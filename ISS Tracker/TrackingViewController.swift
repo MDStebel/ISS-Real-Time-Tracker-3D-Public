@@ -403,8 +403,9 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
     
     
+    /// Function called when zoom is changed
+    /// - Parameter sender: The slider control
     @IBAction func zoomValueChanged(_ sender: UISlider) {
-
         stopAction()
         
         delay(1.0) {                                        // Delay a bit to make sure we don't violate the API's 1 second rate limit if moving the slider too fast
@@ -417,7 +418,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     
     private func playAction() {
-        
         if !running! {
             startAction()
         } else {
@@ -427,7 +427,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     
     private func startAction() {
-        
         timerValue = getTimerInterval()
         startRealTimeTracking()
         
@@ -444,7 +443,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     /// This method is also called as a delegate method when the app goes into background or is closed
     func stopAction() {
-        
         timer?.cancel()
         
         if running != nil {
@@ -458,21 +456,18 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     /// User tapped the start prompt
     @IBAction private func startPromptButton(_ sender: UIButton) {
-        
         playAction()
     }
     
     
     /// User tapped the play button
     @IBAction private func play(_ sender: UIBarButtonItem) {
-        
         playAction()
     }
     
     
     /// Method to set up and start the tracking process
     private func startRealTimeTracking() {
-        
         // Don't leave without doing this!
         defer {
             map.isScrollEnabled = Globals.mapScrollingAndZoomIsEnabled
@@ -499,7 +494,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Get  NORAD ID, name, and icon to use in background for selected target
     /// - Parameter station: Target satellite selector value.
     private func getTargetID(for target: StationsAndSatellites) {
-        
         targetID         = target.satelliteNORADCode
         targetName       = target.satelliteName
         targetImageGlobe = target.satelliteImage
@@ -511,7 +505,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     ///
     /// Calls locateSatellites selector at the current timerValue setting.
     private func timerStartup() {
-        
         timer = Timer
             .publish(every: timerValue, on: .main, in: .common)
             .autoconnect()
@@ -534,23 +527,19 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             if Globals.displayZoomFactorBelowMarkerIsOn {
                 setupZoomFactorLabel(timerIntervalToReturn)
             }
-        } // end of deferred code
+        }
         
         if (zoomValueWasChanged || Globals.zoomFactorWasResetInSettings) && running! {
-            
             timer?.cancel()
             
             if running != nil {
                 running = false
             }
-            
         }
         
         if Globals.zoomFactorWasResetInSettings {
-            
             createZoomSliderRanges()
             setUpZoomSlider(usingSavedZoomFactor: false)
-            
         }
         
         // Calculate the update interval in seconds, based on the zoom scale and zoom expansion multiplier
@@ -573,7 +562,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Sets up slider min and max values
     /// - Parameter usingSavedZoomFactor: If true, use the saved zoom factor. Otherwise, use the default value.
     func setUpZoomSlider(usingSavedZoomFactor useSavedZoomFactor: Bool) {
-
         zoomSlider.maximumValue = Float(zoomSliderMaxValue)
         zoomSlider.minimumValue = Float(zoomSliderMinValue)
         
@@ -588,7 +576,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Set the zoom and scale label
     /// - Parameter timerInterval: Time in seconds as a TimeInterval
     func setupZoomFactorLabel(_ timerInterval: TimeInterval) {
-        
         let integerTimerInterval = Int(timerInterval)
         
         zoomFactorLabel.text! = "Scale: \(zoomRangeFactorLabel) \(Constants.linefeed)" + String(format: Constants.zoomFactorStringFormat, round(zoomSlider.value * 100.0) / 100.0) + "\(Constants.linefeed)Interval: \(integerTimerInterval)" + "\(integerTimerInterval > 1 ? " secs." : " sec.")"
@@ -599,7 +586,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     ///
     /// Sets up an array of slider ranges based on the computed scaling factor.
     private func createZoomSliderRanges() {
-        
         zoomInterval = []                                           // first clear out existing intervals
         
         // Create an array of zoom intervals based on the max zoom value and the number of intervals
@@ -624,6 +610,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         configureCursor()
     }
 
+    
     private func configureMapType() {
         switch Globals.mapTypeSelection {
         case 0:
@@ -637,6 +624,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
     }
 
+    
     private func configureLabelsAndButtons() {
         let commonTextColor = UIColor.white
         let commonAlpha: CGFloat = 1.0
@@ -667,9 +655,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
       
     
-    /// Show map overlay info box and buttons if isOn parameter is true
+    /// Show map overlay info box and buttons only if isOn parameter is true
     func displayInfoBox(_ isOn: Bool) {
-        
         if isOn {
             altitudeLabel.isHidden    = false
             coordinatesLabel.isHidden = false
@@ -737,7 +724,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     /// Toggle soundtrack on and off
     @IBAction func toggleMusicSoundtrack(_ sender: UIButton) {
-        
         if running! {
             if soundtrackButtonOn {
                 soundtrackMusicPlayer?.pause()
