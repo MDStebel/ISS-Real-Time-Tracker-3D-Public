@@ -12,11 +12,22 @@ import MapKit
 extension TrackingViewController {
     
     /// Update the info box data 
-    private func updateCoordinatesDisplay() {
-        DispatchQueue.main.async { [self] in
-            altitudeLabel.text    = altString
+    private func updateCoordinatesDisplay() async {
+        await MainActor.run { [self] in
+            if let lat         = Double(latitude), let lon = Double(longitude) {
+                positionString = "    Position: \(CoordinateConversions.decimalCoordinatesToDegMinSec(latitude: lat, longitude: lon, format: Globals.coordinatesStringFormat))"
+            } else {
+                positionString = Globals.spacer
+            }
+            altitudeInKm       = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)!))!
+            altitudeInMiles    = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)! * Globals.kilometersToMiles))!
+            altString          = "    Altitude: \(altitudeInKm) km  (\(altitudeInMiles) mi)"
+            velocityInKmH      = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)!))!
+            velocityInMPH      = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)! * Globals.kilometersToMiles))!
+            velString          = "    Velocity: \(velocityInKmH) km/h  (\(velocityInMPH) mph)"
+            altitudeLabel.text = altString
             coordinatesLabel.text = positionString
-            velocityLabel.text    = velString
+            velocityLabel.text = velString
         }
     }
     
@@ -118,7 +129,6 @@ extension TrackingViewController {
     fileprivate func updateGlobeAndMapForPositionsOfStations() {
         
         DispatchQueue.main.async {
-            
             self.setUpAllOverlaysAndButtons()
             
             // Update map position
@@ -126,7 +136,7 @@ extension TrackingViewController {
             self.span = MKCoordinateSpan.init(latitudeDelta: self.latDelta, longitudeDelta: self.lonDelta)
             self.region = MKCoordinateRegion.init(center: self.location, span: self.span)
             self.map.setRegion(self.region, animated: true)
-                                    
+            
             // Draw ground track, if enabled
             if Globals.orbitGroundTrackLineEnabled {
                 self.drawOrbitGroundTrackLine()
@@ -134,7 +144,9 @@ extension TrackingViewController {
             
             // Update the coordinates and other data in the info box, if enabled
             if Globals.showCoordinatesIsOn {
-                self.updateCoordinatesDisplay()
+                Task {
+                    await self.updateCoordinatesDisplay()
+                }
             }
             
             // Update mini globe with ISS position, footprint, and orbital track, if enabled.
@@ -231,7 +243,7 @@ extension TrackingViewController {
                         return
                     }                    
                     
-                    self.altitude      = String(self.coordinates[0].sataltitude)
+                    self.altitude = String(self.coordinates[0].sataltitude)
                     self.atDateAndTime = String(self.coordinates[0].timestamp)
                     
                     // Update positions and info box

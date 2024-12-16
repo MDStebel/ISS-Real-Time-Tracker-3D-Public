@@ -89,6 +89,16 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
     }
     
+    private var alreadyAnimatedStartPrompt = false
+    private var justStartedUp              = false
+    private var targetID                   = ""
+    private var targetImageMap: UIImage?   = StationsAndSatellites.iss.satelliteImageSmall        // Default map marker image
+    private var targetImageGlobe: UIImage? = StationsAndSatellites.iss.satelliteImage             // Default globe marker image
+    private var targetName                 = ""
+    private var zoomInterval               = [Float]()
+    private var zoomRangeFactorLabel       = ""
+    private var zoomValueWasChanged        = false
+    
     /// This computed property returns the max value for the zoom slider
     private var zoomSliderMaxValue: Double {
         switch Globals.zoomRangeFactorSelection {
@@ -115,14 +125,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     private var zoomSliderMinValue: Double {
         max(zoomSliderMaxValue / Constants.zoomScaleFactor, zoomSliderMinFloor)     // Keep minimum value >= to zoomSliderMinFloor
     }
-    
-    /// This computed property returns the value used for both the lat and long in the map span and the default value of the zoom slider
-    var zoomFactorDefaultValue: Float {
-        let zf = Float(zoomSliderMaxValue / 2.0)
-        Globals.zoomFactorDefaultValue = zf
-        
-        return zf
-    }
+
     
     /// This computed property returns the allowed minimum zoom slider setting based on the device, for better performance on iPad
     private var zoomSliderMinFloor: Double {
@@ -132,32 +135,12 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             return 0.05
         }
     }
-     
-    var location = CLLocationCoordinate2D()
-    var span     = MKCoordinateSpan()
-    var region   = MKCoordinateRegion()
-    var latDelta: CLLocationDegrees {
-        Double(zoomSlider.value)
-    }
-    var lonDelta: CLLocationDegrees {
-        latDelta
-    }
-       
-    private var alreadyAnimatedStartPrompt = false
-    private var altitudeInMiles            = ""
-    private var justStartedUp              = false
-    private var targetID                   = ""
-    private var targetImageMap: UIImage?   = StationsAndSatellites.iss.satelliteImageSmall        // Default map marker image
-    private var targetImageGlobe: UIImage? = StationsAndSatellites.iss.satelliteImage             // Default globe marker image
-    private var targetName                 = ""
-    private var velocityInKmH              = ""
-    private var velocityInMPH              = ""
-    private var zoomInterval               = [Float]()
-    private var zoomRangeFactorLabel       = ""
-    private var zoomValueWasChanged        = false
-    
+
     var aPolyLine                          = MKPolyline()
     var altString                          = ""
+    var altitude                           = ""
+    var altitudeInKm                       = ""
+    var altitudeInMiles                    = ""
     var atDateAndTime                      = ""
     var coordinates                        = [SatelliteOrbitPosition.Positions]()
     var dateFormatter: DateFormatter?      = DateFormatter()     // String format for zoom factor label. Declared as an optional so we can test for nil in save settings in case it wasn't set before being called
@@ -174,14 +157,25 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     var issLongitude                       = 0.0
     var latitude                           = ""
     var listOfCoordinates                  = [CLLocationCoordinate2D]()
+    var location = CLLocationCoordinate2D()
     var longitude                          = ""
     var positionString                     = ""
     var ranAtLeastOnce                     = false
+    var region   = MKCoordinateRegion()
+    var satelliteCode                      = StationsAndSatellites.iss.satelliteNORADCode   // Get the NORAD code for the default target
+    var span     = MKCoordinateSpan()
     var tLat                               = ""
     var tLon                               = ""
+    var timer: AnyCancellable?
+    var timerValue: TimeInterval           = 2.0
     var tssLastLat: Float                  = 0
     var tssLatitude                        = 0.0
     var tssLongitude                       = 0.0
+    var velString                          = ""
+    var velocity                           = ""
+    var velocityInKmH                      = ""
+    var velocityInMPH                      = ""
+    
     var target: StationsAndSatellites      = .iss {
         didSet{
             getTargetID(for: target)
@@ -194,32 +188,18 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             }
         }
     }
-    var timer: AnyCancellable? 
-    var timerValue: TimeInterval           = 2.0
-    var satelliteCode                      = StationsAndSatellites.iss.satelliteNORADCode   // Get the NORAD code for the default target
-    var velString                          = ""
-    var altitude               = "" {
-        didSet{
-            altitudeInMiles    = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)! * Globals.kilometersToMiles))!
-            altitudeInKm       = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)!))!
-            altString          = "    Altitude: \(altitudeInKm) km  (\(altitudeInMiles) mi)"
-        }
+    /// This computed property returns the value used for both the lat and long in the map span and the default value of the zoom slider
+    var zoomFactorDefaultValue: Float {
+        let zf = Float(zoomSliderMaxValue / 2.0)
+        Globals.zoomFactorDefaultValue = zf
+        
+        return zf
     }
-    var velocity               = "" {
-        didSet {
-            velocityInMPH      = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)! * Globals.kilometersToMiles))!
-            velocityInKmH      = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)!))!
-            velString          = "    Velocity: \(velocityInKmH) km/h  (\(velocityInMPH) mph)"
-        }
+    var latDelta: CLLocationDegrees {
+        Double(zoomSlider.value)
     }
-    private var altitudeInKm   = "" {
-        willSet {
-            if let lat         = Double(latitude), let lon = Double(longitude) {
-                positionString = "    Position: \(CoordinateConversions.decimalCoordinatesToDegMinSec(latitude: lat, longitude: lon, format: Globals.coordinatesStringFormat))"
-            } else {
-                positionString = Globals.spacer
-            }
-        }
+    var lonDelta: CLLocationDegrees {
+        latDelta
     }
 
     
