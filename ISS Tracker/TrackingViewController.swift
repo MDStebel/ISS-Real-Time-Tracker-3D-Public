@@ -192,7 +192,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     var zoomFactorDefaultValue: Float {
         let zf = Float(zoomSliderMaxValue / 2.0)
         Globals.zoomFactorDefaultValue = zf
-        
         return zf
     }
     var latDelta: CLLocationDegrees {

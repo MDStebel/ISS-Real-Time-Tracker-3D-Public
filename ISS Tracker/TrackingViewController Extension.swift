@@ -14,20 +14,20 @@ extension TrackingViewController {
     /// Update the info box data 
     private func updateCoordinatesDisplay() async {
         await MainActor.run { [self] in
-            if let lat         = Double(latitude), let lon = Double(longitude) {
-                positionString = "    Position: \(CoordinateConversions.decimalCoordinatesToDegMinSec(latitude: lat, longitude: lon, format: Globals.coordinatesStringFormat))"
+            if let lat = Double(latitude), let lon = Double(longitude) {
+                positionString    = "    Position: \(CoordinateConversions.decimalCoordinatesToDegMinSec(latitude: lat, longitude: lon, format: Globals.coordinatesStringFormat))"
             } else {
-                positionString = Globals.spacer
+                positionString    = Globals.spacer
             }
-            altitudeInKm       = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)!))!
-            altitudeInMiles    = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)! * Globals.kilometersToMiles))!
-            altString          = "    Altitude: \(altitudeInKm) km  (\(altitudeInMiles) mi)"
-            velocityInKmH      = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)!))!
-            velocityInMPH      = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)! * Globals.kilometersToMiles))!
-            velString          = "    Velocity: \(velocityInKmH) km/h  (\(velocityInMPH) mph)"
-            altitudeLabel.text = altString
+            altitudeInKm          = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)!))!
+            altitudeInMiles       = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)! * Globals.kilometersToMiles))!
+            altString             = "    Altitude: \(altitudeInKm) km  (\(altitudeInMiles) mi)"
+            velocityInKmH         = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)!))!
+            velocityInMPH         = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)! * Globals.kilometersToMiles))!
+            velString             = "    Velocity: \(velocityInKmH) km/h  (\(velocityInMPH) mph)"
+            altitudeLabel.text    = altString
             coordinatesLabel.text = positionString
-            velocityLabel.text = velString
+            velocityLabel.text    = velString
         }
     }
     
@@ -124,18 +124,22 @@ extension TrackingViewController {
             self.cursor.isHidden = false                        // Now, show the marker
         }
     }
-
+    
+    /// Helper method to update the 2D map with the satellite's current position
+    fileprivate func updateMap() {
+        self.location = CLLocationCoordinate2DMake(CLLocationDegrees(self.latitude) ?? 0.0, CLLocationDegrees(self.longitude) ?? 0.0)
+        self.span = MKCoordinateSpan.init(latitudeDelta: self.latDelta, longitudeDelta: self.lonDelta)
+        self.region = MKCoordinateRegion.init(center: self.location, span: self.span)
+        self.map.setRegion(self.region, animated: true)
+    }
+    
     /// Update map and globe
     fileprivate func updateGlobeAndMapForPositionsOfStations() {
         
         DispatchQueue.main.async {
             self.setUpAllOverlaysAndButtons()
             
-            // Update map position
-            self.location = CLLocationCoordinate2DMake(CLLocationDegrees(self.latitude) ?? 0.0, CLLocationDegrees(self.longitude) ?? 0.0)
-            self.span = MKCoordinateSpan.init(latitudeDelta: self.latDelta, longitudeDelta: self.lonDelta)
-            self.region = MKCoordinateRegion.init(center: self.location, span: self.span)
-            self.map.setRegion(self.region, animated: true)
+            self.updateMap()
             
             // Draw ground track, if enabled
             if Globals.orbitGroundTrackLineEnabled {
@@ -187,57 +191,57 @@ extension TrackingViewController {
                     switch satellite {
                     case .iss:
                         DispatchQueue.main.sync {
-                            self.issLatitude            = self.coordinates[0].satlatitude
-                            self.issLongitude           = self.coordinates[0].satlongitude
-                            self.iLat                   = String(self.issLatitude)
-                            self.iLon                   = String(self.issLongitude)
-                            self.latitude               = String(self.issLatitude)
-                            self.longitude              = String(self.issLongitude)
-                            self.tssLatitude            = 0
-                            self.tssLongitude           = 0
-                            self.tLat                   = ""
-                            self.tLon                   = ""
-                            self.hubbleLatitude         = 0
-                            self.hubbleLongitude        = 0
-                            self.hLat                   = ""
-                            self.hLon                   = ""
-                            self.velocity               = "27540"
+                            issLatitude            = coordinates[0].satlatitude
+                            issLongitude           = coordinates[0].satlongitude
+                            iLat                   = String(issLatitude)
+                            iLon                   = String(issLongitude)
+                            latitude               = String(issLatitude)
+                            longitude              = String(issLongitude)
+                            tssLatitude            = 0
+                            tssLongitude           = 0
+                            tLat                   = ""
+                            tLon                   = ""
+                            hubbleLatitude         = 0
+                            hubbleLongitude        = 0
+                            hLat                   = ""
+                            hLon                   = ""
+                            velocity               = satellite.satelliteVelocity
                         }
                     case .tss:
                         DispatchQueue.main.sync {
-                            self.tssLatitude            = self.coordinates[0].satlatitude
-                            self.tssLongitude           = self.coordinates[0].satlongitude
-                            self.tLat                   = String(self.tssLatitude)
-                            self.tLon                   = String(self.tssLongitude)
-                            self.latitude               = String(self.tssLatitude)
-                            self.longitude              = String(self.tssLongitude)
-                            self.issLatitude            = 0
-                            self.issLongitude           = 0
-                            self.iLat                   = ""
-                            self.iLon                   = ""
-                            self.hubbleLatitude         = 0
-                            self.hubbleLongitude        = 0
-                            self.hLat                   = ""
-                            self.hLon                   = ""
-                            self.velocity               = "27648"
+                            tssLatitude            = coordinates[0].satlatitude
+                            tssLongitude           = coordinates[0].satlongitude
+                            tLat                   = String(tssLatitude)
+                            tLon                   = String(tssLongitude)
+                            latitude               = String(tssLatitude)
+                            longitude              = String(tssLongitude)
+                            issLatitude            = 0
+                            issLongitude           = 0
+                            iLat                   = ""
+                            iLon                   = ""
+                            hubbleLatitude         = 0
+                            hubbleLongitude        = 0
+                            hLat                   = ""
+                            hLon                   = ""
+                            velocity               = satellite.satelliteVelocity
                         }
                     case .hst:
                         DispatchQueue.main.sync {
-                            self.hubbleLatitude         = self.coordinates[0].satlatitude
-                            self.hubbleLongitude        = self.coordinates[0].satlongitude
-                            self.hLat                   = String(self.hubbleLatitude)
-                            self.hLon                   = String(self.hubbleLongitude)
-                            self.latitude               = String(self.hubbleLatitude)
-                            self.longitude              = String(self.hubbleLongitude)
-                            self.issLatitude            = 0
-                            self.issLongitude           = 0
-                            self.iLat                   = ""
-                            self.iLon                   = ""
-                            self.tssLatitude            = 0
-                            self.tssLongitude           = 0
-                            self.tLat                   = ""
-                            self.tLon                   = ""
-                            self.velocity               = "27360"
+                            hubbleLatitude         = coordinates[0].satlatitude
+                            hubbleLongitude        = coordinates[0].satlongitude
+                            hLat                   = String(hubbleLatitude)
+                            hLon                   = String(hubbleLongitude)
+                            latitude               = String(hubbleLatitude)
+                            longitude              = String(hubbleLongitude)
+                            issLatitude            = 0
+                            issLongitude           = 0
+                            iLat                   = ""
+                            iLon                   = ""
+                            tssLatitude            = 0
+                            tssLongitude           = 0
+                            tLat                   = ""
+                            tLon                   = ""
+                            velocity               = satellite.satelliteVelocity
                         }
                     case .none:
                         return

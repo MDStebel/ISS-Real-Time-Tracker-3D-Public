@@ -57,6 +57,19 @@ public enum StationsAndSatellites: String, CaseIterable {
         }
     }
     
+    var satelliteVelocity: String {
+        switch self {
+        case .iss:
+            return "27540"
+        case .tss:
+            return "27612"
+        case .hst:
+            return "27396"
+        case .none:
+            return "27540"
+        }
+    }
+    
     /// Used in computing the orbital track for the 3D model
     var multiplier: Float {
         switch self {
