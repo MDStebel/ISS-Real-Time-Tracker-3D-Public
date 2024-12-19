@@ -11,7 +11,7 @@ import MapKit
 
 extension TrackingViewController {
     
-    /// Update the info box data
+    /// Update the info box data asynchronously
     private func updateCoordinatesDisplay() async {
         await MainActor.run { [self] in
             if let lat = Double(latitude), let lon = Double(longitude) {
@@ -31,14 +31,16 @@ extension TrackingViewController {
         }
     }
     
-    /// Draw orbit ground track line overlay
-    private func drawOrbitGroundTrackLine() {
-        appendCurrentCoordinate()
-        
-        guard Globals.orbitGroundTrackLineEnabled, listOfCoordinates.count >= 2 else { return }
-        
-        drawPolyline()
-        removeExcessCoordinates()
+    /// Draw orbit ground track line overlay asynchronously
+    private func drawOrbitGroundTrackLine() async {
+        await MainActor.run { [self] in
+            appendCurrentCoordinate()
+            
+            guard Globals.orbitGroundTrackLineEnabled, listOfCoordinates.count >= 2 else { return }
+            
+            drawPolyline()
+            removeExcessCoordinates()
+        }
     }
     
     private func appendCurrentCoordinate() {
@@ -134,7 +136,6 @@ extension TrackingViewController {
     
     /// Update map and globe
     fileprivate func updateGlobeAndMapForPositionsOfStations() {
-        
         DispatchQueue.main.async {
             self.setUpAllOverlaysAndButtons()
             
@@ -142,7 +143,9 @@ extension TrackingViewController {
             
             // Draw ground track, if enabled
             if Globals.orbitGroundTrackLineEnabled {
-                self.drawOrbitGroundTrackLine()
+                Task {
+                    await self.drawOrbitGroundTrackLine()
+                }
             }
             
             // Update the coordinates and other data in the info box, if enabled

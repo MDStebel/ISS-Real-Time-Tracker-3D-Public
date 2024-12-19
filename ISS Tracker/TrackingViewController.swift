@@ -16,15 +16,14 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     // MARK: - Types
     
-    
     /// Zoom factor ranges and their maximum values
     private enum ZoomFactorRanges: Double {
         typealias RawValue = Double
         
-        case fine                             = 3.0
-        case small                            = 10.0
-        case medium                           = 30.0
-        case large                            = 90.0
+        case fine = 3.0
+        case small = 10.0
+        case medium = 30.0
+        case large = 90.0
     }
     
     /// Segue names
@@ -63,9 +62,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         static let on                         = "music.quarternote.3"
     }
     
-    
     // MARK: - Properties
-    
     
     // Change status bar to light color for this VC
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -120,12 +117,10 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
     }
     
-    
     /// This computed property returns the minimum zoom value for the slider based on the max value divided by a scaling factor
     private var zoomSliderMinValue: Double {
         max(zoomSliderMaxValue / Constants.zoomScaleFactor, zoomSliderMinFloor)     // Keep minimum value >= to zoomSliderMinFloor
     }
-
     
     /// This computed property returns the allowed minimum zoom slider setting based on the device, for better performance on iPad
     private var zoomSliderMinFloor: Double {
@@ -157,13 +152,13 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     var issLongitude                       = 0.0
     var latitude                           = ""
     var listOfCoordinates                  = [CLLocationCoordinate2D]()
-    var location = CLLocationCoordinate2D()
+    var location                           = CLLocationCoordinate2D()
     var longitude                          = ""
     var positionString                     = ""
     var ranAtLeastOnce                     = false
-    var region   = MKCoordinateRegion()
+    var region                             = MKCoordinateRegion()
     var satelliteCode                      = StationsAndSatellites.iss.satelliteNORADCode   // Get the NORAD code for the default target
-    var span     = MKCoordinateSpan()
+    var span                               = MKCoordinateSpan()
     var tLat                               = ""
     var tLon                               = ""
     var timer: AnyCancellable?
@@ -176,15 +171,15 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     var velocityInKmH                      = ""
     var velocityInMPH                      = ""
     
-    var target: StationsAndSatellites      = .iss {
+    var target: StationsAndSatellites = .iss {
         didSet{
             getTargetID(for: target)
         }
     }
-    var running: Bool?                     = false {
+    var running: Bool? = false {
         didSet {
-            if let isRunning               = running {
-                globeStatusLabel?.text     = isRunning ? "Running" : "Not running"
+            if let isRunning = running {
+                globeStatusLabel?.text = isRunning ? "Running" : "Not running"
             }
         }
     }
@@ -200,10 +195,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     var lonDelta: CLLocationDegrees {
         latDelta
     }
-
     
     // MARK: - Outlets
-    
     
     @IBOutlet var clearOrbitTrackButton: UIButton!
     @IBOutlet var helpButton: UIButton!
@@ -254,9 +247,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     }
     @IBOutlet var selectTargetButton: UIButton!
     
-    
     // MARK: - Methods
-    
     
     /// Set up rounded top corners for the coordinates label box
     /// - Parameter withTopCorners: True if we want the top to have rounded corners
@@ -270,7 +261,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
     }
     
-    
     private func setUpMap() {
         map.delegate        = self
         map.isPitchEnabled  = true
@@ -279,17 +269,14 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         map.showsScale      = true
     }
     
-    
     private func setUpNumberFormatter() {
         Constants.numberFormatter.numberStyle = NumberFormatter.Style.decimal
         Constants.numberFormatter.maximumFractionDigits = 0
     }
     
-    
     private func setUpDateFormatter() {
         dateFormatter?.dateFormat = Globals.outputDateFormatString
     }
-    
     
     /// Set up a reference to this view controller. This allows AppDelegate to do stuff on it when it enters background.
     private func setUpAppDelegate() {
@@ -297,9 +284,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         appDelegate.referenceToViewController = self
     }
     
-    
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
         setUpAppDelegate()
@@ -317,9 +302,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         justStartedUp = true
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(animated)
         
         // Set font and attributes for navigation bar
@@ -331,10 +314,8 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
     }
     
-    
     /// If app has just started up, then show the start prompt, create the zoom slider ranges and reset the start up flag
     private func animateStartPrompt() {
-        
         if justStartedUp && !alreadyAnimatedStartPrompt {
             
             // Animate the startup prompt
@@ -348,7 +329,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
     }
     
-    
 //    /// Present What's New if app was updated or if the switch is enabled in Settings
 //    private func showWhatsNewIfNeeded() {
 //        
@@ -359,32 +339,24 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
 //        
 //    }
     
-    
     override func viewDidAppear(_ animated: Bool) {
-        
         super.viewDidAppear(animated)
         
         animateStartPrompt()
-//        showWhatsNewIfNeeded()
         
         map.isZoomEnabled   = Globals.mapScrollingAndZoomIsEnabled
         map.isScrollEnabled = Globals.mapScrollingAndZoomIsEnabled
     }
     
-    
     @IBAction func resetGlobe(_ sender: UIButton) {
-        
         resetGlobeAction()
     }
     
-    
     /// Reset the globe only
     func resetGlobeAction() {
-        
         globe = EarthGlobe()
         setUpEarthGlobeScene(for: globe, in: globeScene, hasTintedBackground: true)
     }
-    
     
     /// Copy position information to clipboard
     @IBAction func copyCoordinatesToClipboard(_ sender: Any) {
@@ -401,7 +373,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         alert(for: "Current ISS Position" + Constants.linefeed + "Copied to Your Clipboard", message: dataToBeCopiedString)
     }
     
-    
     /// Function called when zoom is changed
     /// - Parameter sender: The slider control
     @IBAction func zoomValueChanged(_ sender: UISlider) {
@@ -415,7 +386,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
     }
     
-    
     private func playAction() {
         if !running! {
             startAction()
@@ -423,7 +393,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             stopAction()
         }
     }
-    
     
     private func startAction() {
         timerValue = getTimerInterval()
@@ -439,7 +408,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         playButton.image = UIImage(named: TrackingButtonImages.pause, in: nil, compatibleWith: nil)     // While running, change play to pause
     }
     
-    
     /// This method is also called as a delegate method when the app goes into background or is closed
     func stopAction() {
         timer?.cancel()
@@ -452,23 +420,20 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         playButton?.image = UIImage(named: TrackingButtonImages.play, in: nil, compatibleWith: nil)     // While paused, change pause icon to play icon
     }
     
-    
     /// User tapped the start prompt
     @IBAction private func startPromptButton(_ sender: UIButton) {
         playAction()
     }
-    
     
     /// User tapped the play button
     @IBAction private func play(_ sender: UIBarButtonItem) {
         playAction()
     }
     
-    
     /// Method to set up and start the tracking process
     private func startRealTimeTracking() {
-        // Don't leave without doing this!
-        defer {
+        
+        defer {     // Don't leave without doing this!
             map.isScrollEnabled = Globals.mapScrollingAndZoomIsEnabled
             map.isZoomEnabled   = Globals.mapScrollingAndZoomIsEnabled
         }
@@ -489,7 +454,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
     }
     
-    
     /// Get  NORAD ID, name, and icon to use in background for selected target
     /// - Parameter station: Target satellite selector value.
     private func getTargetID(for target: StationsAndSatellites) {
@@ -498,7 +462,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         targetImageGlobe = target.satelliteImage
         targetImageMap   = target.satelliteImageSmall
     }
-    
     
     /// Method to set up the map refresh timer.
     ///
@@ -511,7 +474,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
                 self.locateSatellite(for: self.target)
             }
     }
-    
     
     /// Set timer interval.
     /// Computes timer interval based on the zoom interval.
@@ -555,7 +517,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         return timerIntervalToReturn
     }
     
-    
     /// Set up zoom slider.
     ///
     /// Sets up slider min and max values
@@ -571,7 +532,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
     }
     
-    
     /// Set the zoom and scale label
     /// - Parameter timerInterval: Time in seconds as a TimeInterval
     func setupZoomFactorLabel(_ timerInterval: TimeInterval) {
@@ -579,7 +539,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         zoomFactorLabel.text! = "Scale: \(zoomRangeFactorLabel) \(Constants.linefeed)" + String(format: Constants.zoomFactorStringFormat, round(zoomSlider.value * 100.0) / 100.0) + "\(Constants.linefeed)Interval: \(integerTimerInterval)" + "\(integerTimerInterval > 1 ? " secs." : " sec.")"
     }
-    
     
     /// Set up zoom slider ranges.
     ///
@@ -599,7 +558,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
     }
     
-    
     /// Set up the map.
     ///
     /// Sets the map type and associated parameters basedon selector control in Settings. Sets cursor and zoomFactorLabel color to black or white, and coordinatesLabel to red or white depending upon map type.
@@ -609,7 +567,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         configureCursor()
     }
 
-    
     private func configureMapType() {
         switch Globals.mapTypeSelection {
         case 0:
@@ -619,14 +576,14 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         case 2:
             map.preferredConfiguration = MKHybridMapConfiguration()
         default:
-            map.preferredConfiguration = MKImageryMapConfiguration()
+            map.preferredConfiguration = MKHybridMapConfiguration()
         }
     }
 
-    
     private func configureLabelsAndButtons() {
         let commonTextColor = UIColor.white
         let commonAlpha: CGFloat = 1.0
+        
         zoomFactorLabel.textColor = commonTextColor
         coordinatesLabel.textColor = commonTextColor
         altitudeLabel.textColor = commonTextColor
@@ -639,6 +596,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
 
     private func configureCursor() {
         let imageName: String
+        
         switch Globals.markerType {
         case 0:
             cursor.image = targetImageMap
@@ -653,7 +611,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
     }
       
-    
     /// Show map overlay info box and buttons only if isOn parameter is true
     func displayInfoBox(_ isOn: Bool) {
         if isOn {
@@ -666,7 +623,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             velocityLabel.isHidden    = true
         }
     }
-
     
     /// Prepare for seque
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -694,13 +650,11 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             stopAction()
         }
     }
-
     
     /// Unwind segue
     @IBAction func unwindFromOtherVCs(unwindSegue: UIStoryboardSegue) {
         
     }
-    
     
     /// Set up audio player to play soundtrack without stopping any audio that was playing when app launched
     private func setUpSoundTrackMusicPlayer() {
@@ -720,7 +674,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         soundtrackMusicPlayer?.numberOfLoops = -1       // Loop indefinitely
     }
     
-    
     /// Toggle soundtrack on and off
     @IBAction func toggleMusicSoundtrack(_ sender: UIButton) {
         if running! {
@@ -733,7 +686,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         soundtrackButtonOn.toggle()
     }
-    
     
     /// Clear the ground track plot line
     @IBAction func clearOrbitGroundTrack(_ sender: UIButton) {
@@ -761,11 +713,9 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         present(alertController, animated: true)
     }
   
-    
     @IBAction func switchTarget(_ sender: UIButton) {
         switchStationPopup(withTitle: "Select a Target", usingStyle: .actionSheet)
     }
-    
     
     /// Switch to a different station to get pass predictions for
     /// - Parameters:
@@ -794,7 +744,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         present(alertController, animated: true)
     }
 
-    
     private func handleTargetSelection(_ selectedTarget: StationsAndSatellites) {
         DispatchQueue.main.async {
             self.stopAction()
@@ -811,9 +760,9 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
     }
     
-
     private func configurePopover(for alertController: UIAlertController) {
         guard let popoverController = alertController.popoverPresentationController else { return }
+        
         popoverController.permittedArrowDirections = .up
         popoverController.sourceView = selectTargetButton
         popoverController.sourceRect = CGRect(
@@ -823,7 +772,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             height: selectTargetButton.bounds.height
         )
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
