@@ -11,7 +11,7 @@ import MapKit
 
 extension TrackingViewController {
     
-    /// Update the info box data 
+    /// Update the info box data
     private func updateCoordinatesDisplay() async {
         await MainActor.run { [self] in
             if let lat = Double(latitude), let lon = Double(longitude) {
@@ -40,12 +40,12 @@ extension TrackingViewController {
         drawPolyline()
         removeExcessCoordinates()
     }
-
+    
     private func appendCurrentCoordinate() {
         let coordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude) ?? 0.0, longitude: CLLocationDegrees(longitude) ?? 0.0)
         listOfCoordinates.append(coordinate)
     }
-
+    
     private func drawPolyline() {
         let lastTwoCoordinates = Array(listOfCoordinates.suffix(2))
         let polyline = MKPolyline(coordinates: lastTwoCoordinates, count: lastTwoCoordinates.count)
@@ -54,7 +54,7 @@ extension TrackingViewController {
         polylineRenderer.fillColor = .blue
         map.addOverlay(polyline)
     }
-
+    
     private func removeExcessCoordinates() {
         let maxCoordinates = 4
         if listOfCoordinates.count == maxCoordinates {
@@ -74,7 +74,7 @@ extension TrackingViewController {
         renderer.lineCap = .round
         return renderer
     }
-
+    
     private func colorForTarget(_ target: StationsAndSatellites) -> UIColor {
         switch target {
         case .iss:
@@ -92,7 +92,6 @@ extension TrackingViewController {
     fileprivate func setUpAllOverlaysAndButtons() {
         
         DispatchQueue.main.async {
-            
             self.setUpDisplayConfiguration()
             
             if Globals.zoomFactorWasResetInSettings {           // If reset was pressed in Settings, or if the zoom scale factor was changed, this flag will be set. So, reset zoom to default values for the selected scale factor and call zoomValueChanged method.
@@ -172,7 +171,6 @@ extension TrackingViewController {
     /// Locate satellite position and other data
     /// - Parameter satellite: The target satellite as a StationsAndSatellites object
     func locateSatellite(for satellite: StationsAndSatellites) {
-        
         let satelliteCodeNumber = satellite.satelliteNORADCode
         
         /// Make sure we can create the URL from the endpoint and parameters
@@ -184,8 +182,7 @@ extension TrackingViewController {
             if let data {
                 let decoder = JSONDecoder()
                 do {
-                    // Parse JSON
-                    let parsedPosition = try decoder.decode(SatelliteOrbitPosition.self, from: data)
+                    let parsedPosition = try decoder.decode(SatelliteOrbitPosition.self, from: data)  // Parse JSON data
                     self.coordinates   = parsedPosition.positions
                     
                     switch satellite {
@@ -205,7 +202,6 @@ extension TrackingViewController {
                             hubbleLongitude        = 0
                             hLat                   = ""
                             hLon                   = ""
-                            velocity               = satellite.satelliteVelocity
                         }
                     case .tss:
                         DispatchQueue.main.sync {
@@ -223,7 +219,6 @@ extension TrackingViewController {
                             hubbleLongitude        = 0
                             hLat                   = ""
                             hLon                   = ""
-                            velocity               = satellite.satelliteVelocity
                         }
                     case .hst:
                         DispatchQueue.main.sync {
@@ -241,20 +236,20 @@ extension TrackingViewController {
                             tssLongitude           = 0
                             tLat                   = ""
                             tLon                   = ""
-                            velocity               = satellite.satelliteVelocity
                         }
                     case .none:
                         return
-                    }                    
+                    }
                     
-                    self.altitude = String(self.coordinates[0].sataltitude)
-                    self.atDateAndTime = String(self.coordinates[0].timestamp)
-                    
-                    // Update positions and info box
-                    self.updateGlobeAndMapForPositionsOfStations()
+                    DispatchQueue.main.sync {
+                        velocity = satellite.satelliteVelocity     // Use hard-coded velecity from the model
+                        altitude = String(coordinates[0].sataltitude)
+                        atDateAndTime = String(coordinates[0].timestamp)
+                        
+                        updateGlobeAndMapForPositionsOfStations()  // Update positions and info box
+                    }
                     
                 } catch {
-                    
                     // If parsing fails
                     DispatchQueue.main.async {
                         self.stopAction()
@@ -262,7 +257,6 @@ extension TrackingViewController {
                     }
                 }
             } else {
-                
                 // If can't access API
                 DispatchQueue.main.async {
                     self.stopAction()
