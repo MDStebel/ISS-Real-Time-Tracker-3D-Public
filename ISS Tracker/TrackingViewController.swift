@@ -291,13 +291,13 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         setUpDateFormatter()
         setUpNumberFormatter()
         setUpMap()
-        setUpEarthGlobeScene(for: globe, in: globeScene, hasTintedBackground: true)                 // Set up Earth model scene
-        setUpCoordinatesLabel(withTopCorners: true)                                                 // Set up the coordinates info box
-        setUpZoomSlider(usingSavedZoomFactor: true)                                                 // Set up zoom factor using saved zoom factor, rather than default
-        setUpDisplayConfiguration()                                                                 // Set up display with map in last-used map type and other display parameters
-        setUpSoundTrackMusicPlayer()                                                                // Set up the player for the soundtrack
-        SettingsDataModel.restoreUserSettings()                                                     // Restore user settings
-        displayInfoBox(false)                                                                       // Start up with map overlay info box and buttons off
+        setUpEarthGlobeScene(for: globe, in: globeScene, hasTintedBackground: true)    // Set up Earth model scene
+        setUpCoordinatesLabel(withTopCorners: true)                                    // Set up the coordinates info box
+        setUpZoomSlider(usingSavedZoomFactor: true)                                    // Set up zoom factor using saved zoom factor, rather than default
+        setUpDisplayConfiguration()                                                    // Set up display with map in last-used map type and other display parameters
+        setUpSoundTrackMusicPlayer()                                                   // Set up the player for the soundtrack
+        SettingsDataModel.restoreUserSettings()                                        // Restore user settings
+        displayInfoBox(false)                                                          // Start up with map overlay info box and buttons off
         
         justStartedUp = true
     }
@@ -671,7 +671,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         }
         
         soundtrackButtonOn = false
-        soundtrackMusicPlayer?.numberOfLoops = -1       // Loop indefinitely
+        soundtrackMusicPlayer?.numberOfLoops = -1       // Play indefinitely
     }
     
     /// Toggle soundtrack on and off
@@ -694,7 +694,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
             message: """
                      Are you sure you wish to
                      clear the ground track?
-
+                     
                      Note: You can turn off the
                      ground track line in Settings.
                      """,

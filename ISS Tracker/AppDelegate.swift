@@ -33,8 +33,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func scheduleReviewRequest() {
-        let shortestTime: UInt32 = 40
-        let longestTime: UInt32  = 120
+        let shortestTime: UInt32 = 15
+        let longestTime: UInt32  = 150
         let timeInterval         = TimeInterval(arc4random_uniform(longestTime - shortestTime) + shortestTime)
         Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(requestReview), userInfo: nil, repeats: false)
     }
