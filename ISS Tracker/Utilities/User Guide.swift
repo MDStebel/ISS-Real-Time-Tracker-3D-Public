@@ -75,6 +75,7 @@ struct UserGuide {
     <h4><a href="#globe">Globe</a></h4>
     <h4><a href="#passes">Passes</a></h4>
     <h4><a href="#crew">Crew</a></h4>
+    <h4><a href="#streaming">Earth View</a></h4>
     <h4><a href="#settings">Settings</a></h4>
     <h4><a href="#watch">Using the Apple Watch App</a></h4>
 
@@ -262,6 +263,17 @@ struct UserGuide {
     <p>Drag down the table to refresh the data.</p>
     <p>Tap < to return to the map and resume tracking.</p>
     <h4><a href="#contents">Back to contents</a></h4>
+    <div id="streaming"></div>
+    <h2>Earth View</h2>
+    <p>Live streaming HD video of Earth is provided courtesy of NASA.</p>
+    <p>Live views from the International Space Station are streaming from an external camera mounted on the station's Harmony module. The camera is looking forward at an angle so that International Docking Adapter 2 is visible. If the Harmony module camera is not available due to operational considerations for a longer period of time, a continuous loop of recorded Earth views will be displayed with the caption “Previously Recorded.”</p>
+    <h5>Notes:</h5>
+    <ul>
+    <li>
+    <h6>If your screen is blank, then the live Earth View is not currently operating, or the ISS is in nighttime. Just try again later.</h6>
+    </li>
+    </ul>
+    <p>Tap < to return to the map and resume tracking.</p>
     <div id="settings"></div>
     <h2>Settings</h2>
     <p>All of your current user settings are automatically saved on your device when you exit the app or switch to another app. This also includes the current zoom slider position. Each time you run ISS Real-Time Tracker 3D, your settings are restored.</p>
@@ -407,6 +419,35 @@ struct UserGuide {
     <h4>Pull-to-Refresh</h4>
     <p>Drag down the table to refresh the data.</p>
     <p>Tap < to return to the map and resume tracking.</p>
+    \(tail)
+    """
+    
+    static let streamingVideoHelp =
+    """
+    \(head)
+    <p>Live streaming HD video of Earth is provided courtesy of NASA.</p>
+    <p>Live views from the International Space Station are streaming from an external camera mounted on the station's Harmony module. The camera is looking forward at an angle so that International Docking Adapter 2 is visible. If the Harmony module camera is not available due to operational considerations for a longer period of time, a continuous loop of recorded Earth views will be displayed with the caption “Previously Recorded.”</p>
+    <h5>Notes:</h5>
+    <ul>
+    <li>
+    <h6>If your screen is blank, then the live Earth View is not currently operating, or the ISS is in nighttime. Just try again later.</h6>
+    </li>
+    </ul>
+    <p>Tap < to return to the map.</p>
+    \(tail)
+    """
+    
+    static let NASATVVideoHelp =
+    """
+    \(head)
+    <p>NASA TV airs a variety of regularly scheduled, pre-recorded educational and public relations programming 24 hours a day. The network also provides an array of live programming, such as 24-hour coverage of missions, events (spacewalks, media interviews, educational broadcasts), press conferences & rocket launches.</p>
+    <h5>Notes:</h5>
+    <ul>
+    <li>
+    <h6>If your screen is blank, then NASA TV is currently off the air.</h6>
+    </li>
+    </ul>
+    <p>Tap < to return to the map.</p>
     \(tail)
     """
     

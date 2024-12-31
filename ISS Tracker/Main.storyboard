@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="xca-LQ-QDn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="xca-LQ-QDn">
     <device id="retina6_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -147,6 +147,14 @@ TRACKER
                                             <segue destination="KAf-66-1vZ" kind="presentation" identifier="segueToCurrentCrew" modalPresentationStyle="fullScreen" id="dke-2Y-gTW"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="2HH-mt-qk7"/>
+                                    <barButtonItem title="Item" image="Live-Earth-2" id="N5f-Xl-svW" userLabel="Live Earth Video">
+                                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-4"/>
+                                        <color key="tintColor" name="White"/>
+                                        <connections>
+                                            <segue destination="kzn-zg-Bfo" kind="presentation" identifier="segueToStreamingVideo" modalPresentationStyle="fullScreen" id="xGF-6c-INn"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                                 <color key="barTintColor" name="Pop-Up and Tab Bar Background"/>
                             </toolbar>
@@ -247,7 +255,7 @@ TRACKER
                                                     <constraint firstAttribute="width" constant="120" id="g7j-Rr-asI"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-DemiBold" family="Avenir Next Condensed" pointSize="13"/>
-                                                <color key="textColor" name="ISSRTT-White"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -352,7 +360,7 @@ TRACKER
                                 <rect key="frame" x="339.66666666666669" y="843" width="27.333333333333314" height="31"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal">
-                                    <imageReference key="image" image="document.on.document" catalog="system" symbolScale="large"/>
+                                    <imageReference key="image" image="doc.on.doc" catalog="system" symbolScale="large"/>
                                 </state>
                                 <connections>
                                     <action selector="copyCoordinatesToClipboard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jqN-v6-m6C"/>
@@ -495,7 +503,7 @@ TRACKER
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1461" y="-3545"/>
+            <point key="canvasLocation" x="-1090.7692307692307" y="-3628.4360189573458"/>
         </scene>
         <!--Settings-->
         <scene sceneID="Xni-iU-0bq">
@@ -1089,7 +1097,7 @@ TRACKER
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HeY-E6-t8C" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="KE2-yS-lMR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-3098" y="-1700"/>
+            <point key="canvasLocation" x="-3071" y="-1693"/>
         </scene>
         <!--Help-->
         <scene sceneID="lBM-mR-tUw">
@@ -1644,7 +1652,7 @@ TRACKER
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JCA-ed-TWT" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="v27-2Q-D4J" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-1091" y="-1700"/>
+            <point key="canvasLocation" x="-932.24299065420553" y="-1699.5680345572355"/>
         </scene>
         <!--Crew-->
         <scene sceneID="xDe-RZ-xqm">
@@ -1859,7 +1867,7 @@ Days in Space:</string>
                                 </connections>
                             </barButtonItem>
                             <barButtonItem id="vCZ-Vu-aHt">
-                                <imageReference key="image" image="document.on.document" catalog="system" symbolScale="medium"/>
+                                <imageReference key="image" image="doc.on.doc" catalog="system" symbolScale="medium"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
                                     <action selector="copyCurrentCrewNamesToClipboard:" destination="Dsg-u5-LHe" id="KCi-AI-o6H"/>
@@ -1963,7 +1971,7 @@ Days in Space:</string>
                     </connections>
                 </view>
             </objects>
-            <point key="canvasLocation" x="-2129" y="-1700"/>
+            <point key="canvasLocation" x="-2154.6728971962616" y="-1693.088552915767"/>
         </scene>
         <!--AstronautBio-->
         <scene sceneID="Qb2-HR-8TG">
@@ -2119,6 +2127,66 @@ Days in Space:</string>
             </objects>
             <point key="canvasLocation" x="-1177" y="-786"/>
         </scene>
+        <!--Earth View-->
+        <scene sceneID="h53-Kz-gr7">
+            <objects>
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="ML7-44-Z1L" customClass="LiveVideoViewController" customModule="ISS_Tracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GR7-gA-2Sg"/>
+                        <viewControllerLayoutGuide type="bottom" id="61g-B4-Mfb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iR9-Vr-UOG">
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oup-Pf-N8L" userLabel="Background">
+                                <rect key="frame" x="4" y="44" width="422" height="888"/>
+                                <color key="backgroundColor" systemColor="viewFlipsideBackgroundColor"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="viewFlipsideBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="oup-Pf-N8L" firstAttribute="top" secondItem="GR7-gA-2Sg" secondAttribute="bottom" id="YeU-JI-Q1j"/>
+                            <constraint firstItem="oup-Pf-N8L" firstAttribute="bottom" secondItem="61g-B4-Mfb" secondAttribute="top" id="eve-lh-NbP"/>
+                            <constraint firstItem="oup-Pf-N8L" firstAttribute="centerX" secondItem="iR9-Vr-UOG" secondAttribute="centerX" id="l2y-Di-ars"/>
+                            <constraint firstItem="oup-Pf-N8L" firstAttribute="leading" secondItem="iR9-Vr-UOG" secondAttribute="leadingMargin" constant="-16" id="qkY-LJ-CUR"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Earth View" largeTitleDisplayMode="never" id="Glz-RY-sjH">
+                        <barButtonItem key="leftBarButtonItem" image="chevron.backward" catalog="system" id="dCW-UL-Gr6" userLabel="Done">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <connections>
+                                <segue destination="sEe-Fv-QiU" kind="unwind" unwindAction="unwindFromOtherVCsWithUnwindSegue:" id="xyb-Oy-a42"/>
+                            </connections>
+                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="questionmark.circle" catalog="system" id="b0z-lU-LXq">
+                                <color key="tintColor" name="ISSRTT-White"/>
+                                <connections>
+                                    <segue destination="BQd-9j-Dfx" kind="popoverPresentation" identifier="segueToHelpFromStreamingVideo" popoverAnchorBarButtonItem="b0z-lU-LXq" id="FzL-nh-cek">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="refresh" id="bkS-34-6BH">
+                                <color key="tintColor" name="White"/>
+                                <connections>
+                                    <action selector="refresh:" destination="ML7-44-Z1L" id="Snz-Pi-pFh"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HI3-DY-aFm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="sEe-Fv-QiU" userLabel="Exit" sceneMemberID="exit"/>
+                <tapGestureRecognizer id="cP2-nQ-Wqd">
+                    <connections>
+                        <action selector="userTappedImage:" destination="ML7-44-Z1L" id="cWg-IK-4Px"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="151" y="-1698"/>
+        </scene>
         <!--Globe-->
         <scene sceneID="FFZ-eW-W62">
             <objects>
@@ -2270,7 +2338,33 @@ Days in Space:</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nDE-KW-MjK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="2Z1-xE-zUS" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-29" y="-1700"/>
+            <point key="canvasLocation" x="1127.6923076923076" y="-1697.6303317535544"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="TJo-kv-MZz">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kzn-zg-Bfo" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="OIA-Hq-RNV"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" translucent="NO" id="oBh-qV-pGx">
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" name="Background"/>
+                        <color key="tintColor" name="Background"/>
+                        <color key="barTintColor" name="ISSRTT-Red"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="NasalizationRg-Regular" family="Nasalization" pointSize="17"/>
+                            <color key="textColor" name="White"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ML7-44-Z1L" kind="relationship" relationship="rootViewController" id="0cD-9J-Srj"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aj1-rj-lPU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-293" y="-2559"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="xIT-Qf-Dav">
@@ -2296,7 +2390,7 @@ Days in Space:</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YP6-QJ-nms" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-315" y="-2562"/>
+            <point key="canvasLocation" x="472" y="-2559"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
@@ -2312,6 +2406,7 @@ Days in Space:</string>
         <image name="ISS-Marker-25" width="43" height="25"/>
         <image name="ISS-New" width="150" height="85"/>
         <image name="ISS-New-Marker" width="75" height="42"/>
+        <image name="Live-Earth-2" width="40" height="40"/>
         <image name="Milky Way Correct Rotation in the Sky Square Thumb" width="100" height="100"/>
         <image name="Minus Math _ffffff_50" width="15" height="15"/>
         <image name="Orion Nebula Thumb" width="100" height="100"/>
@@ -2327,7 +2422,7 @@ Days in Space:</string>
         <image name="center_direction_black_small" width="25" height="25"/>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="comments_filled_wide_mds_new_red" width="223" height="100"/>
-        <image name="document.on.document" catalog="system" width="116" height="128"/>
+        <image name="doc.on.doc" catalog="system" width="116" height="128"/>
         <image name="exit" width="30" height="30"/>
         <image name="gearshape" catalog="system" width="128" height="123"/>
         <image name="help" width="31" height="31"/>

@@ -29,8 +29,10 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Segue names
     private struct Segues {
         static let crewSeque                  = "segueToCurrentCrew"
+        static let earthViewSegue             = "segueToStreamingVideo"
         static let globeSegue                 = "segueToFullGlobe"
         static let helpSegue                  = "helpViewSegue"
+//        static let nasaTvSegue                = "segueToNasaTV"
         static let passesSegue                = "segueToPassTimes"
         static let segueToFullGlobeFromTabBar = "segueToFullGlobeFromTabBar"
         static let settingsSegue              = "segueToSettings"
@@ -627,17 +629,17 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     /// Prepare for seque
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let segueIdentifier = segue.identifier else { return }
-
+        
         switch segueIdentifier {
         case Segues.globeSegue, Segues.segueToFullGlobeFromTabBar, Segues.passesSegue, Segues.crewSeque:
             stopAction()
-
+            
         case Segues.settingsSegue:
             if let navigationController = segue.destination as? UINavigationController,
                let destinationVC = navigationController.topViewController as? SettingsTableViewController {
                 destinationVC.settingsButtonInCallingVCSourceView = settingsButton
             }
-
+            
         case Segues.helpSegue:
             if let navigationController = segue.destination as? UINavigationController,
                let destinationVC = navigationController.topViewController as? HelpViewController {
@@ -645,7 +647,23 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
                 destinationVC.helpButtonInCallingVCSourceView = helpButton
                 destinationVC.title = Constants.helpTitle
             }
-
+            
+        case Segues.earthViewSegue:                                // Stop tracking and select live earth view channel
+            stopAction()
+            if let navigationController = segue.destination as? UINavigationController,
+               let destinationVC = navigationController.topViewController as? LiveVideoViewController {
+                destinationVC.channelSelected = .liveEarth
+                destinationVC.title = destinationVC.channelSelected.rawValue
+            }
+            
+//        case Segues.nasaTvSegue:                                   // Stop tracking and select NASA TV channel
+//            stopAction()
+//            if let navigationController = segue.destination as? UINavigationController,
+//               let destinationVC = navigationController.topViewController as? LiveVideoViewController {
+//                destinationVC.channelSelected = .nasaTv
+//                destinationVC.title = destinationVC.channelSelected.rawValue
+//            }
+            
         default:
             stopAction()
         }

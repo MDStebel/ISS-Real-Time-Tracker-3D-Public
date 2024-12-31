@@ -13,7 +13,6 @@ class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     // MARK: - Properties
     
-    
     /// During segue to this VC, the HTML content for the web view will be contained here
     var helpContentHTML = ""
     
@@ -29,30 +28,22 @@ class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         static let fontForTitle = Theme.nasa
     }
     
-    
     // MARK: - Outlets
-    
     
     @IBOutlet private var helpTextWebView: WKWebView!
     
-    
     // MARK: - Methods
     
-    
     private func setUpViewForHelp() {
-        
         helpTextWebView.uiDelegate                   = self
         helpTextWebView.navigationDelegate           = self
         let webConfiguration                         = WKWebViewConfiguration()
         webConfiguration.preferences.minimumFontSize = 12.0
         helpTextWebView                              = WKWebView(frame: .zero, configuration: webConfiguration)
         view                                         = helpTextWebView
-        
     }
     
-    
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
         // Set the target rectangle for the popover
@@ -60,7 +51,6 @@ class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         popoverPresentationController?.sourceRect = CGRect(x: -1.00, y: 3.0, width: helpButtonInCallingVCSourceView.bounds.width, height: helpButtonInCallingVCSourceView.bounds.height)
         
         setUpViewForHelp()
-        
     }
     
     
@@ -78,7 +68,6 @@ class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         // Show the help content
         helpTextWebView.loadHTMLString(helpContentHTML, baseURL: nil)
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
