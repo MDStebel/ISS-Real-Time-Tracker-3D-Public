@@ -71,16 +71,16 @@ struct UserGuide {
     <h6>Covers version \(Globals.versionNumber)</h6>
     <h2>Contents</h2>
     <p>Tap an item from the list below to jump to that section:</p>
-    <h4><a href="#track">Track</a></h4>
-    <h4><a href="#globe">Globe</a></h4>
-    <h4><a href="#passes">Passes</a></h4>
-    <h4><a href="#crew">Crew</a></h4>
+    <h4><a href="#track">2D Map</a></h4>
+    <h4><a href="#globe">3D Globe</a></h4>
+    <h4><a href="#passes">Flyover Passes</a></h4>
+    <h4><a href="#crew">Crews</a></h4>
     <h4><a href="#streaming">Earth View</a></h4>
     <h4><a href="#settings">Settings</a></h4>
     <h4><a href="#watch">Using the Apple Watch App</a></h4>
 
     <div id="track"></div>
-    <h2>Track</h2>
+    <h2>2D Map</h2>
     <p>To locate and track the ISS (default), Tiangong, or Hubble in real time, tap the play button at the bottom of the screen. To pause tracking, tap the pause button.</p>
     <h4>Switching Targets</h4>
     <p>To change the target satellite to ISS, Tiangong, or Hubble, tap the target button at the top-left of the screen.</p>
@@ -143,7 +143,7 @@ struct UserGuide {
     </ul>
     <h4><a href="#contents">Back to contents</a></h4>
     <div id="globe"></div>
-    <h2>Globe</h2>
+    <h2>3D Globe</h2>
     <p>From the Tracking screen, tapping the expand icon on the globe overlay, or the globe icon on the tab bar, expands the globe to full-screen mode and hides the map.</p>
     <p>The full-screen 3D interactive globe shows the current position of the ISS, Tiangong, and Hubble. It plots their orbital tracks and groundtrack footprints (viewing range circle). The ISS track and footprint are shown in red, gold for the Tiangong, and blue for the Hubble.</p>
     <p>The globe is a photorealistic model of the Earth complete with accurate Sun subsolar position, specular reflections on the water, seasonal tilt, mountain shadows, and other details.</p>
@@ -196,8 +196,8 @@ struct UserGuide {
     <p>Tap the collapse button on the upper-right of the globe scene, or the back button, to return to the tracking screen.</p>
     <h4><a href="#contents">Back to contents</a></h4>
     <div id="passes"></div>
-    <h2>Passes</h2>
-    <p>Tapping the binoculars icon at the bottom of the main screen starts computing upcoming visible ISS, Tiangong, or Hubble passes. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the ISS, Tiangong, or Hubble passes that should be visible (weather permitting) from your location. The default number of days to predict passes is set in Settings and can be overridden in the Passes screen. The passes are listed in chronological order, along with detailed viewing data.</p>
+    <h2>Flyover Passes</h2>
+    <p>Tapping the binoculars icon at the bottom of the main screen starts computing upcoming visible ISS, Tiangong, or Hubble flyover passes. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the ISS, Tiangong, or Hubble passes that should be visible (weather permitting) from your location. The default number of days to predict passes is set in Settings and can be overridden in the Passes screen. The passes are listed in chronological order, along with detailed viewing data.</p>
     <p>Data for each pass includes:</p>
     <ul>
     <li>
@@ -231,7 +231,7 @@ struct UserGuide {
     <h6>The pass predictions become less certain the further out in time they go.</h6>
     </li>
     <li>
-    <h6>Overhead passes returned are only those visible from your location for at least 300 seconds (5 minutes) and where the ISS is illuminated by the Sun.</h6>
+    <h6>Flyover passes returned are only those visible from your location for at least 300 seconds (5 minutes) and where the ISS is illuminated by the Sun.</h6>
     </li>
     <li>
     <h6>Tiangong pass predictions do not currently include the magnitude of the passes and are, therefore, not rated. The stars are greyed-out. This may change in the future, once the magnitude data are provided for the Tiangong.</h6>
@@ -249,8 +249,8 @@ struct UserGuide {
     <p>Tap < to return to the map and resume tracking.</p>
     <h4><a href="#contents">Back to contents</a></h4>
     <div id="crew"></div>
-    <h2>Crew</h2>
-    <p>Tap the astronaut icon at the bottom of the screen to get a table of information about the current space station crew.</p>
+    <h2>Crews</h2>
+    <p>Tap the astronaut icon at the bottom of the screen to get a table of information about the selected space station crew.</p>
     <h4>Switching Stations</h4>
     <p>Tap the switch target button in the navigation bar to switch between the ISS and the Chinese space station, Tiangong. The table will automatically refresh and present the crew data for the selected space station.</p>
     <h4>Crew Bios &amp; X Tweets</h4>
@@ -288,7 +288,7 @@ struct UserGuide {
     <p>To see live position information for the three satellites and the subsolar point, tap the live position button (third from left). The positions are updated in real-time every three seconds.</p>
     <p>Get pass predictions on your Apple Watch for the ISS, Tiangong, and Hubble. Tap the live position button, then tap the ISS, Tiangong, or Hubble position details. You'll get a list of your location's visible passes for that satellite for the next 30 days. Like the iPhone and iPad apps, each ISS pass is rated 0 - 4 stars. Tap any of the passes to get viewing details for that pass. Tapping the subsolar point provides a discussion of the subsolar point.</p>
     <p>Tap the crew button (bottom-right) to get crew information for the ISS and Tiangong. Scroll to see the crews for each station. Tap a crew member to get their details.</p>
-    <p>Tap the back button to return to the globe.</p>
+    <p>Tap the < button to return to the globe.</p>
     <h4><a href="#contents">Back to contents</a></h4>
     \(tail)
     """
@@ -296,7 +296,7 @@ struct UserGuide {
     static let passesHelp =
     """
     \(head)
-    <p>This screen computes and presents a table of up-coming ISS, Tiangong, or Hubble passes that are predicted to be visible (weather permitting) from your location. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the passes that should be visible (weather permitting) from your location. The default number of days to predict passes is set in Settings and can be overridden in the Passes screen. The passes are listed in chronological order along with detailed viewing data.</p>
+    <p>This screen computes and presents a table of up-coming ISS, Tiangong, or Hubble flyover passes that are predicted to be visible (weather permitting) from your location. First, ISS Real-Time Tracker 3D gets your current location's coordinates. Then, it computes the passes that should be visible (weather permitting) from your location. The default number of days to predict passes is set in Settings and can be overridden in the Passes screen. The passes are listed in chronological order along with detailed viewing data.</p>
     <p>Data for each pass includes:</p>
     <ul>
     <li>
@@ -330,7 +330,7 @@ struct UserGuide {
     <h6>The pass predictions become less certain the further out in time they go.</h6>
     </li>
     <li>
-    <h6>Overhead passes returned are only those visible from your location for at least 300 seconds (5 minutes) and where the ISS is illuminated by the Sun.</h6>
+    <h6>Flyover passes returned are only those visible from your location for at least 300 seconds (5 minutes) and where the ISS is illuminated by the Sun.</h6>
     </li>
     <li>
     <h6>Tiangong pass predictions do not currently include the magnitude of the passes and are, therefore, not rated. The stars are greyed-out. This may change in the future, once the magnitude data are provided for the Tiangong.</h6>
@@ -407,7 +407,7 @@ struct UserGuide {
     static let crewHelp =
     """
     \(head)
-    <p>This screen provides a table of information about the current space station crew. It also lets you drill down to deeper information about each crewmember and even tweet a crewmember.</p>
+    <p>This screen provides a table of information about the selected space station crew. It also lets you drill down to deeper information about each crewmember and even tweet a crewmember.</p>
     <h4>Switching Stations</h4>
     <p>Tap the switch target button in the navigation bar to switch between the ISS and Tiangong. The table will automatically refresh and present the crew data for the selected space station.</p>
     <h4>Crew Bios &amp; X Tweets</h4>
