@@ -14,17 +14,41 @@ extension TrackingViewController {
     /// Update the info box data asynchronously
     private func updateCoordinatesDisplay() async {
         await MainActor.run { [self] in
-            if let lat = Double(latitude), let lon = Double(longitude) {
-                positionString    = "    Position: \(CoordinateConversions.decimalCoordinatesToDegMinSec(latitude: lat, longitude: lon, format: Globals.coordinatesStringFormat))"
-            } else {
-                positionString    = Globals.spacer
+            guard
+                let lat = Double(latitude),
+                let lon = Double(longitude),
+                let altDouble = Double(altitude),
+                let velDouble = Double(velocity)
+            else {
+                // Safely handle parsing issues or invalid numbers
+                positionString        = Globals.spacer
+                altitudeLabel.text    = ""
+                coordinatesLabel.text = ""
+                velocityLabel.text    = ""
+                return
             }
-            altitudeInKm          = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)!))!
-            altitudeInMiles       = Constants.numberFormatter.string(from: NSNumber(value: Double(altitude)! * Globals.kilometersToMiles))!
-            altString             = "    Altitude: \(altitudeInKm) km  (\(altitudeInMiles) mi)"
-            velocityInKmH         = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)!))!
-            velocityInMPH         = Constants.numberFormatter.string(from: NSNumber(value: Double(velocity)! * Globals.kilometersToMiles))!
-            velString             = "    Velocity: \(velocityInKmH) km/h  (\(velocityInMPH) mph)"
+            
+            // Coordinates
+            positionString = "    Position: \(CoordinateConversions.decimalCoordinatesToDegMinSec(latitude: lat, longitude: lon, format: Globals.coordinatesStringFormat))"
+            
+            // Altitude
+            if let altitudeInKmNumber = Constants.numberFormatter.string(from: NSNumber(value: altDouble)) {
+                altitudeInKm = altitudeInKmNumber
+            }
+            if let altitudeInMilesNumber = Constants.numberFormatter.string(from: NSNumber(value: altDouble * Globals.kilometersToMiles)) {
+                altitudeInMiles = altitudeInMilesNumber
+            }
+            altString = "    Altitude: \(altitudeInKm) km  (\(altitudeInMiles) mi)"
+            
+            // Velocity
+            if let velocityInKmHNumber = Constants.numberFormatter.string(from: NSNumber(value: velDouble)) {
+                velocityInKmH = velocityInKmHNumber
+            }
+            if let velocityInMPHNumber = Constants.numberFormatter.string(from: NSNumber(value: velDouble * Globals.kilometersToMiles)) {
+                velocityInMPH = velocityInMPHNumber
+            }
+            velString = "    Velocity: \(velocityInKmH) km/h  (\(velocityInMPH) mph)"
+            
             altitudeLabel.text    = altString
             coordinatesLabel.text = positionString
             velocityLabel.text    = velString
@@ -36,7 +60,11 @@ extension TrackingViewController {
         await MainActor.run { [self] in
             appendCurrentCoordinate()
             
-            guard Globals.orbitGroundTrackLineEnabled, listOfCoordinates.count >= 2 else { return }
+            guard Globals.orbitGroundTrackLineEnabled,
+                  listOfCoordinates.count >= 2
+            else {
+                return
+            }
             
             drawPolyline()
             removeExcessCoordinates()
