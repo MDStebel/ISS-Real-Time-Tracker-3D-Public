@@ -17,12 +17,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var referenceToViewController = TrackingViewController()
     var referenceToGlobeFullViewController = GlobeFullViewController()
+    
+    private var reviewRequestTimer: Timer?
+    
+    private let minimumReviewPromptTime: UInt32 = 20
+    private let maximumReviewPromptTime: UInt32 = 80
 
     // MARK: - Methods
 
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         configureGlobalSettings()
-        scheduleReviewRequest()
+        scheduleReviewRequest(shortestTime: minimumReviewPromptTime, longestTime: maximumReviewPromptTime)
         return true
     }
 
@@ -32,17 +37,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Globals.isIPad = Globals.thisDevice.hasPrefix("iPad")
     }
 
-    private func scheduleReviewRequest() {
-        let shortestTime: UInt32 = 20
-        let longestTime: UInt32  = 150
-        let timeInterval         = TimeInterval(arc4random_uniform(longestTime - shortestTime) + shortestTime)
-        Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(requestReview), userInfo: nil, repeats: false)
+    private func scheduleReviewRequest(shortestTime: UInt32, longestTime: UInt32) {
+        guard shortestTime < longestTime else {
+            print("Invalid time range: shortestTime must be less than longestTime.")
+            return
+        }
+        
+        // Invalidate any existing timer before creating a new one
+        reviewRequestTimer?.invalidate()
+        
+        let timeInterval = TimeInterval(UInt32.random(in: shortestTime..<longestTime))
+        
+        // Assign the new timer to the property
+        reviewRequestTimer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(handleTimerFired), userInfo: nil, repeats: false)
+    }
+
+    @objc private func handleTimerFired() {
+        reviewRequestTimer?.invalidate() // Invalidate the timer when it fires
+        reviewRequestTimer = nil         // Clear the reference to the timer
+        
+        // Call the review request method
+        requestReview()
     }
 
     @objc private func requestReview() {
-        if let windowScene = window?.windowScene {
-            AppStore.requestReview(in: windowScene)
+        // Instead of directly accessing window?.windowScene, which might be nil, we retrieve the first available UIWindowScene from UIApplication.shared.connectedScenes.
+        guard let windowScene = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .first else {
+            print("Unable to retrieve windowScene for review request.")
+            return
         }
+        
+        AppStore.requestReview(in: windowScene)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
