@@ -109,7 +109,7 @@ struct Globals {
     static let hubbleMarkerWidth: CGFloat                    = 0.06
     static let hubbleMaxAltitudeInKM: Float                  = 550
     static let hubbleOrbitAltitudeInScene                    = hubbleOrbitalAltitudeFactor
-    static let hubbleOrbitInclinationInDegrees: Float        = 28.5
+    static let hubbleOrbitInclinationInDegrees: Float        = 28.47
     static let hubbleOrbitInclinationInRadians: Float        = hubbleOrbitInclinationInDegrees * Float(degreesToRadians)
     static let hubbleOrbitalAltitudeFactor: Float            = globeRadiusFactor * (1 + hubbleMaxAltitudeInKM / earthRadiusInKM) * 1.05
     static let hubbleViewingCircleGraphic                    = "Hubble-Viewing-Circle-1"
@@ -118,7 +118,7 @@ struct Globals {
     static let issIconFor3DGlobeView                         = "ISS-mds-1350px"
     static let issIconForMapView                             = "ISS-mds-75px-Template-Image"
     static let issOrbitAltitudeInScene                       = issOrbitalAltitudeFactor
-    static let issOrbitInclinationInDegrees: Float           = 51.6
+    static let issOrbitInclinationInDegrees: Float           = 51.64
     static let issOrbitInclinationInRadians: Float           = issOrbitInclinationInDegrees * Float(degreesToRadians)
     static let issOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + issAvgAltitudeInKM / earthRadiusInKM) * 1.02
     static let issViewingCircleGraphic                       = "iss_4_visibility_circle"
@@ -158,7 +158,7 @@ struct Globals {
     static let tssMarkerWidth: CGFloat                       = 0.07
     static let tssMinAltitudeInKM: Float                     = 370
     static let tssOrbitAltitudeInScene                       = tssOrbitalAltitudeFactor
-    static let tssOrbitInclinationInDegrees: Float           = 41.5
+    static let tssOrbitInclinationInDegrees: Float           = 41.46
     static let tssOrbitInclinationInRadians: Float           = tssOrbitInclinationInDegrees * Float(degreesToRadians)
     static let tssOrbitalAltitudeFactor                      = globeRadiusFactor * (1 + tssMinAltitudeInKM / earthRadiusInKM) * 1.01
     static let tssViewingCircleGraphic                       = "TSS-Visibility-Circle"
