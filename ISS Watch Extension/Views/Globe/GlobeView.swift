@@ -34,7 +34,16 @@ struct GlobeView: View {
                 // Show progress indicator when starting up/resetting
                 if vm.isStartingUp {
                     ProgressView()
-                        .scaleEffect(x: 2, y: 2, anchor: .center) // Scale the ProgressView
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .scaleEffect(1.5) // Larger progress indicator
+                    VStack {
+                        Text("Loading...")
+                            .font(.subheadline) // Adjust font style for better visibility
+                            .opacity(0.75)
+                            .minimumScaleFactor(0.7)
+                            .padding(.top, 15) // Add some spacing between the text and top of screen
+                        Spacer()
+                    }
                 }
                 
                 // MARK: Buttons
@@ -113,8 +122,6 @@ struct GlobeView: View {
     
 struct GlobeView_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
-            GlobeView()
-        }
+        GlobeView()
     }
 }
