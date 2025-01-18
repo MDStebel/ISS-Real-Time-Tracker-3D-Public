@@ -86,10 +86,10 @@ struct PassesView: View {
                     NavigationLink(destination: PassDetailView(pass: pass, station: station)) {
                         passRow(for: pass)
                     }
-                    .cornerRadius(10.0)
-                    .frame(height: 50)
-                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    .cornerRadius(15)
+                    .frame(height: 60)
                     .listItemTint(.ISSRTT3DBackground)
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 }
             }
             .navigationTitle("\(station.satelliteName) Passes")
@@ -99,7 +99,7 @@ struct PassesView: View {
     }
     
     private func passRow(for pass: Passes.Pass) -> some View {
-        HStack(alignment: .center) {
+        HStack() {
             Rectangle()
                 .frame(width: 6)
                 .foregroundStyle(sidebarColor)

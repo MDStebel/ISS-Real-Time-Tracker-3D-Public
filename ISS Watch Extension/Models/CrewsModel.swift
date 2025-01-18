@@ -27,7 +27,6 @@ struct Crews: Decodable, Hashable {
     }
 }
 
-
 enum Stations: String {
     case ISS = "International Space Station"
     case Tiangong = "Tiangong"

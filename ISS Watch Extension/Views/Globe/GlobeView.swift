@@ -18,14 +18,11 @@ struct GlobeView: View {
     @StateObject private var vm = PositionViewModel()
     
     var body: some View {
-        
         NavigationStack {
-            
             ZStack {
                 
                 // MARK: Globe
-                
-                // Render the globe. This will update continually as new coordinates are received from the view model.
+                /// Render the globe. This will update continually as new coordinates are received from the view model.
                 SceneView(scene: vm.globeScene,
                           pointOfView: vm.globeMainNode,
                           options: [.allowsCameraControl]
@@ -38,10 +35,10 @@ struct GlobeView: View {
                         .scaleEffect(1.5) // Larger progress indicator
                     VStack {
                         Text("Loading...")
-                            .font(.subheadline) // Adjust font style for better visibility
+                            .font(.footnote) // Adjust font style for better visibility
                             .opacity(0.75)
                             .minimumScaleFactor(0.7)
-                            .padding(.top, 15) // Add some spacing between the text and top of screen
+                            .padding(.top, 7) // Add some spacing between the text and top of screen
                         Spacer()
                     }
                 }
@@ -122,6 +119,8 @@ struct GlobeView: View {
     
 struct GlobeView_Previews: PreviewProvider {
     static var previews: some View {
-        GlobeView()
+        Group {
+            GlobeView()
+        }
     }
 }

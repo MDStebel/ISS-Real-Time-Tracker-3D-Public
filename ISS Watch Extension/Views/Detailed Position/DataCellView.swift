@@ -26,14 +26,12 @@ struct DataCellView: View {
     
     var body: some View {
         HStack {
-            
             // MARK: - Sidebar area
             Rectangle()
                 .frame(width: 6)
                 .foregroundStyle(sidebarColor)
             
             VStack {
-                
                 // MARK: - Title area
                 HStack {
                     Text(title)
@@ -48,8 +46,8 @@ struct DataCellView: View {
                 HStack {
                     
                     // MARK: - Conditional view shows altitude scale for satellites only
-                    // Only show the altitude indicator if there's an altitude available
-                    // If not, we'll assume we're showing the subsolar point, so show the Sun
+                    /// Only show the altitude indicator if there's an altitude available
+                    /// If not, we'll assume we're showing the subsolar point, so show the Sun
                     if let altKm = altitudeInKm, let altMi = altitudeInMi, let alt = altitude {
                         
                         let range             = max - min                       // Scale range
@@ -63,7 +61,6 @@ struct DataCellView: View {
                         
                         // Movable indicator with values
                         HStack(spacing: -4) {
-                            
                             Image(systemName: "arrowtriangle.left.fill")
                                 .resizable()
                                 .frame(width: 7, height: 6)
@@ -90,7 +87,6 @@ struct DataCellView: View {
                         
                         // Show the Sun icon if this is not a satellite
                     } else {
-                        
                         Image(systemName: "sun.max.fill")
                             .resizable()
                             .scaledToFit()
