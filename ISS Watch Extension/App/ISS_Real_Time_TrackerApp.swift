@@ -10,12 +10,10 @@ import SwiftUI
 
 @main
 struct ISS_Real_Time_TrackerApp: App {
-    
     @SceneBuilder var body: some Scene {
         WindowGroup {
             GlobeView()
         }
-        
         WKNotificationScene(controller: NotificationController.self, category: "myCategory")
     }
 }

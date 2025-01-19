@@ -41,6 +41,7 @@ struct CrewRowView: View {
             .padding([.leading], 1)
             .padding([.trailing], 1)
         }
+        .frame(height: 50)
         .cornerRadius(10.0)
     }
     

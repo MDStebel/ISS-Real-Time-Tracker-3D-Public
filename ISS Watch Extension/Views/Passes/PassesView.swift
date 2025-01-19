@@ -86,8 +86,7 @@ struct PassesView: View {
                     NavigationLink(destination: PassDetailView(pass: pass, station: station)) {
                         passRow(for: pass)
                     }
-                    .cornerRadius(15)
-                    .frame(height: 60)
+
                     .listItemTint(.ISSRTT3DBackground)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 }
@@ -114,9 +113,11 @@ struct PassesView: View {
                     noQualityAvailableView()
                 }
             }
+            .padding(.horizontal, 1)
+            .padding(.vertical, 1)
         }
-        .padding(.horizontal, 1)
-        .padding(.vertical, 1)
+        .frame(height: 50)
+        .cornerRadius(10)
     }
     
     /// Return 1-4 stars in a view based on the magnitude of the pass
@@ -160,7 +161,6 @@ struct PassesView: View {
         sharedDefaults?.set(lon, forKey: "longitude")
     }
 }
-
 
 #Preview {
     PassesView(station: .iss)
