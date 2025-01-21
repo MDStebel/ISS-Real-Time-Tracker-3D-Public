@@ -13,7 +13,6 @@ import Foundation
 /// Represents the JSON-returned data from Pass Predictions API
 /// A pass is in a struct named Pass. Array of Passes is named passes[].
 struct Passes: Decodable, Hashable {
-    
     let info: Info
     let passes: [Pass]
     

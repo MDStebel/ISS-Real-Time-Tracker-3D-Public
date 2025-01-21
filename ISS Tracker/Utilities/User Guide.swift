@@ -13,9 +13,9 @@ struct UserGuide {
     
     // MARK: - Theme colors converted to CSS hex
     
-    private static let helpViewBackgroundColor = UIColor(named: Theme.usrGuide)?.cgColor.toHex ?? "000000"
-    private static let tintColor = UIColor(named: Theme.tint)?.cgColor.toHex ?? "ff4c4c"
-    private static let whiteColor = UIColor(named: Theme.white)?.cgColor.toHex ?? "ffffff"
+    private static let helpViewBackgroundColor = UIColor(named: Theme.usrGuide)?.cgColor.hexString ?? "000000"
+    private static let tintColor = UIColor(named: Theme.tint)?.cgColor.hexString ?? "ff4c4c"
+    private static let whiteColor = UIColor(named: Theme.white)?.cgColor.hexString ?? "ffffff"
     
     
     // MARK: - Common code

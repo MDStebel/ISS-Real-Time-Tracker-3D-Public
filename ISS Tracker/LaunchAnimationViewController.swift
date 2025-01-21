@@ -126,11 +126,9 @@ class LaunchAnimationViewController: UIViewController {
     }
     
     private func getVersionAndCopyrightData() {
-        if let (versionNumber, buildNumber, copyright) = getAppCurrentVersion() {
-            Globals.copyrightString = copyright
-            Globals.versionNumber = versionNumber
-            Globals.buildNumber = buildNumber
-        }
+            Globals.copyrightString = Bundle.main.humanReadableCopyright
+            Globals.versionNumber = Bundle.main.appVersion
+            Globals.buildNumber = Bundle.main.buildNumber
     }
     
     override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {

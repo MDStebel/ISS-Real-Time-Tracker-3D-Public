@@ -14,10 +14,8 @@ extension String {
     /// Checks that prefix substring exists.
     /// - Parameter prefix: Substring to remove.
     /// - Returns: New string.
-    func deletingPrefix(_ prefix: String) -> String {
-        
+    func removingPrefix(_ prefix: String) -> String {
         guard self.hasPrefix(prefix) else { return self }
         return String(self.dropFirst(prefix.count))
-        
     }
 }

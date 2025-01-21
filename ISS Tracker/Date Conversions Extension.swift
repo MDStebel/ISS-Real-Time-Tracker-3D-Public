@@ -9,34 +9,38 @@
 import UIKit
 
 /// Extension to DateFormatter to convert dates. Conforms to StringDateConversions protocol.
-extension DateFormatter: StringDateConversions {
+extension DateFormatter {
     
-    /// Take a date and convert it from its original format to a new format and return optional string.
+    /// Converts a date string from one format to another.
     /// - Parameters:
-    ///   - date: Date string
-    ///   - fromStringFormat: Format date is in
-    ///   - toStringFormat: Format used in converting date
-    /// - Returns: Optional date string
-    func convert(from date: String, fromStringFormat: String, toStringFormat: String) -> String? {
+    ///   - dateString: The original date string.
+    ///   - fromFormat: Format the date string is currently in.
+    ///   - toFormat: Desired format for output date string.
+    /// - Returns: An optional date string in the new format.
+    static func convertDateString(_ dateString: String,
+                                  fromFormat: String,
+                                  toFormat: String) -> String? {
+        let originalFormatter = DateFormatter()
+        originalFormatter.dateFormat = fromFormat
         
-        dateFormat = fromStringFormat
-        
-        if let tempDate = self.date(from: date) {
-            dateFormat = toStringFormat
-            return string(from: tempDate)
-        } else {
+        guard let parsedDate = originalFormatter.date(from: dateString) else {
             return nil
         }
+        
+        let targetFormatter = DateFormatter()
+        targetFormatter.dateFormat = toFormat
+        
+        return targetFormatter.string(from: parsedDate)
     }
     
-    /// Convert a Date to a date in String representation.
+    /// Converts a `Date` to a string representation using the specified format.
     /// - Parameters:
-    ///   - date: Date
-    ///   - withOutputFormat: Format to use
-    /// - Returns: Date as a string
-    func getCurrentDateAndTimeInAString(forCurrent date: Date, withOutputFormat: String) -> String {
-        
-        dateFormat = withOutputFormat
-        return string(from: date)
+    ///   - date: The `Date` to be converted.
+    ///   - format: The desired output format.
+    /// - Returns: A date string in the given format.
+    static func string(from date: Date, format: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = format
+        return formatter.string(from: date)
     }
 }

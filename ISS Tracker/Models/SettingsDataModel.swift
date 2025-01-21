@@ -95,7 +95,7 @@ struct SettingsDataModel {
         defaults.set(Globals.markerType, forKey: UserSettingsPropertyKeys.markerTypePropertyKey)
         defaults.set(Globals.globeBackgroundImageSelection, forKey: UserSettingsPropertyKeys.globeBackgroundImageKey)
         defaults.set(Globals.zoomFactorLastValue, forKey: UserSettingsPropertyKeys.zoomSliderSegmentValueKey)
-        let formattedDate = dateFormatter.getCurrentDateAndTimeInAString(forCurrent: Date(), withOutputFormat: Globals.outputDateFormatString)
+        let formattedDate = DateFormatter.string(from: Date(), format: Globals.outputDateFormatString)
         defaults.set(formattedDate, forKey: UserSettingsPropertyKeys.lastSavedDateAndTimeKey)
         defaults.setValue(Globals.blackScreenInHDEVExplanationPopsUp, forKey: UserSettingsPropertyKeys.blackScreenInEHDCExplanationPopupWillAppearKey)
     }

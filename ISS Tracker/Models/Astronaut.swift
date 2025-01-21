@@ -44,7 +44,7 @@ struct Astronaut: Decodable, Hashable {
     
     /// This computed property returns a date formatted according to output date format string in Globals. If not successful, return an empty string
     var launchDateFormatted: String {
-        DateFormatter().convert(from: launchDate, fromStringFormat: Globals.dateFormatStringEuropeanForm, toStringFormat: Globals.outputDateFormatStringShortForm) ?? ""
+        DateFormatter.convertDateString(launchDate, fromFormat: Globals.dateFormatStringEuropeanForm, toFormat: Globals.outputDateFormatStringShortForm) ?? ""
     }
     
     // MARK: - Methods

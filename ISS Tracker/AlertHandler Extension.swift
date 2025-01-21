@@ -11,7 +11,6 @@ extension UIViewController: AlertHandler {
     
     ///  Convenience method to display a simple alert
     func alert(for title: String, message messageToDisplay: String) {
-        
         let alertController = UIAlertController(title: title, message: messageToDisplay, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         present(alertController, animated: true, completion: nil)
@@ -19,8 +18,6 @@ extension UIViewController: AlertHandler {
     
     /// Display alert if unable to connect to a server
     func cannotConnectToInternetAlert() {
-        
         alert(for: "Can't connect to the server.", message: "Check your Internet connection\nand try again.")
-        
     }
 }

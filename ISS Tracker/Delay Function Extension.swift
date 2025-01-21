@@ -8,15 +8,12 @@
 import UIKit
 
 extension UIViewController {
-    
-    /// Method to wait before executing a closure
+    /// Schedules the given closure to be executed on the main queue after a specified delay.
+    ///
     /// - Parameters:
-    ///   - delay: Delay
-    ///   - closure: Closure as ()->() type. The closure is allowed to execute after the method returns, and is therefore an escaping closure.
-    /// - Returns: Returns immediately after delay. Closure is executed asynchronously
-    func delay(_ delay: Double, closure: @escaping () -> () ) {
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
-        
+    ///   - delay: The delay (in seconds) before executing the closure.
+    ///   - closure: The closure to execute after the delay.
+    func delay(_ delay: TimeInterval, closure: @escaping () -> Void) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: closure)
     }
 }
