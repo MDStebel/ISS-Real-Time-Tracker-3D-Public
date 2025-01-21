@@ -42,7 +42,7 @@ struct CrewDetailView: View {
                 VStack {
                     
                     // Date calculations
-                    let launchdate = DateFormatter().convert(from:  crewMember.launchdate, fromStringFormat: Globals.dateFormatStringEuropeanForm, toStringFormat: Globals.outputDateFormatStringShortForm) ?? ""
+                    let launchdate = DateFormatter.convertDateString(crewMember.launchdate, fromFormat: Globals.dateFormatStringEuropeanForm, toFormat: Globals.outputDateFormatStringShortForm) ?? ""
                     let numDays = numberOfDaysInSpace(since: launchdate)
                     
                     DetailSubheading(heading: "General")

@@ -19,7 +19,7 @@ struct CrewRowView: View {
     
     var body: some View {
         HStack {
-            Rectangle()                                             // Sidebar with color key indicator
+            Rectangle()  // Sidebar with color key indicator
                 .frame(width: 6)
                 .foregroundStyle(colorKey)
             VStack {

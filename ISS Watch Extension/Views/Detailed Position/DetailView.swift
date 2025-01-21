@@ -98,14 +98,11 @@ struct DetailView: View {
     }
     
     private func getAppCurrentVersion() -> (version: String, build: String, copyright: String)? {
-        let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-        let currentBuild   = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
-        let copyright      = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String
+        let currentVersion = Bundle.main.appVersion
+        let currentBuild   = Bundle.main.buildNumber
+        let copyright      = Bundle.main.humanReadableCopyright
         
-        if let version = currentVersion, let build = currentBuild, let copyright = copyright {
-            return (version, build, copyright)
-        }
-        return nil
+        return (currentVersion, currentBuild, copyright)
     }
 }
 
