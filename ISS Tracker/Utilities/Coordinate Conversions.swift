@@ -69,7 +69,6 @@ struct CoordinateConversions: ConvertsToDegreesMinutesSeconds {
     
 #endif
     
-    
     /// Convert coordinates from decimal to degrees, minutes, and direction
     ///
     /// This is a format conversion only.
@@ -108,5 +107,4 @@ struct CoordinateConversions: ConvertsToDegreesMinutesSeconds {
         
         return (degrees + (minutes + seconds / Double(Globals.numberOfSecondsInAMinute)) / Double(Globals.numberOfSecondsInAMinute)) * sign
     }
-    
 }

@@ -52,7 +52,6 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         .lightContent
     }
     
-    
     // MARK: - Outlets
     
     @IBOutlet private var crewTable: UITableView!
@@ -77,13 +76,11 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         }
     }
     
-    
     // MARK: - Methods
     
     /// Get  NORAD ID, name, and icon to use in background for selected target satellite/space station
     /// - Parameter station: Station selector value.
     private func getStationID(for station: StationsAndSatellites) {
-        
         selectTarget.image = stationSelectionButton
         stationID          = station.satelliteNORADCode
         stationImage       = station.satelliteImage
@@ -93,15 +90,12 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         }
     }
     
-    
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
         getStationID(for: station)
         setUpRefreshControl()
     } 
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -117,7 +111,6 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     
     
     override func viewDidAppear(_ animated: Bool) {
-        
         super.viewDidAppear(animated)
         
         // If we came here from the map view, get the crew from the API, otherwise, we're returning from the bio viewcontroller, so do nothing.
@@ -129,10 +122,8 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         }
     }
     
-    
     /// Set up refresh contol to allow pull-to-refresh in table view
     private func setUpRefreshControl() {
-        
         refreshControl = UIRefreshControl()
         refreshControl?.tintColor = UIColor(named: Theme.tint)
         
@@ -145,19 +136,15 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         refreshControl?.addTarget(self, action: #selector(refreshTable(_:)), for: .valueChanged)
     }
     
-    
     /// Selector for refresh control
     @objc func refreshTable(_ sender: Any) {
-        
         DispatchQueue.global(qos: .userInteractive).async {
             self.getCurrrentCrewMembers()
         }
     }
     
-    
     /// Method to get current crew data from API
     private func getCurrrentCrewMembers() {
-        
         DispatchQueue.main.async {
             self.spinner.startAnimating()
             self.promptLabel.text = Constants.updatingDataPromptText
@@ -223,10 +210,8 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         crewMembersTask.resume()
     }
     
-    
     /// Copy crew names to clipboard
     @IBAction private func copyCurrentCrewNamesToClipboard(_ sender: UIBarButtonItem) {
-        
         guard currentCrew != nil else { return }
         
         var crewListString = ""
@@ -238,14 +223,12 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         alert(for: "\(currentCrewSize) \(self.station.satelliteName) Crew Members\nCopied to Your Clipboard", message: crewListString)
     }
       
-
     /// Build a label with leading text followed by an image and return as an attributed string
     /// - Parameters:
     ///   - startOfText: String to add image to
     ///   - endingWithImageAtURL: URL of image
     /// - Returns: Label with image
     private func createStringWithRichContent(starting startOfText: String, and endingWithImageAtURL: String) -> NSMutableAttributedString {
-        
         // Create an NSMutableAttributedString that we'll append the image to
         let fullString = NSMutableAttributedString(string: startOfText)
         
@@ -271,14 +254,11 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         return fullString
     }
     
-    
     /// Prepare for seque
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         guard segue.identifier != nil else { return }                                     // Prevents crash if a segue is unnamed
         
         switch segue.identifier {
-            
         case Constants.segueToHelpFromCrew :
             
             DispatchQueue.main.async {
@@ -327,12 +307,9 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         }
     }
     
-    
     /// Unwind segue
     @IBAction func unwindFromOtherVCs(unwindSegue: UIStoryboardSegue) {
-
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -340,19 +317,15 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     }
 }
 
-
 // MARK: - Table view delegates
 
 extension CrewMembersTableViewController {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        
         return 1
     }
     
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return currentCrewSize
     }
     
@@ -373,21 +346,16 @@ extension CrewMembersTableViewController {
             return nil
         }
     }
-
     
     @IBAction func changeStation(_ sender: UIBarButtonItem) {
-        
         switchStationPopup(withTitle: "Select a Station", withStyleToUse: .actionSheet)
-        
     }
-    
     
     /// Switch to a different station to get crew data for
     /// - Parameters:
     ///   - title: Pop-up title
     ///   - usingStyle: The alert style
     private func switchStationPopup(withTitle title: String, withStyleToUse usingStyle : UIAlertController.Style) {
-        
         let alertController = UIAlertController(title: title, message: "Select a space station for crew data", preferredStyle: usingStyle)
         
         alertController.addAction(UIAlertAction(title: "Back", style: .cancel) { (dontShow) in
@@ -410,7 +378,6 @@ extension CrewMembersTableViewController {
         
         self.present(alertController, animated: true, completion: nil)
     }
-    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> AstronautTableViewCell {
         var image: UIImage?
@@ -448,17 +415,13 @@ extension CrewMembersTableViewController {
         return cell
     }
     
-    
     /// If user scrolls the table and the short bio is presented, recenter the pop-up to keep the pop-up centered.
     /// - Parameter scrollView: scrollview fpr which this is a delegate
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
         centerPopover()
     }
     
-    
     private func centerPopover() {
-        
         let parentBounds = view.bounds
         let shortBioViewWidth      = crewMemberDetailView.frame.width
         let shortBioViewHeight     = crewMemberDetailView.frame.height
@@ -467,10 +430,8 @@ extension CrewMembersTableViewController {
         crewMemberDetailView.frame = CGRect(x: xPosition, y: yPosition, width: shortBioViewWidth, height: shortBioViewHeight)
     }
     
-    
     /// This delegate will display the detail view if the cell is tapped
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         centerPopover()
         
         let row                                         = indexPath.row
@@ -484,10 +445,8 @@ extension CrewMembersTableViewController {
         view.addSubview(crewMemberDetailView)
     }
     
-    
     /// Return the cell height for the cell
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
         return Constants.tableRowSize
     }
 }

@@ -53,7 +53,6 @@ class HelpViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         setUpViewForHelp()
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super .viewWillAppear(animated)
         

@@ -15,9 +15,7 @@ import UIKit
 /// Full-screen 3D interactive globe VC
 class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlobeProtocol {
     
-    
     // MARK: - Properties
-    
     
     struct Constants {
         static let ISSAPIEndpointString  = ApiEndpoints.issTrackerAPIEndpointA       // ISS API
@@ -54,7 +52,6 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
     var tssLatitude                      = 0.0
     var tssLongitude                     = 0.0
     
-    
     private var helpTitle                = "3D Globe Help"
     
     // Soundtrack
@@ -72,15 +69,12 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         }
     }
     
-    
     // Change status bar to light color for this VC
     override var preferredStatusBarStyle: UIStatusBarStyle {
         .lightContent
     }
     
-    
     // MARK: - Outlets
-    
     
     @IBOutlet var spaceBackgroundImage: UIImageView!
     @IBOutlet var fullScreenGlobeView: SCNView!
@@ -99,14 +93,10 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
     }
     @IBOutlet weak var soundtrackMusicButton: UIBarButtonItem!
     
-    
-    
     // MARK: - Methods
-    
     
     /// Set the space image to use for the background
     func setGlobeBackgroundImage() {
-        
         switch Globals.globeBackgroundImageSelection {
         case 0 :
             globeBackgroundImageName = Globals.hubbleDeepField
@@ -125,29 +115,21 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         }
         
         spaceBackgroundImage?.image = UIImage(named: globeBackgroundImageName)
-        
     }
-    
     
     /// Set up a reference to this view controller. This allows AppDelegate to do stuff on it when it enters background.
     private func setUpAppDelegate() {
-        
         let appDelegate = UIApplication.shared.delegate! as! AppDelegate
         appDelegate.referenceToGlobeFullViewController = self
-        
     }
     
-    
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
         setUpAppDelegate()
         setUpSoundTrackMusicPlayer()
-        
     }
     
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -160,89 +142,62 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         navigationItem.scrollEdgeAppearance = barAppearance
         
         setUpEarthGlobeScene(for: fullGlobe, in: fullScreenGlobeView, hasTintedBackground: false)
-        
     }
     
-    
     override func viewDidAppear(_ animated: Bool) {
-        
         super.viewDidAppear(animated)
         
         Globals.globeBackgroundWasChanged = true
         startUpdatingGlobe()
-        
     }
     
-    
     override func viewWillDisappear(_ animated: Bool) {
-        
         super.viewWillDisappear(animated)
         soundtrackMusicPlayer?.stop()
         stopUpdatingGlobe()
-        
     }
     
-    
     func startUpdatingGlobe() {
-        
         Globals.globeBackgroundWasChanged = true
         earthGlobeLocateSatellites()       // Call once to update the globe before the timer starts in order to immediately show the ISS location, etc.
         start()
     }
     
-    
     private func start() {
-        
         timer = Timer
             .publish(every: Constants.timerValue, on: .main, in: .common)
             .autoconnect()
             .sink { _ in
                 self.earthGlobeLocateSatellites()
             }
-        
     }
-    
     
     @IBAction func resetGlobe(_ sender: UIButton) {
-        
         reset()
-        
     }
     
-    
     func reset() {
-        
         soundtrackMusicPlayer?.stop()
         stopUpdatingGlobe()
         fullGlobe = EarthGlobe()
         setUpEarthGlobeScene(for: fullGlobe, in: fullScreenGlobeView, hasTintedBackground: false)
         startUpdatingGlobe()
-        
     }
-    
     
     func stopUpdatingGlobe() {
-        
         timer?.cancel()
         isRunningLabel?.text = "Not Running"
-        
     }
-    
     
     @IBAction func toggleAutoRotation() {
-        
         Globals.autoRotateGlobeEnabled.toggle()
-        
     }
-    
     
     /// Prepare for seque
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         guard segue.identifier != nil else { return }   // Prevents crash if a segue is unnamed
         
         switch segue.identifier {
-        
         case Constants.segueToHelpFromGlobe :
             let navigationController                          = segue.destination as! UINavigationController
             let destinationVC                                 = navigationController.topViewController as! HelpViewController
@@ -257,21 +212,15 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         
         default :
             break
-            
         }
-        
     }
-    
     
     /// Unwind segue
     @IBAction func unwindFromOtherVCs(unwindSegue: UIStoryboardSegue) {
-
     }
-    
     
     /// Set up audio player to play soundtrack without stopping any audio that was playing when app launched
     private func setUpSoundTrackMusicPlayer() {
-        
         if let bundlePath = Bundle.main.path(forResource: soundtrackFilePathString, ofType: nil) {
             
             let url = URL.init(fileURLWithPath: bundlePath)
@@ -287,13 +236,10 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         
         soundtrackButtonOn = false
         soundtrackMusicPlayer?.numberOfLoops = -1       // Loop indefinitely
-        
     }
-    
     
     /// Toggle soundtrack on and off
     @IBAction func toggleMusicSoundtrack(_ sender: UIBarButtonItem) {
-        
         if soundtrackButtonOn {
             soundtrackMusicPlayer?.pause()
         } else {
@@ -301,19 +247,14 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         }
         
         soundtrackButtonOn.toggle()
-        
     }
     
-    
     override func didReceiveMemoryWarning() {
-        
         super.didReceiveMemoryWarning()
         
         stopUpdatingGlobe()
         delay(0.5) {
             self.startUpdatingGlobe()
         }
-        
     }
-    
 }

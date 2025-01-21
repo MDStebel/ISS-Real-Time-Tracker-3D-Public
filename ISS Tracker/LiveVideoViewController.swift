@@ -83,7 +83,6 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
         webView.navigationDelegate = self
         view = webView
     }
-    
         
     /// Retrieve address of desired channel.
     ///
@@ -141,7 +140,6 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
         alertController.addAction(dontShowAgainAction)
         alertController.preferredAction = okAction
         present(alertController, animated: true, completion: nil)
-
     }
     
     private func loadWebView() {
@@ -160,17 +158,14 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
                 self.alert(for: "URL Error", message: "Can't access live video feed.")
             }
         }
-        
     }
 
     // MARK: - WebKit Navigation Delegate Methods
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        
         DispatchQueue.main.async {
             self.alert(for: "Navigation Error!", message: "Can't access video feed.")
         }
-        
     }
     
     /// Prepare for seque
