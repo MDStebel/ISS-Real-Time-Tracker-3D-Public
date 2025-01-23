@@ -118,6 +118,9 @@ extension EarthGlobe {
         orbitTrackNode.transform = compositeRotationMatrix
     }
     
+    /// Helper function to create the orbitals
+    /// - Parameter station: satellite
+    /// - Returns: Scene node as optional
     private func createOrbitTrack(for station: StationsAndSatellites) -> SCNNode? {
         guard let config = orbitConfiguration(for: station) else { return nil }
         
