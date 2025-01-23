@@ -119,31 +119,35 @@ extension EarthGlobe {
     }
     
     private func createOrbitTrack(for station: StationsAndSatellites) -> SCNNode? {
-        let orbitTrack = SCNTorus()
+        guard let config = orbitConfiguration(for: station) else { return nil }
         
+        let orbitTrack = SCNTorus()
+        orbitTrack.firstMaterial?.diffuse.contents = config.color
+        orbitTrack.ringRadius = config.ringRadius
+        orbitTrack.pipeRadius = pipeRadius
+        orbitTrack.ringSegmentCount = ringSegmentCount
+        orbitTrack.pipeSegmentCount = pipeSegmentCount
+        
+        return SCNNode(geometry: orbitTrack)
+    }
+    
+    /// Helper function to configure the orbitals
+    /// - Parameter station: satellite
+    /// - Returns: Tuple of color and ring radius
+    private func orbitConfiguration(for station: StationsAndSatellites) -> (color: CGColor, ringRadius: CGFloat)? {
         switch station {
         case .iss:
-            orbitTrack.firstMaterial?.diffuse.contents = Theme.issrtt3dRedCGColor
-            orbitTrack.ringRadius = CGFloat(Globals.issOrbitAltitudeInScene)
-            orbitTrack.pipeRadius = pipeRadius
-            orbitTrack.ringSegmentCount = ringSegmentCount
-            orbitTrack.pipeSegmentCount = pipeSegmentCount
+            guard let color = Theme.issrtt3dRedCGColor else { return nil }
+            return (color, CGFloat(Globals.issOrbitAltitudeInScene))
         case .tss:
-            orbitTrack.firstMaterial?.diffuse.contents = Theme.issrtt3dGoldCGColor
-            orbitTrack.ringRadius = CGFloat(Globals.tssOrbitAltitudeInScene)
-            orbitTrack.pipeRadius = pipeRadius
-            orbitTrack.ringSegmentCount = ringSegmentCount
-            orbitTrack.pipeSegmentCount = pipeSegmentCount
+            guard let color = Theme.issrtt3dGoldCGColor else { return nil }
+            return (color, CGFloat(Globals.tssOrbitAltitudeInScene))
         case .hst:
-            orbitTrack.firstMaterial?.diffuse.contents = Theme.hubbleOrbitalCGColor
-            orbitTrack.ringRadius = CGFloat(Globals.hubbleOrbitAltitudeInScene)
-            orbitTrack.pipeRadius = pipeRadius
-            orbitTrack.ringSegmentCount = ringSegmentCount
-            orbitTrack.pipeSegmentCount = pipeSegmentCount
+            guard let color = Theme.hubbleOrbitalCGColor else { return nil }
+            return (color, CGFloat(Globals.hubbleOrbitAltitudeInScene))
         case .none:
             return nil
         }
-        return SCNNode(geometry: orbitTrack)
     }
     
     private func adjustCoordinates(lat: Float, lon: Float) -> (lat: Float, lon: Float) {
