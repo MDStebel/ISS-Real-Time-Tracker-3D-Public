@@ -143,7 +143,6 @@ final class PositionViewModel: ObservableObject {
             subsolarLongitude   = CoordinateConversions.decimalCoordinatesToDegMinSec(coordinate: Double(subsolarCoordinates.longitude), format: Globals.coordinatesStringFormat, isLatitude: false)
         }
         
-        
         /// We need to remove each of the nodes we've added before adding them again at new coordinates, or we get a f'ng mess!
         var numberOfChildNodes = earthGlobe.getNumberOfChildNodes()
         while numberOfChildNodes > 0 {

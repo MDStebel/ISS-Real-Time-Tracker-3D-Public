@@ -25,10 +25,8 @@ struct DetailView: View {
             .padding()
         }
         .buttonStyle(PlainButtonStyle())
-        .opacity(1)
         .ignoresSafeArea(edges: .bottom)
         .navigationTitle("Live Positions")
-//        .onAppear { start() }
         .onChange(of: scenePhase) { _, phase in
             handleScenePhaseChange(phase)
         }
