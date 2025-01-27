@@ -100,7 +100,7 @@ class AstronautBioViewController: UIViewController, WKUIDelegate, WKNavigationDe
             }
         } else {
             DispatchQueue.main.async {
-                self.alert(for: "Error!", message: "Bad Web Address")
+                self.showAlert(title: "Error!", message: "Bad Web Address")
             }
         }
     }
@@ -121,7 +121,7 @@ class AstronautBioViewController: UIViewController, WKUIDelegate, WKNavigationDe
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         DispatchQueue.main.async {
-            self.alert(for: "Navigation Error!", message: "Couldn't access web page.")
+            self.showAlert(title: "Navigation Error!", message: "Couldn't access web page.")
         }
     }
     

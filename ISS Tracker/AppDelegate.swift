@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var reviewRequestTimer: Timer?
     
     private let minimumReviewPromptTime: UInt32 = 20
-    private let maximumReviewPromptTime: UInt32 = 80
+    private let maximumReviewPromptTime: UInt32 = 75
 
     // MARK: - Methods
 

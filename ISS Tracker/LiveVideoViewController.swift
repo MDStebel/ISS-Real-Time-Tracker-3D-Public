@@ -30,7 +30,6 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
     private var whichJSONFileToUse = LiveTVChoices.URLAlternatives.v9.rawValue
 
     private var videoURL  = ""              // Live video feed address
-    
     private var helpTitle = ""
     
     /// The web view
@@ -97,7 +96,6 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
         
         let getURLTask = tvURLSession.dataTask(with: myJsonFile) { (data, response, error) -> Void in
             if let data {
-                
                 // Call parser with data and if successful (not nil) copy crew member names to currentCrew string array and fill the table
                 if let parsedURL = try? JSONDecoder().decode(LiveTVChoices.self, from: data) {
                     
@@ -111,16 +109,13 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
                     completionHandler()                                        // We've got the URL from JSON. Now call the completionHandler (the callback)
                     
                 } else {
-                    
-                    DispatchQueue.main.async {
-                        self.alert(for: "Can't receive video stream at this time.", message: "Tap Done, wait a few minutes, then try again.")
-                    }
+                        self.showAlert(message: "Can't receive video stream at this time.")
                 }
                 
             } else {
                 
                 DispatchQueue.main.async {
-                    self.cannotConnectToInternetAlert()
+                    self.showNoInternetAlert()
                 }
             }
         }
@@ -143,19 +138,22 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
     }
     
     private func loadWebView() {
-        if let URL = URL(string: videoURL) {
-            let urlRequest = URLRequest(url: URL)
+        guard let url = URL(string: videoURL) else {
             DispatchQueue.main.async {
-                self.webView.load(urlRequest)                       // Load web page from the main queue
-                
-                // Only the Live Earth view needs to present this popup
-                if Globals.blackScreenInHDEVExplanationPopsUp && self.channelSelected == .liveEarth {
-                    self.explainBlankScreenToUserPopup()
-                }
+                self.showAlert(title: "URL Error", message: "Can't access live video feed.")
             }
-        } else {
-            DispatchQueue.main.async {
-                self.alert(for: "URL Error", message: "Can't access live video feed.")
+            return
+        }
+
+        let request = URLRequest(url: url)
+        
+        DispatchQueue.main.async {
+            self.webView.load(request)
+            
+            // Show explanation popup only for Live Earth view
+            if Globals.blackScreenInHDEVExplanationPopsUp,
+               self.channelSelected == .liveEarth {
+                self.explainBlankScreenToUserPopup()
             }
         }
     }
@@ -164,7 +162,7 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
     
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         DispatchQueue.main.async {
-            self.alert(for: "Navigation Error!", message: "Can't access video feed.")
+            self.showAlert(title: "Navigation Error!", message: "Can't access video feed.")
         }
     }
     

@@ -306,7 +306,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         DispatchQueue.main.async { [weak self] in
             self?.spinner.stopAnimating()
             self?.refreshControl?.endRefreshing()
-            self?.cannotConnectToInternetAlert()
+            self?.showNoInternetAlert()
             self?.promptLabel.text = "Connection Error"
         }
     }
@@ -328,7 +328,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
 
     private func showCalendarAccessDeniedAlert() {
         DispatchQueue.main.async {
-            self.alert(for: "Can't create reminder", message: "Access to your calendar was previously denied. Please update your device Settings to change this")
+            self.showAlert(title: "Can't create reminder", message: "Access to your calendar was previously denied. Please update your device Settings to change this")
         }
     }
 
@@ -380,13 +380,13 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
 
     private func showEventSavedAlert() {
         DispatchQueue.main.async {
-            self.alert(for: "Pass Reminded Saved!", message: "A \(self.station.satelliteName) pass reminder was added to your calendar. You'll be alerted 1 hour in advance, and again 15 minutes before it begins.")
+            self.showAlert(title: "Pass Reminded Saved!", message: "A \(self.station.satelliteName) pass reminder was added to your calendar. You'll be alerted 1 hour in advance, and again 15 minutes before it begins.")
         }
     }
 
     private func showEventSaveFailedAlert() {
         DispatchQueue.main.async {
-            self.alert(for: "Failed", message: "Could not add the \(self.station.satelliteName) pass reminder to your calendar")
+            self.showAlert(title: "Failed", message: "Could not add the \(self.station.satelliteName) pass reminder to your calendar")
         }
     }
 
@@ -518,7 +518,7 @@ extension PassesTableViewController {
     }
 
     private func showAlertForNoVisiblePasses() {
-        alert(for: "No Visible Passes", message: "No visible \(station.satelliteName) passes found during the next \(numberOfDays) days")
+        showAlert(title: "No Visible Passes", message: "No visible \(station.satelliteName) passes found during the next \(numberOfDays) days")
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

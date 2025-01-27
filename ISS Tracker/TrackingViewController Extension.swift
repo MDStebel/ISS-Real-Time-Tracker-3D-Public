@@ -284,14 +284,14 @@ extension TrackingViewController {
                     // If parsing fails
                     DispatchQueue.main.async {
                         self.stopAction()
-                        self.alert(for: "Can't get ISS location", message: "Wait a few minutes\nand then tap ▶︎ again.")
+                        self.showAlert(title: "Can't get ISS location", message: "Wait a few minutes\nand then tap ▶︎ again.")
                     }
                 }
             } else {
                 // If can't access API
                 DispatchQueue.main.async {
                     self.stopAction()
-                    self.cannotConnectToInternetAlert()
+                    self.showNoInternetAlert()
                 }
             }
         }

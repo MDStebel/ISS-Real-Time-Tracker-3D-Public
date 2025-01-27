@@ -192,7 +192,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                     DispatchQueue.main.async {
                         weakSelf?.spinner.stopAnimating()
                         weakSelf?.refreshControl?.endRefreshing()
-                        weakSelf?.alert(for: "Can't get crew data", message: "Tap Done, wait a few minutes, then try again")
+                        weakSelf?.showAlert(title: "Can't get crew data", message: "Tap Done, wait a few minutes, then try again")
                     }
                 }
                 
@@ -201,7 +201,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
                 DispatchQueue.main.async {
                     weakSelf?.spinner.stopAnimating()
                     weakSelf?.refreshControl?.endRefreshing()
-                    weakSelf?.cannotConnectToInternetAlert()
+                    weakSelf?.showNoInternetAlert()
                 }
             }
         }
@@ -220,7 +220,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         }
         UIPasteboard.general.string = crewListString                                      // Copy to general pasteboard
         
-        alert(for: "\(currentCrewSize) \(self.station.satelliteName) Crew Members\nCopied to Your Clipboard", message: crewListString)
+        showAlert(title: "\(currentCrewSize) \(self.station.satelliteName) Crew Members\nCopied to Your Clipboard", message: crewListString)
     }
       
     /// Build a label with leading text followed by an image and return as an attributed string

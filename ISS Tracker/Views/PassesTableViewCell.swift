@@ -10,16 +10,12 @@ import UIKit
 
 /// A card style custom cell for passes
 class PassesTableViewCell: UITableViewCell {
-        
     
     // MARK: - Properties
     
-    
     private let cornerRadius = Theme.cornerRadius
     
-
     // MARK: - Outlets
-    
 
     @IBOutlet var cellBackground: UIView!
     @IBOutlet var durationLabel: UILabel!
@@ -44,9 +40,7 @@ class PassesTableViewCell: UITableViewCell {
     @IBOutlet var startTime: UILabel!
     @IBOutlet var stationIcon: UIImageView!
     
-    
     // MARK: - Methods
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -60,25 +54,17 @@ class PassesTableViewCell: UITableViewCell {
         cellBackground.layer.shadowRadius = 3.0
         cellBackground.layer.shadowOpacity = 0.6
         cellBackground.layer.shadowOffset = CGSize(width: 0.0, height: 3.0)
-        
     }
-    
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         if selected {
-            
             cellBackground.backgroundColor = UIColor(named: Theme.tint)
             passDate.textColor = UIColor(named: Theme.tblBgd)
-            
         } else {
-            
             cellBackground.backgroundColor = UIColor(named: Theme.popupBgd)
             passDate.textColor = UIColor(named: Theme.popupBgd)
-            
         }
-        
-    } 
-
+    }
 }

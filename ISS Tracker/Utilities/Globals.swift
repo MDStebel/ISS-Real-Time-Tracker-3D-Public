@@ -144,7 +144,7 @@ struct Globals {
     static let orionNebula                                   = "Orion Nebula.png"
     static let outputDateFormatString                        = "MMM-dd-YYYY 'at' hh:mma"
     static let outputDateFormatStringShortForm               = "MMM-dd-yyyy"
-    static let outputDateOnlyFormatString                    = "MMM-dd-YYY"
+    static let outputDateOnlyFormatString                    = "MMMM d, yyyy"
     static let outputTimeOnlyFormatString                    = "hh:mm a"
     static let radiansToDegrees: Double                      = 1 / degreesToRadians
     static let settingsChar                                  = "⚙"

@@ -276,7 +276,6 @@ extension EarthGlobe {
         let sceneKitZ = y
         
         let position  = SCNVector3(x: sceneKitX, y: sceneKitY, z: sceneKitZ )
-        
         return position
     }
     

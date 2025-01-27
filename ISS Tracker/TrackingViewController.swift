@@ -372,7 +372,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         
         UIPasteboard.general.string = dataToBeCopiedString  // Copy to general pasteboard
         
-        alert(for: "Current ISS Position" + Constants.linefeed + "Copied to Your Clipboard", message: dataToBeCopiedString)
+        showAlert(title: "Current ISS Position" + Constants.linefeed + "Copied to Your Clipboard", message: dataToBeCopiedString)
     }
     
     /// Function called when zoom is changed
