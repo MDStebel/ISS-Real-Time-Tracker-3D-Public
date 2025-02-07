@@ -14,7 +14,6 @@ protocol TableAnimatable: AnyObject {
 }
 
 extension TableAnimatable {
-    
     /// Default implementation.
     ///
     /// Animates the drawing of a table such that it looks springy.
@@ -24,17 +23,25 @@ extension TableAnimatable {
         let cells = tableToAnimate.visibleCells
         let tableViewHeight = tableToAnimate.bounds.size.height
         
+        // Animation constants
+        let animationDuration: TimeInterval = 1.75
+        let delayIncrement: TimeInterval = 0.08
+        let springDamping: CGFloat = 0.8
+        let initialVelocity: CGFloat = 0
+        
         DispatchQueue.main.async {
             for (index, cell) in cells.enumerated() {
+                // Start the cell below the table
                 cell.transform = CGAffineTransform(translationX: 0, y: tableViewHeight)
+                
                 UIView.animate(
-                    withDuration: 1.75,
-                    delay: Double(index) * 0.08,
-                    usingSpringWithDamping: 0.8,
-                    initialSpringVelocity: 0,
+                    withDuration: animationDuration,
+                    delay: Double(index) * delayIncrement,
+                    usingSpringWithDamping: springDamping,
+                    initialSpringVelocity: initialVelocity,
                     options: .curveEaseInOut,
                     animations: {
-                        cell.transform = CGAffineTransform.identity
+                        cell.transform = .identity
                     },
                     completion: nil
                 )

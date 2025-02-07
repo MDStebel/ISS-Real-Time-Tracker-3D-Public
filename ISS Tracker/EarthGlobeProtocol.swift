@@ -3,13 +3,14 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 2/26/2022.
+//  Updated by Michael on 2/6/2025.
 //  Copyright © 2020-2025 ISS Real-Time Tracker. All rights reserved.
 //
 
 import SceneKit
 import UIKit
 
-/// Protocol that adds EarthGlobe support to a UIViewController subclass, with properties and methods to create the scene and update it
+/// Protocol that adds EarthGlobe support to a UIViewController subclass, with properties and methods to create the scene and update it.
 protocol EarthGlobeProtocol: UIViewController {
     var issLastLat: Float { get set }
     var tssLastLat: Float { get set }
@@ -17,165 +18,107 @@ protocol EarthGlobeProtocol: UIViewController {
     
     func setUpEarthGlobeScene(for globe: EarthGlobe, in scene: SCNView, hasTintedBackground: Bool)
     
-    func updateEarthGlobeScene(in globe: EarthGlobe, hubbleLatitude: String?, hubbleLongitude: String?, issLatitude: String?, issLongitude: String?, tssLatitude: String?, tssLongitude: String?, hubbleLastLat: inout Float, issLastLat: inout Float, tssLastLat: inout Float)
+    func updateEarthGlobeScene(in globe: EarthGlobe,
+                               hubbleLatitude: String?,
+                               hubbleLongitude: String?,
+                               issLatitude: String?,
+                               issLongitude: String?,
+                               tssLatitude: String?,
+                               tssLongitude: String?,
+                               hubbleLastLat: inout Float,
+                               issLastLat: inout Float,
+                               tssLastLat: inout Float)
 }
 
 // MARK: - Default implementations
 
 extension EarthGlobeProtocol {
-    /// Create the context globe scene
-    /// - Parameters:
-    ///   - globe: Which globe instance to set up in the scene
-    ///   - scene: The scene to use
-    ///   - hasTintedBackground: Bool that is True if we're settin up the overlay globe on the tracking screen, or False if we're setting up the fullscreen globe
+    
     func setUpEarthGlobeScene(for globe: EarthGlobe, in scene: SCNView, hasTintedBackground: Bool) {
         globe.setupInSceneView(scene, customPinchGestureIsEnabled: false)
         
         if hasTintedBackground {
-            scene.backgroundColor     = UIColor(named: Theme.popupBgd)?.withAlphaComponent(0.60)        // Tinted for map view overlay mode
+            scene.backgroundColor     = UIColor(named: Theme.popupBgd)?.withAlphaComponent(0.60) // Tinted for map view overlay mode
             scene.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
             scene.layer.cornerRadius  = 10
             scene.layer.masksToBounds = true
         } else {
-            scene.backgroundColor     = UIColor(red: 0, green: 0, blue: 0, alpha: 0)                    // Transparent background for full-screen mode
+            scene.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0) // Transparent background for full-screen mode
         }
     }
     
-    /// Add the statellite/station position marker(s), orbital track(s), footprint(s), and current Sun position to the globe.
-    /// Since we are not always plotting the TSS, the coordinates parameters are optional
-    /// - Parameters:
-    ///   - globe: The globe instance to use
-    ///   - issLatitude: ISS latitude as a string
-    ///   - issLongitude: ISS longitude as a string
-    ///   - tssLatitude: TSS latitude as an optional string
-    ///   - tssLongitude: TSS longitude as an optional string
-    ///   - issLastLat: The last ISS latitude saved as a mutating float
-    ///   - tssLastLat: The last TSS latitude saved as a mutating float
-    ///   - hubbleLatitude: Hubble latitude as an optional string
-    ///   - hubbleLongitude: Hubble longitude as an optional string
-    ///   - hubbleLastLat: The  last Hubble latitude  saved as a mutating float
-    func updateEarthGlobeScene(in globe: EarthGlobe, hubbleLatitude: String?, hubbleLongitude: String?, issLatitude: String?, issLongitude: String?, tssLatitude: String?, tssLongitude: String?, hubbleLastLat: inout Float, issLastLat: inout Float, tssLastLat: inout Float ) {
+    func updateEarthGlobeScene(in globe: EarthGlobe,
+                               hubbleLatitude: String?,
+                               hubbleLongitude: String?,
+                               issLatitude: String?,
+                               issLongitude: String?,
+                               tssLatitude: String?,
+                               tssLongitude: String?,
+                               hubbleLastLat: inout Float,
+                               issLastLat: inout Float,
+                               tssLastLat: inout Float) {
         
-        var hubbleHeadingFactor: Float = 1
-        var issHeadingFactor: Float    = 1
-        var tssHeadingFactor: Float    = 1
-        
-        var addHubble                  = false
-        var addISS                     = false
-        var addTSS                     = false
-        var showHubbleOrbitNow         = false
-        var showISSOrbitNow            = false
-        var showTSSOrbitNow            = false
-        
-        var hLat: Float?               = nil
-        var hLon: Float?               = nil
-        var iLat: Float?               = nil
-        var iLon: Float?               = nil
-        var tLat: Float?               = nil
-        var tLon: Float?               = nil
-
-        if issLatitude != nil && issLongitude != nil {  // Make sure we have valid ISS coordinates
-            iLat = Float(issLatitude!) ?? 0.0
-            iLon = Float(issLongitude!) ?? 0.0
-            if (iLat! + iLon!) != 0.0 {
-                addISS = true
-            } else {
-                addISS = false
-            }
-        } else {
-            addISS = false
+        // Helper to parse coordinate strings into a Float tuple and determine if valid coordinates were provided.
+        func parseCoordinates(lat: String?, lon: String?) -> (isValid: Bool, lat: Float, lon: Float) {
+            let latitude  = Float(lat ?? "") ?? 0.0
+            let longitude = Float(lon ?? "") ?? 0.0
+            // If the sum of lat and lon is not zero, we assume valid coordinates.
+            return ((latitude + longitude) != 0.0, latitude, longitude)
         }
         
-        if tssLatitude != nil && tssLongitude != nil {  // Make sure we have valid TSS coordinates
-            tLat = Float(tssLatitude!) ?? 0.0
-            tLon = Float(tssLongitude!) ?? 0.0
-            if (tLat! + tLon!) != 0.0 {
-                addTSS = true
-            } else {
-                addTSS = false
-            }
-        } else {
-            addTSS = false
-        }
+        // Parse coordinates for each satellite.
+        let (addISS, iLat, iLon)       = parseCoordinates(lat: issLatitude, lon: issLongitude)
+        let (addTSS, tLat, tLon)       = parseCoordinates(lat: tssLatitude, lon: tssLongitude)
+        let (addHubble, hLat, hLon)    = parseCoordinates(lat: hubbleLatitude, lon: hubbleLongitude)
         
-        if hubbleLatitude != nil && hubbleLongitude != nil {  // Make sure we have valid Hubble coordinates
-            hLat = Float(hubbleLatitude!) ?? 0.0
-            hLon = Float(hubbleLongitude!) ?? 0.0
-            if (hLat! + hLon!) != 0.0 {
-                addHubble = true
-            } else {
-                addHubble = false
-            }
-        } else {
-            addHubble = false
-        }
-        
-        /// We need to remove all each of the nodes we've added before adding them again at new coordinates
-        var numberOfChildNodes = globe.getNumberOfChildNodes()
-        while numberOfChildNodes > 0 {
+        // Remove all previously added child nodes.
+        while globe.getNumberOfChildNodes() > 0 {
             globe.removeLastNode()
-            numberOfChildNodes -= 1
         }
         
-        /// Determine if we have a prior ISS latitude saved, as we don't know which way the orbit is oriented unless we do
-        if issLastLat != 0 {
-            showISSOrbitNow  = true
-            issHeadingFactor = iLat! - issLastLat < 0 ? -1 : 1
+        // Helper to update heading factor based on the change in latitude.
+        func updateHeading(for currentLat: Float, lastLat: inout Float) -> (shouldShowOrbit: Bool, headingFactor: Float) {
+            let delta = currentLat - lastLat
+            let shouldShowOrbit = (lastLat != 0 && abs(delta) < 0.5)
+            let headingFactor: Float = shouldShowOrbit ? (delta < 0 ? -1 : 1) : 1
+            lastLat = currentLat
+            return (shouldShowOrbit, headingFactor)
         }
-        issLastLat = iLat ?? 0
         
-        /// Determine if we have a prior TSS latitude saved, as we don't know which way the orbit is oriented unless we do
-        if tssLastLat != 0 {
-            showTSSOrbitNow  = true
-            tssHeadingFactor = tLat! - tssLastLat < 0 ? -1 : 1
-        }
-        tssLastLat = tLat ?? 0
+        let (showISSOrbitNow, issHeadingFactor)       = updateHeading(for: iLat, lastLat: &issLastLat)
+        let (showTSSOrbitNow, tssHeadingFactor)       = updateHeading(for: tLat, lastLat: &tssLastLat)
+        let (showHubbleOrbitNow, hubbleHeadingFactor) = updateHeading(for: hLat, lastLat: &hubbleLastLat)
         
-        /// Determine if we have a prior Hubble latitude saved, as we don't know which way the orbit is oriented unless we do
-        if hubbleLastLat != 0 {
-            showHubbleOrbitNow  = true
-            hubbleHeadingFactor = hLat! - hubbleLastLat < 0 ? -1 : 1
-        }
-        hubbleLastLat = hLat ?? 0
+        // Set up the Sun based on the current subsolar coordinates.
+        let subSolarCoordinates = AstroCalculations.getSubSolarCoordinates()
+        globe.setUpTheSun(lat: subSolarCoordinates.latitude, lon: subSolarCoordinates.longitude)
         
-        /// Get the current coordinates of the subsolar point (i.e., where the Sun is at zenith)
-        let coordinates = AstroCalculations.getSubSolarCoordinates()
-        let subSolarLat = coordinates.latitude                  // Get the latitude of the subsolar point at the current time
-        let subSolarLon = coordinates.longitude                 // Get the longitude of the subsolar point at the current time
-        globe.setUpTheSun(lat: subSolarLat, lon: subSolarLon)   // Now, set up the Sun in our model at the subsolar point
-        
-        /// If we're ready to show the orbital tracks, render them now
+        // Add orbit tracks if applicable.
         if addISS && showISSOrbitNow {
-            globe.addOrbitTrackAroundTheGlobe(for: .iss, lat: iLat!, lon: iLon!, headingFactor: issHeadingFactor)
+            globe.addOrbitTrackAroundTheGlobe(for: .iss, lat: iLat, lon: iLon, headingFactor: issHeadingFactor)
         }
-        
         if addTSS && showTSSOrbitNow {
-            globe.addOrbitTrackAroundTheGlobe(for: .tss, lat: tLat!, lon: tLon!, headingFactor: tssHeadingFactor)
+            globe.addOrbitTrackAroundTheGlobe(for: .tss, lat: tLat, lon: tLon, headingFactor: tssHeadingFactor)
         }
-        
         if addHubble && showHubbleOrbitNow {
-            globe.addOrbitTrackAroundTheGlobe(for: .hst, lat: hLat!, lon: hLon!, headingFactor: hubbleHeadingFactor)
+            globe.addOrbitTrackAroundTheGlobe(for: .hst, lat: hLat, lon: hLon, headingFactor: hubbleHeadingFactor)
         }
         
-        /// Add the ISS if valid
+        // Add markers and viewing circles for each valid satellite.
         if addISS {
-            globe.addISSMarker(lat: iLat!, lon: iLon!)
-            globe.addISSViewingCircle(lat: iLat!, lon: iLon!)
+            globe.addISSMarker(lat: iLat, lon: iLon)
+            globe.addISSViewingCircle(lat: iLat, lon: iLon)
         }
-        
-        /// Add the TSS if valid
         if addTSS {
-            globe.addTSSMarker(lat: tLat!, lon: tLon!)
-            globe.addTSSViewingCircle(lat: tLat!, lon: tLon!)
+            globe.addTSSMarker(lat: tLat, lon: tLon)
+            globe.addTSSViewingCircle(lat: tLat, lon: tLon)
         }
-        
-        /// Add the Hubble if valid
         if addHubble {
-            globe.addHubbleMarker(lat: hLat!, lon: hLon!)
-            globe.addHubbleViewingCircle(lat: hLat!, lon: hLon!)
+            globe.addHubbleMarker(lat: hLat, lon: hLon)
+            globe.addHubbleViewingCircle(lat: hLat, lon: hLon)
         }
         
-        /// Autorotate the globe if autorotation is enabled in Settings
+        // Autorotate the globe if the auto-rotate setting is enabled.
         globe.autoSpinGlobeRun(run: Globals.autoRotateGlobeEnabled)
     }
 }
