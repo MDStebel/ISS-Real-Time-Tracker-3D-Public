@@ -83,9 +83,9 @@ struct DataCellView: View {
                             }
                             .offset(x: -3, y: 1.5)
                         }
-                        .offset(y: yOffsetComputed)                         // This will position the alt on the scale
+                        .offset(y: yOffsetComputed)   // This will position the alt on the scale
                         
-                        // Show the Sun icon if this is not a satellite
+                    // Show the Sun icon if this is not a satellite
                     } else {
                         Image(systemName: "sun.max.fill")
                             .resizable()

@@ -1,5 +1,5 @@
 //
-//  CoordinatesViewModel.swift
+//  LocationManager.swift
 //  ISS Real-Time Tracker
 //
 //  Created by Michael Stebel on 6/16/24.
