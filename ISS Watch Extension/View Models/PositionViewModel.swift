@@ -52,7 +52,7 @@ final class PositionViewModel: ObservableObject {
     private let apiKey = ApiKeys.issLocationKey
     private let numberFormatter = NumberFormatter()
     private let timerValue = 3.0
-    private let deltaThreshold: Float = 10  // used to ensure a reliable heading calculation
+    private let deltaThreshold: Float = 10  // Used to ensure a reliable heading calculation
     
     private var timer: AnyCancellable?
     private var cancellables: Set<AnyCancellable> = []
@@ -79,7 +79,6 @@ final class PositionViewModel: ObservableObject {
     
     init() {
         reset()
-        initHelper()
         updateEarthGlobe() // one initial update before starting the timer
         start()
     }
@@ -115,7 +114,6 @@ final class PositionViewModel: ObservableObject {
     /// Stop the timer.
     func stop() {
         timer?.cancel()
-        
     }
     
     // MARK: - Private Methods
@@ -136,12 +134,12 @@ final class PositionViewModel: ObservableObject {
         // Remove previously added nodes from the globe
         removeAllGlobeNodes()
         
-        // Fetch satellite positions
+        // Fetch satellite positions.
         for sat in [StationsAndSatellites.iss, .tss, .hst] {
             getSatellitePosition(for: sat)
         }
         
-        // Update subsolar point info
+        // Update subsolar point position.
         updateSubSolarPoint()
         
         // Update each satellite's display on the globe.
