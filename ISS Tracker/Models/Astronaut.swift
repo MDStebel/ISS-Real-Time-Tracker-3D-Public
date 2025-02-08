@@ -3,6 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 7/9/16.
+//  Updated by Michael on 2/7/2025.
 //  Copyright © 2016-2025 ISS Real-Time Tracker. All rights reserved.
 //
 
@@ -10,7 +11,8 @@ import Foundation
 
 /// Model that encapsulates an astronaut/comonaut.
 ///
-/// Initialize an Astronaut instance with member-wise initializer: Astronaut(name: name, title: title, country: country, countryFlag: countryFlag, spaceCraft: spaceCraft, launchDate: launchDate, bio: bio, shortBioBlurb: shortBioBlurb, image: image, twitter: twitter, mission: mission, launchVehicle: launchVehicle).
+/// Initialize an Astronaut instance with the member-wise initializer:
+/// Astronaut(name: title: country: spaceCraft: launchDate: bio: launchVehicle: shortBioBlurb: image: twitter: mission: expedition:)
 struct Astronaut: Decodable, Hashable {
     
     // MARK: - Properties
@@ -28,87 +30,102 @@ struct Astronaut: Decodable, Hashable {
     let mission: String
     let expedition: String
     
-    /// This computed property returns the uppercase string of the country
+    /// Returns the uppercase string of the country.
     private var countryFormatted: String {
         country.uppercased()
     }
     
-    /// This computed property returns a flag representing the country, if available. If there's no flag, return the flag image, or else return the country name.
+    /// Returns a flag representing the country if available; otherwise, returns the formatted country.
     var flag: String {
         Globals.countryFlags[country] ?? countryFormatted
     }
     
+    /// A short description combining the astronaut's name and flag.
     var shortAstronautDescription: String {
-        name + "  " + (flag)
+        "\(name)  \(flag)"
     }
     
-    /// This computed property returns a date formatted according to output date format string in Globals. If not successful, return an empty string
+    /// Returns the launch date formatted according to the output format specified in Globals.
+    /// If conversion fails, returns an empty string.
     var launchDateFormatted: String {
-        DateFormatter.convertDateString(launchDate, fromFormat: Globals.dateFormatStringEuropeanForm, toFormat: Globals.outputDateFormatStringShortForm) ?? ""
+        DateFormatter.convertDateString(launchDate,
+                                        fromFormat: Globals.dateFormatStringEuropeanForm,
+                                        toFormat: Globals.outputDateFormatStringShortForm) ?? ""
     }
     
     // MARK: - Methods
     
-    /// Method to calculate the number of days an astronaut has been in space (today - launch date).
-    /// If there's an error in the JSON data, this will detect it and return 0 days.
+    /// Calculates the number of days an astronaut has been in space (today minus the launch date).
+    /// If the launch date is invalid, returns 0.
     /// - Returns: Number of days since launch.
     func numberOfDaysInSpace() -> Int {
-        
         let todaysDate = Date()
-        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = Globals.outputDateFormatStringShortForm
-        let launchedOn = launchDateFormatted
         
-        if launchedOn != "" {
-            let startDate = dateFormatter.date(from: launchedOn)
-            return Int(Float(todaysDate.timeIntervalSince(startDate!)) / Float(Globals.numberOfSecondsInADay ))
-        } else {
+        guard let startDate = dateFormatter.date(from: launchDateFormatted) else {
             return 0
         }
+        
+        let timeInterval = todaysDate.timeIntervalSince(startDate)
+        return Int(timeInterval / Globals.numberOfSecondsInADay)
     }
     
-    /// Parses JSON file with current crew names from my API and returns an optional array of Astronauts.
-    /// - Parameter data: The data returned from API.
-    /// - Returns: Optional array of Astronauts.
+    // MARK: - JSON Parsing
+    
+    /// Parses JSON data containing current crew information and returns an array of Astronauts.
+    /// - Parameter data: The data returned from the API.
+    /// - Returns: An optional array of Astronauts.
     static func parseCurrentCrew(from data: Data?) -> [Astronaut]? {
+        guard let data = data else { return nil }
         
-        /// Type alias for a dictionary to make code easier to read
+        // Type alias for a dictionary to make code easier to read.
         typealias JSONDictionary = [String: Any]
         
-        var crew = [Astronaut]()    // Create an empty array of Astronauts
-        
         do {
-            if let json = try JSONSerialization.jsonObject(with: data!, options: []) as? JSONDictionary,
-               let numberOfAstronauts = json["number"] as? Int,
-               let astronauts = json["people"] as? [JSONDictionary]
-            {
-                for astronaut in astronauts  {
-                    let name          = astronaut["name"] as! String
-                    let title         = astronaut["title"] as! String
-                    let country       = astronaut["country"] as! String
-                    let spaceCraft    = astronaut["location"] as! String
-                    let launchDate    = astronaut["launchdate"] as! String
-                    let bio           = astronaut["biolink"] as! String
-                    let shortBioBlurb = astronaut["bio"] as! String
-                    let image         = astronaut["biophoto"] as! String
-                    let twitter       = astronaut["twitter"] as! String
-                    let mission       = astronaut["mission"] as! String
-                    let launchVehicle = astronaut["launchvehicle"] as! String
-                    let expedition    = astronaut["expedition"] as! String
-                    
-                    crew.append(Astronaut(name: name, title: title, country: country, spaceCraft: spaceCraft, launchDate: launchDate, bio: bio, launchVehicle: launchVehicle, shortBioBlurb: shortBioBlurb, image: image, twitter: twitter, mission: mission, expedition: expedition))
-                }
-                
-                guard crew.count == numberOfAstronauts else { return nil }      // Ensures there's no discrepancy in the number of crew returned
-                return crew
-                
-            } else {
+            guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? JSONDictionary,
+                  let numberOfAstronauts = json["number"] as? Int,
+                  let astronautsArray = json["people"] as? [JSONDictionary] else {
                 return nil
             }
-        }
-        
-        catch {
+            
+            var crew = [Astronaut]()
+            
+            for astronaut in astronautsArray {
+                guard let name          = astronaut["name"] as? String,
+                      let title         = astronaut["title"] as? String,
+                      let country       = astronaut["country"] as? String,
+                      let spaceCraft    = astronaut["location"] as? String,
+                      let launchDate    = astronaut["launchdate"] as? String,
+                      let bio           = astronaut["biolink"] as? String,
+                      let shortBioBlurb = astronaut["bio"] as? String,
+                      let image         = astronaut["biophoto"] as? String,
+                      let twitter       = astronaut["twitter"] as? String,
+                      let mission       = astronaut["mission"] as? String,
+                      let launchVehicle = astronaut["launchvehicle"] as? String,
+                      let expedition    = astronaut["expedition"] as? String else {
+                    return nil
+                }
+                
+                let astronautObj = Astronaut(name: name,
+                                             title: title,
+                                             country: country,
+                                             spaceCraft: spaceCraft,
+                                             launchDate: launchDate,
+                                             bio: bio,
+                                             launchVehicle: launchVehicle,
+                                             shortBioBlurb: shortBioBlurb,
+                                             image: image,
+                                             twitter: twitter,
+                                             mission: mission,
+                                             expedition: expedition)
+                crew.append(astronautObj)
+            }
+            
+            // Ensure the number of parsed astronauts matches the expected count.
+            guard crew.count == numberOfAstronauts else { return nil }
+            return crew
+        } catch {
             return nil
         }
     }
@@ -124,7 +141,7 @@ extension Astronaut: CustomStringConvertible, Comparable {
         lhs.name == rhs.name
     }
     
-    /// Returns comma delimited string
+    /// Returns a comma-delimited string representation of the astronaut.
     var description: String {
         "\(name), \(title), \(flag)"
     }
