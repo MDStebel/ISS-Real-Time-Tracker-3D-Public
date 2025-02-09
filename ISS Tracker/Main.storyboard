@@ -243,7 +243,7 @@ TRACKER
                                         <subviews>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="30" minValue="1" maxValue="30" minimumValueImage="Plus Math_ffffff_50" maximumValueImage="Minus Math _ffffff_50" translatesAutoresizingMaskIntoConstraints="NO" id="wun-ka-2M8" userLabel="Zoom Slider">
                                                 <rect key="frame" x="-2" y="0.0" width="290" height="58"/>
-                                                <color key="minimumTrackTintColor" name="Background"/>
+                                                <color key="minimumTrackTintColor" name="ISSRTT-Red"/>
                                                 <color key="maximumTrackTintColor" name="White"/>
                                                 <connections>
                                                     <action selector="zoomValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="GdJ-ea-eH9"/>
@@ -255,7 +255,7 @@ TRACKER
                                                     <constraint firstAttribute="width" constant="120" id="g7j-Rr-asI"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-DemiBold" family="Avenir Next Condensed" pointSize="13"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" name="ISSRTT-White"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -2436,7 +2436,7 @@ Days in Space:</string>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="cR5-3C-RSS"/>
-        <segue reference="bZ3-Go-siV"/>
+        <segue reference="QZj-XB-PmD"/>
         <segue reference="7Ix-1h-Ypp"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="Tint"/>

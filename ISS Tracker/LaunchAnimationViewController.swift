@@ -3,96 +3,56 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 10/31/16.
+//  Updated by Michael on 2/8/2025
 //  Copyright © 2016-2025 ISS Real-Time Tracker. All rights reserved.
 //
 
 import UIKit
 
 /// Animated launch screen
-///
 /// This is the entry view controller for the app. Animates then segues to the tracking view controller.
 class LaunchAnimationViewController: UIViewController {
     
-    // MARK: - Properties
-    
+    // MARK: - Constants
     private let iconAnimationDuration: TimeInterval = 5.0
-    private let iconAnimationRotationAngle: CGFloat = -CGFloat.pi / 6.0 // In radians
+    private let iconAnimationRotationAngle: CGFloat = -CGFloat.pi / 6.0
     private let iconAnimationScaleFactor: CGFloat = 0.5
+    private let titleAnimationDuration: TimeInterval = 5.0
+    private let titleInitialScaleFactor: CGFloat = 0.33
+    private let titleFinalScaleFactor: CGFloat = 4.0
+    private let threeDInitialScaleFactor: CGFloat = 0.05
+    private let iPad3DTextYOffset: CGFloat = 850.0
+    private let iPhone3DTextYOffset: CGFloat = 10.0
+    private let issIconExtraOffset: CGFloat = 20.0
     private let segueToMainViewController = "mainViewControllerSegue"
-    private let threeDScaleFactor: CGFloat = 0.05
-    private let titleAnimationDuration: TimeInterval = 5.0 // In seconds
-    private let titleScaleFactor: CGFloat = 0.33
     
-    private var iconScaleFactor: CGFloat = 0
-    private var scaleFactorFor3DTextImageForLaunchAnimation: CGFloat = 0
-    private var scaleFactorForAppNameTitleForLaunchAnimation: CGFloat = 0
-    private var trans1 = CGAffineTransform.identity
-    private var trans2 = CGAffineTransform.identity
-    private var trans3 = CGAffineTransform.identity
-    private var xTrans: CGFloat = 0
-    private var yTrans: CGFloat = 0
+    // MARK: - Properties
+    private var issImageFinalTransform = CGAffineTransform.identity
+    private var titleFinalTransform = CGAffineTransform.identity
+    private var threeDTextFinalTransform = CGAffineTransform.identity
     
+    // MARK: - Outlets
+    @IBOutlet private var curves: UIImageView!
+    @IBOutlet private var ISSImage: UIImageView!
+    @IBOutlet private var appNameTitleForLaunchAnimation: UILabel!
+    @IBOutlet private var threeDTextImage: UIImageView!
+    
+    // MARK: - Lifecycle Methods
     override var prefersStatusBarHidden: Bool {
         true
     }
     
-    // MARK: - Outlets
-    
-    @IBOutlet private var curves: UIImageView!
-    @IBOutlet private var ISSImage: UIImageView!
-    @IBOutlet private var appNameTitleForLaunchAnimation: UILabel! {
-        didSet {
-            scaleFactorForAppNameTitleForLaunchAnimation = titleScaleFactor
-            trans2 = trans2.scaledBy(x: scaleFactorForAppNameTitleForLaunchAnimation, y: scaleFactorForAppNameTitleForLaunchAnimation)
-            appNameTitleForLaunchAnimation.transform = trans2
-            appNameTitleForLaunchAnimation.alpha = 0.0
-            appNameTitleForLaunchAnimation.isHidden = true
-        }
-    }
-    @IBOutlet weak var threeDTextImage: UIImageView! {
-        didSet {
-            scaleFactorFor3DTextImageForLaunchAnimation = threeDScaleFactor
-            trans3 = trans3.scaledBy(x: scaleFactorFor3DTextImageForLaunchAnimation, y: scaleFactorFor3DTextImageForLaunchAnimation)
-            threeDTextImage.transform = trans3
-            threeDTextImage.alpha = 0.0
-            threeDTextImage.isHidden = true
-        }
-    }
-    
-    // MARK: - Methods
-    
-    private func createTransformationsForISSIcon() {
-        xTrans = view.bounds.size.width + 20
-        yTrans = view.bounds.size.height + 20
-        iconScaleFactor = iconAnimationScaleFactor
-        trans1 = trans1.translatedBy(x: xTrans, y: -yTrans)
-        trans1 = trans1.scaledBy(x: iconScaleFactor, y: iconScaleFactor)
-        trans1 = trans1.rotated(by: iconAnimationRotationAngle)
-    }
-    
-    private func createTransformationsForTitle() {
-        scaleFactorForAppNameTitleForLaunchAnimation = 4.0
-        trans2 = trans2.scaledBy(x: scaleFactorForAppNameTitleForLaunchAnimation, y: scaleFactorForAppNameTitleForLaunchAnimation)
-    }
-    
-    private func createTransformationsFor3D() {
-        if Globals.isIPad {
-            scaleFactorFor3DTextImageForLaunchAnimation = 22
-            yTrans = threeDTextImage.bounds.size.height + 850
-            trans3 = trans3.translatedBy(x: 0, y: yTrans)
-        } else {
-            scaleFactorFor3DTextImageForLaunchAnimation = 12
-            yTrans = threeDTextImage.bounds.size.height + 10
-            trans3 = trans3.translatedBy(x: 0, y: yTrans)
-        }
-        trans3 = trans3.scaledBy(x: scaleFactorFor3DTextImageForLaunchAnimation, y: scaleFactorFor3DTextImageForLaunchAnimation)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        createTransformationsForISSIcon()
-        createTransformationsForTitle()
-        createTransformationsFor3D()
+        
+        // Set up initial states (e.g., hidden, alpha, and initial transform)
+        setupInitialStates()
+        
+        // Calculate final transforms based on the view’s bounds
+        setupISSImageFinalTransform()
+        setupTitleFinalTransform()
+        setup3DTextFinalTransform()
+        
         getVersionAndCopyrightData()
     }
     
@@ -101,6 +61,64 @@ class LaunchAnimationViewController: UIViewController {
         animateLaunchScreen()
     }
     
+    // MARK: - Setup Methods
+    
+    /// Configure initial view states before the animation starts.
+    private func setupInitialStates() {
+        // ISSImage starts in its default state.
+        ISSImage.transform = .identity
+        ISSImage.alpha = 1.0
+        
+        // Configure appNameTitleForLaunchAnimation with a small scale, hidden, and transparent.
+        appNameTitleForLaunchAnimation.transform = CGAffineTransform(scaleX: titleInitialScaleFactor, y: titleInitialScaleFactor)
+        appNameTitleForLaunchAnimation.alpha = 0.0
+        appNameTitleForLaunchAnimation.isHidden = true
+        
+        // Configure threeDTextImage similarly.
+        threeDTextImage.transform = CGAffineTransform(scaleX: threeDInitialScaleFactor, y: threeDInitialScaleFactor)
+        threeDTextImage.alpha = 0.0
+        threeDTextImage.isHidden = true
+    }
+    
+    /// Compute the final transform for the ISS icon animation.
+    private func setupISSImageFinalTransform() {
+        let xTranslation = view.bounds.width + issIconExtraOffset
+        let yTranslation = view.bounds.height + issIconExtraOffset
+        
+        issImageFinalTransform = CGAffineTransform.identity
+            .translatedBy(x: xTranslation, y: -yTranslation)
+            .scaledBy(x: iconAnimationScaleFactor, y: iconAnimationScaleFactor)
+            .rotated(by: iconAnimationRotationAngle)
+    }
+    
+    /// Compute the final transform for the app name title animation.
+    private func setupTitleFinalTransform() {
+        // Starting from the initial scale, then applying the final scale multiplier.
+        titleFinalTransform = CGAffineTransform(scaleX: titleInitialScaleFactor, y: titleInitialScaleFactor)
+            .scaledBy(x: titleFinalScaleFactor, y: titleFinalScaleFactor)
+    }
+    
+    /// Compute the final transform for the 3D text image animation.
+    private func setup3DTextFinalTransform() {
+        let yOffset: CGFloat
+        let finalScale: CGFloat
+        
+        if Globals.isIPad {
+            yOffset = threeDTextImage.bounds.height + iPad3DTextYOffset
+            finalScale = 22.0
+        } else {
+            yOffset = threeDTextImage.bounds.height + iPhone3DTextYOffset
+            finalScale = 12.0
+        }
+        
+        // Start with the initial small scale, then apply translation and additional scaling.
+        let initialTransform = CGAffineTransform(scaleX: threeDInitialScaleFactor, y: threeDInitialScaleFactor)
+        threeDTextFinalTransform = initialTransform
+            .translatedBy(x: 0, y: yOffset)
+            .scaledBy(x: finalScale, y: finalScale)
+    }
+    
+    // MARK: - Animation Method
     private func animateLaunchScreen() {
         UIView.animate(
             withDuration: iconAnimationDuration,
@@ -108,39 +126,51 @@ class LaunchAnimationViewController: UIViewController {
             usingSpringWithDamping: 1.0,
             initialSpringVelocity: 0.2,
             options: .curveEaseInOut,
-            animations: { [self] in
-                ISSImage.transform = trans1
-                ISSImage.alpha = 0.0
-                curves.alpha = 0.0
-                appNameTitleForLaunchAnimation.isHidden = false
-                appNameTitleForLaunchAnimation.alpha = 1.0
-                appNameTitleForLaunchAnimation.transform = trans2
-                threeDTextImage.isHidden = false
-                threeDTextImage.alpha = 1.0
-                threeDTextImage.transform = trans3
+            animations: { [weak self] in
+                guard let self = self else { return }
+                
+                // Animate ISSImage out
+                self.ISSImage.transform = self.issImageFinalTransform
+                self.ISSImage.alpha = 0.0
+                self.curves.alpha = 0.0
+                
+                // Animate appNameTitleForLaunchAnimation into view
+                self.appNameTitleForLaunchAnimation.isHidden = false
+                self.appNameTitleForLaunchAnimation.alpha = 1.0
+                self.appNameTitleForLaunchAnimation.transform = self.titleFinalTransform
+                
+                // Animate threeDTextImage into view
+                self.threeDTextImage.isHidden = false
+                self.threeDTextImage.alpha = 1.0
+                self.threeDTextImage.transform = self.threeDTextFinalTransform
             },
-            completion: { [self] _ in
-                performSegue(withIdentifier: segueToMainViewController, sender: self)
+            completion: { [weak self] _ in
+                guard let self = self else { return }
+                self.performSegue(withIdentifier: self.segueToMainViewController, sender: self)
             }
         )
     }
     
-    private func getVersionAndCopyrightData() {
-            Globals.copyrightString = Bundle.main.humanReadableCopyright
-            Globals.versionNumber = Bundle.main.appVersion
-            Globals.buildNumber = Bundle.main.buildNumber
-    }
-    
-    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
-        if UIDevice.current.model.hasPrefix("iPhone") {
-            performSegue(withIdentifier: segueToMainViewController, sender: self)
+    // MARK: - Rotation Handling
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            coordinator.animate(alongsideTransition: nil) { [weak self] _ in
+                guard let self = self else { return }
+                self.performSegue(withIdentifier: self.segueToMainViewController, sender: self)
+            }
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == segueToMainViewController else { return }
+    // MARK: - Helper Methods
+    private func getVersionAndCopyrightData() {
+        Globals.copyrightString = Bundle.main.humanReadableCopyright
+        Globals.versionNumber = Bundle.main.appVersion
+        Globals.buildNumber = Bundle.main.buildNumber
     }
     
+    // Optionally, override didReceiveMemoryWarning if needed
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }

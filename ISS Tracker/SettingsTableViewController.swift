@@ -74,7 +74,7 @@ class SettingsTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super .viewWillAppear(animated)
+        super.viewWillAppear(animated)
         
         setUpSwitchesAndControlsFromSavedSettings()
         
@@ -85,6 +85,12 @@ class SettingsTableViewController: UITableViewController {
         barAppearance.titleTextAttributes    = [.font : UIFont(name: Constants.fontForTitle, size: titleFontSize) as Any, .foregroundColor : UIColor.white]
         navigationItem.standardAppearance    = barAppearance
         navigationItem.scrollEdgeAppearance  = barAppearance
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        SettingsDataModel.saveUserSettings()
     }
     
     @IBAction private func mapTypeSelector(_ sender: UISegmentedControl) {

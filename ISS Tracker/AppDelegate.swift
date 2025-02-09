@@ -3,11 +3,12 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 1/28/16.
+//  Updated by Michael on 2/9/2025
 //  Copyright © 2016-2025 ISS Real-Time Tracker. All rights reserved.
 //
 
 import UIKit
-import StoreKit
+import os.log
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,16 +19,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var referenceToViewController = TrackingViewController()
     var referenceToGlobeFullViewController = GlobeFullViewController()
     
-    private var reviewRequestTimer: Timer?
-    
-    private let minimumReviewPromptTime: UInt32 = 20
-    private let maximumReviewPromptTime: UInt32 = 75
+    // ReviewPromptManager instance handles review scheduling logic.
+    private lazy var reviewPromptManager = ReviewPromptManager(minimumPromptTime: 30, maximumPromptTime: 75)
 
-    // MARK: - Methods
+    // MARK: - Application Lifecycle
 
-    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication,
+                     willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         configureGlobalSettings()
-        scheduleReviewRequest(shortestTime: minimumReviewPromptTime, longestTime: maximumReviewPromptTime)
+        reviewPromptManager.scheduleReviewRequest()
         return true
     }
 
@@ -37,41 +37,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Globals.isIPad = Globals.thisDevice.hasPrefix("iPad")
     }
 
-    private func scheduleReviewRequest(shortestTime: UInt32, longestTime: UInt32) {
-        guard shortestTime < longestTime else {
-            print("Invalid time range: shortestTime must be less than longestTime.")
-            return
+    // We only restore settings once during the foreground transition.
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        SettingsDataModel.restoreUserSettings()
+    }
+
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        if referenceToGlobeFullViewController.isViewLoaded {
+            referenceToGlobeFullViewController.startUpdatingGlobe()
         }
-        
-        // Invalidate any existing timer before creating a new one
-        reviewRequestTimer?.invalidate()
-        
-        let timeInterval = TimeInterval(UInt32.random(in: shortestTime..<longestTime))
-        
-        // Assign the new timer to the property
-        reviewRequestTimer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(handleTimerFired), userInfo: nil, repeats: false)
     }
-
-    @objc private func handleTimerFired() {
-        reviewRequestTimer?.invalidate() // Invalidate the timer when it fires
-        reviewRequestTimer = nil         // Clear the reference to the timer
-        
-        // Call the review request method
-        requestReview()
-    }
-
-    @objc private func requestReview() {
-        // Instead of directly accessing window?.windowScene, which might be nil, we retrieve the first available UIWindowScene from UIApplication.shared.connectedScenes.
-        guard let windowScene = UIApplication.shared.connectedScenes
-            .compactMap({ $0 as? UIWindowScene })
-            .first else {
-            print("Unable to retrieve windowScene for review request.")
-            return
-        }
-        
-        AppStore.requestReview(in: windowScene)
-    }
-
+    
+    // Handle state changes by stopping actions, saving settings, and stopping globe updates.
     func applicationWillResignActive(_ application: UIApplication) {
         handleAppStateChange()
     }
@@ -80,24 +57,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         handleAppStateChange()
     }
 
-    func applicationWillEnterForeground(_ application: UIApplication) {
-        SettingsDataModel.restoreUserSettings()
-    }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        SettingsDataModel.restoreUserSettings()
-        if referenceToGlobeFullViewController.isViewLoaded {
-            referenceToGlobeFullViewController.startUpdatingGlobe()
-        }
-    }
-
     func applicationWillTerminate(_ application: UIApplication) {
         handleAppStateChange()
     }
 
     private func handleAppStateChange() {
         referenceToViewController.stopAction()
-        SettingsDataModel.saveUserSettings()
+        
+        // Save user settings on a background thread to avoid blocking the main thread.
+        DispatchQueue.global(qos: .background).async {
+            SettingsDataModel.saveUserSettings()
+        }
+        
         if referenceToGlobeFullViewController.isViewLoaded {
             referenceToGlobeFullViewController.stopUpdatingGlobe()
         }

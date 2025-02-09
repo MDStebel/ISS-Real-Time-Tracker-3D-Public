@@ -15,31 +15,31 @@ struct SettingsDataModel {
     
     /// Constants for each of the user defaults keys
     private struct UserSettingsPropertyKeys {
-        static let autoRotateGlobeKey                               = "Auto-Rotate Globe"
-        static let blackScreenInEHDCExplanationPopupWillAppearKey   = "Black Screen"
-        static let displayGlobeOverlayKey                           = "Display Globe Overlay"
-        static let displayZoomFactorKey                             = "Display Zoom Factor"
-        static let enableMapScrollingAndZoomKey                     = "Map Scrolling and Zoom"
-        static let globeBackgroundImageKey                          = "Globe Background Image"
-        static let groundTrackOverlayKey                            = "Ground Track Overlay"
-        static let lastSavedDateAndTimeKey                          = "Last Date and Time Saved"
-        static let mapTypeKey                                       = "Map Type"
-        static let markerTypePropertyKey                            = "Marker Type"
-        static let numberOfDaysOfPassesToReportKey                  = "Number of Days of Passes to Report"
-        static let pulsingEnabledKey                                = "Pulsing Enabled"
-        static let showCoordinatesKey                               = "Show Coordinates"
-        static let showWhatsNewPopupKey                             = "Show Whats New"
-        static let zoomRangeFactorKey                               = "Zoom Range Factor"
-        static let zoomSliderSegmentValueKey                        = "Zoom Slider Segment Value"
+        static let autoRotateGlobeKey                             = "Auto-Rotate Globe"
+        static let blackScreenInEHDCExplanationPopupWillAppearKey = "Black Screen"
+        static let displayGlobeOverlayKey                         = "Display Globe Overlay"
+        static let displayZoomFactorKey                           = "Display Zoom Factor"
+        static let enableMapScrollingAndZoomKey                   = "Map Scrolling and Zoom"
+        static let globeBackgroundImageKey                        = "Globe Background Image"
+        static let groundTrackOverlayKey                          = "Ground Track Overlay"
+        static let lastSavedDateAndTimeKey                        = "Last Date and Time Saved"
+        static let mapTypeKey                                     = "Map Type"
+        static let markerTypePropertyKey                          = "Marker Type"
+        static let numberOfDaysOfPassesToReportKey                = "Number of Days of Passes to Report"
+        static let pulsingEnabledKey                              = "Pulsing Enabled"
+        static let showCoordinatesKey                             = "Show Coordinates"
+        static let showWhatsNewPopupKey                           = "Show Whats New"
+        static let zoomRangeFactorKey                             = "Zoom Range Factor"
+        static let zoomSliderSegmentValueKey                      = "Zoom Slider Segment Value"
     }
  
-    static let dateFormatter                                        = DateFormatter()
+    static let dateFormatter = DateFormatter()
     
     // MARK: - Methods
     
     /// This method is called by AppDelegate when app is about to resign and first saves all user settings on the device, which are restored upon reloading this view controller.
     static func saveUserSettings() {
-        let defaults = UserDefaults.standard                // An instance of NSUserDefaults to save user settings
+        let defaults = UserDefaults.standard   // An instance of NSUserDefaults to save user settings
         
         if Globals.showCoordinatesIsOn {
             defaults.set(true, forKey: UserSettingsPropertyKeys.showCoordinatesKey)
@@ -102,7 +102,7 @@ struct SettingsDataModel {
     
     /// Restore user settings to their saved values. Also called as a from AppDelegate when app returns to foreground
     static func restoreUserSettings() {
-        let defaults = UserDefaults.standard                        // An instance of NSUserDefaults
+        let defaults = UserDefaults.standard
         
         // If persistent data exists, then restore settings to last time app was used
         

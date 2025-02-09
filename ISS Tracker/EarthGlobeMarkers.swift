@@ -3,9 +3,9 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 8/7/16.
+//  Updated by Michael on 8/9/2025
 //  Copyright © 2016-2025 ISS Real-Time Tracker. All rights reserved.
 //
-
 
 import SceneKit
 
@@ -14,97 +14,107 @@ final class EarthGlobeMarkers {
     
     // MARK: - Properties
     
-    var altitude: Float = Globals.issOrbitalAltitudeFactor
-    var image: String
-    var node: SCNNode!                                                                                  // The SceneKit node for this marker
-    var widthAndHeight: CGFloat
+    let altitude: Float
+    let image: String
+    let node: SCNNode          // The SceneKit node for this marker
+    let widthAndHeight: CGFloat
     
-    private var heightAdj: Float = 0
-    private var scaling: CGFloat = 0
-    
-    
-    // MARK: - Methods
+    // MARK: - Initializer
     
     /// Initialize a marker to be added to the Earth globe
     /// - Parameters:
-    ///   - satellite: Type of satellite as a SatelliteID
-    ///   - image: Image name to use as marker as a String
-    ///   - lat: Latitude of the marker's position on Earth as a Float
-    ///   - lon: Longitude of the marker's position on Earth as a Float
-    ///   - isInOrbit: Flag that indicates if the marker is above Earth or on its surface as a Bool
+    ///   - satellite: Type of satellite as a StationsAndSatellites enum
+    ///   - image: Image name to use as marker
+    ///   - lat: Latitude of the marker's position on Earth (in degrees)
+    ///   - lon: Longitude of the marker's position on Earth (in degrees)
+    ///   - isInOrbit: Flag indicating if the marker is above Earth (true) or on its surface (false)
     init(for satellite: StationsAndSatellites, using image: String, lat: Float, lon: Float, isInOrbit: Bool) {
-        self.image             = image
-        let adjustedLon        = lon + Globals.ninetyDegrees                                            // Textures are centered on 0,0, so adjust by 90 degrees
+        self.image = image
         
-        if !isInOrbit {                                                                                 // If false, it's the footprint circle
+        // Adjust longitude for texture centering (textures are centered on 0,0)
+        let adjustedLon = lon + Globals.ninetyDegrees
+        
+        // Compute marker dimensions and altitude based on whether it's in orbit or not
+        let computedWidthAndHeight: CGFloat
+        let computedAltitude: Float
+        
+        if !isInOrbit { // Footprint circle on the ground
+            let scaling: CGFloat
+            let heightAdj: Float
             
             if satellite == .hst {
-                scaling        = CGFloat(1.2)
-                heightAdj      = 0.9 + Float(scaling / (.pi / 2)) / 10
+                scaling = 1.2
+                // The calculation below adjusts the height slightly based on the scaling factor
+                heightAdj = 0.9 + Float(scaling / (.pi / 2)) / 10
             } else {
-                scaling        = CGFloat(1.0)
-                heightAdj      = 1.0
+                scaling = 1.0
+                heightAdj = 1.0
             }
             
-            widthAndHeight     = Globals.footprintDiameter * scaling                                    // Factor to approximate the ground diameter of the sighting circle
-            altitude           = Globals.globeRadiusFactor * Globals.globeRadiusMultiplierToPlaceOnSurface * heightAdj
-            
-        } else {                                                                                        // Otherwise, it's a satellite, so which one is it?
-
+            computedWidthAndHeight = Globals.footprintDiameter * scaling
+            computedAltitude = Globals.globeRadiusFactor * Globals.globeRadiusMultiplierToPlaceOnSurface * heightAdj
+        } else { // Marker represents a satellite in orbit
             switch satellite {
             case .iss:
-                widthAndHeight = Globals.issMarkerWidth
-                altitude       = Globals.issAltitudeFactor
+                computedWidthAndHeight = Globals.issMarkerWidth
+                computedAltitude = Globals.issAltitudeFactor
             case .tss:
-                widthAndHeight = Globals.tssMarkerWidth
-                altitude       = Globals.tssAltitudeFactor
+                computedWidthAndHeight = Globals.tssMarkerWidth
+                computedAltitude = Globals.tssAltitudeFactor
             case .hst:
-                widthAndHeight = Globals.hubbleMarkerWidth
-                altitude       = Globals.hubbleAltitudeFactor
+                computedWidthAndHeight = Globals.hubbleMarkerWidth
+                computedAltitude = Globals.hubbleAltitudeFactor
             case .none:
-                widthAndHeight = Globals.issMarkerWidth
-                altitude       = Globals.issAltitudeFactor
+                computedWidthAndHeight = Globals.issMarkerWidth
+                computedAltitude = Globals.issAltitudeFactor
             }
         }
         
-        /// Initialize and configure the marker node
-        node                                             = SCNNode(geometry: SCNPlane(width: widthAndHeight, height: widthAndHeight))
-        node.geometry!.firstMaterial!.diffuse.contents   = image
-        node.geometry!.firstMaterial!.diffuse.intensity  = 1.0                                          // Appearance in daylight areas
-        node.geometry!.firstMaterial!.emission.contents  = image
-        node.geometry!.firstMaterial!.emission.intensity = 0.75                                         // Appearance in nighttime areas (a bit less bright)
-        node.geometry!.firstMaterial!.isDoubleSided      = true
-        node.castsShadow                                 = false
+        self.widthAndHeight = computedWidthAndHeight
+        self.altitude = computedAltitude
         
-        /// Map Earth coordinates (lat and lon) to xyz coodinates on globe
-        let position                                     = EarthGlobe.transformLatLonCoordinatesToXYZ(lat: lat, lon: adjustedLon, alt: altitude)
-        self.node.position                               = position
+        // Configure the marker's geometry and material
+        let plane = SCNPlane(width: computedWidthAndHeight, height: computedWidthAndHeight)
+        let material = SCNMaterial()
+        material.diffuse.contents = image
+        material.diffuse.intensity = 1.0                // Brighter in daylight areas
+        material.emission.contents = image
+        material.emission.intensity = 0.75               // Slightly dimmer in nighttime areas
+        material.isDoubleSided = true
+        plane.firstMaterial = material
         
-        /// Compute the normal pitch, roll and yaw
-        let pitch                                        = -lat * Float(Globals.degreesToRadians)       // Pitch is the rotation about the node's x-axis in radians
-        let roll: Float                                  = Globals.zero                                 // Roll is the rotation about the node's z-axis in radians
-        let yaw                                          = lon * Float(Globals.degreesToRadians)        // Yaw is the rotation about the node's y-axis in radians
+        // Initialize the node with the configured geometry
+        self.node = SCNNode(geometry: plane)
+        self.node.castsShadow = false
         
-        /// Set the marker's orientation using pitch, roll, and yaw
-        node.eulerAngles                                 = SCNVector3(x: pitch, y: yaw, z: roll )
+        // Map Earth coordinates (lat, adjustedLon, altitude) to xyz coordinates on the globe
+        let position = EarthGlobe.transformLatLonCoordinatesToXYZ(lat: lat, lon: adjustedLon, alt: computedAltitude)
+        self.node.position = position
+        
+        // Compute the node's orientation using Euler angles
+        // Note: Pitch rotates about the x-axis, yaw about the y-axis, and roll about the z-axis.
+        let pitch = -lat * Float(Globals.degreesToRadians)
+        let yaw = lon * Float(Globals.degreesToRadians)
+        let roll: Float = 0
+        self.node.eulerAngles = SCNVector3(x: pitch, y: yaw, z: roll)
     }
     
 #if !os(watchOS)
-    /// Method to add a pulsing effect to the marker node
-    /// Isn't used in the watch app
+    /// Adds a pulsing animation to the marker node.
+    /// This effect is not used in the watchOS version.
     func addPulseAnimation() {
-        let scaleMin: Float      = 0.80
-        let scaleMax: Float      = 1.05
-        let animation            = CABasicAnimation(keyPath: "scale")
+        let scaleMin: Float = 0.80
+        let scaleMax: Float = 1.05
+        let animation = CABasicAnimation(keyPath: "scale")
+        animation.fromValue = SCNVector3(x: scaleMin, y: scaleMin, z: scaleMin)
+        animation.toValue = SCNVector3(x: scaleMax, y: scaleMax, z: scaleMax)
+        animation.duration = 0.25
+        animation.autoreverses = true
+        animation.repeatCount = Float.infinity
+        animation.timingFunction = CAMediaTimingFunction(name: .easeOut)
         
-        animation.fromValue      = SCNVector3(x: scaleMin, y: scaleMin, z: scaleMin)
-        animation.toValue        = SCNVector3(x: scaleMax, y: scaleMax, z: scaleMax)
-        animation.duration       = 0.25
-        animation.autoreverses   = true
-        animation.repeatCount    = Float.infinity
-        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
-        
-        node.addAnimation(animation, forKey: nil)
+        // Using a specific key helps if you need to reference or remove the animation later
+        self.node.addAnimation(animation, forKey: "pulse")
     }
 #endif
 }

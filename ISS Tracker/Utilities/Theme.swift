@@ -39,5 +39,4 @@ struct Theme {
     static var lastBackgroundColorWas: UIColor              = .white
     static var navigationBarTitleFontSize: CGFloat          = 0
     static var whatsNewTitleFontSize: CGFloat               = 36
-    
 }
