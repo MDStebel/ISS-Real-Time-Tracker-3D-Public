@@ -14,10 +14,11 @@ struct SkyPoint {
     var elevation: Double // in degrees, where 0° is at the horizon and 90° is the zenith
 }
 
-/// Custom clip shape to show only the top fraction of the view.
+/// A custom shape that clips the view to only show the top fraction.
 struct HorizonClipShape: Shape {
-    /// The fraction of the view's height to show (from the top).
+    // fraction: the fraction of the view's height to show (starting from the top).
     var fraction: CGFloat = 0.5
+
     func path(in rect: CGRect) -> Path {
         var path = Path()
         let clipRect = CGRect(x: rect.minX,
@@ -33,29 +34,18 @@ struct Dome3DView: View {
     // Fixed globe radius.
     static let globeRadius: CGFloat = 2
     
-    // ISSRTTRed as UIColor
-    private let IssRttRed = UIColor(cgColor: CGColor(red: 1.0, green: 0.298, blue: 0.298, alpha: 1.0))
-    
-    // The three sky points passed from the parent.
+    // The three sky points, passed from the parent.
     var skyPoints: [SkyPoint]
     
-    // Rotation state so that the globe starts rotated -90° (facing west).
+    // Rotation state so that the globe starts rotated (here, -90° facing west).
     @State private var rotationAngle: Double = -Double.pi/2
     @State private var lastRotation: Double = -Double.pi/2
-    
-    // Store the scene in a @State variable so we can update it.
-    @State private var scene: SCNScene = SCNScene()
-    
-    // Create the SceneKit scene using the current skyPoints.
+
+    /// Builds the SceneKit scene.
     func makeScene() -> SCNScene {
         let scene = SCNScene()
         // Make the scene's background transparent.
-#if !os(watchOS)
-        scene.background.contents = UIColor.blue
-#else
-        let backgrondColor = IssRttRed.withAlphaComponent(0.15)
-        scene.background.contents = backgrondColor
-#endif
+        scene.background.contents = UIColor.clear
         
         // Create a container node for all content so we can rotate it.
         let containerNode = SCNNode()
@@ -83,24 +73,23 @@ struct Dome3DView: View {
         scene.rootNode.addChildNode(ambientLightNode)
         
         // MARK: - Globe with Conditional Shading
+        // Create a full globe where the top hemisphere is blue and the bottom is solid dark green.
         let globeNode = Self.createGlobe(radius: Dome3DView.globeRadius)
         containerNode.addChildNode(globeNode)
         
         // MARK: - Sky Points and Smooth Curve
-        // Use the passed-in skyPoints (we're expecting exactly 3 points)
-        let points = skyPoints
         let pointLabels = ["A", "B", "C"]
-        for (i, point) in points.enumerated() {
+        for (i, point) in skyPoints.enumerated() {
             let pos = Self.convert(skyPoint: point, radius: Dome3DView.globeRadius)
-            let sphere = SCNSphere(radius: 0.10)
-            sphere.firstMaterial?.diffuse.contents = IssRttRed
+            let sphere = SCNSphere(radius: 0.05)
+            sphere.firstMaterial?.diffuse.contents = UIColor.red
             let pointNode = SCNNode(geometry: sphere)
             pointNode.position = pos
             containerNode.addChildNode(pointNode)
             
-            let labelGeometry = SCNText(string: pointLabels[i], extrusionDepth: 0.10)
+            let labelGeometry = SCNText(string: pointLabels[i], extrusionDepth: 0.01)
             labelGeometry.font = UIFont.systemFont(ofSize: 0.7)
-            labelGeometry.firstMaterial?.diffuse.contents = IssRttRed
+            labelGeometry.firstMaterial?.diffuse.contents = UIColor.red
             let labelNode = SCNNode(geometry: labelGeometry)
             let (minBound, maxBound) = labelGeometry.boundingBox
             let dx = (maxBound.x - minBound.x) / 2
@@ -112,10 +101,10 @@ struct Dome3DView: View {
             containerNode.addChildNode(labelNode)
         }
         
-        if points.count == 3 {
-            let p0 = Self.convert(skyPoint: points[0], radius: Dome3DView.globeRadius)
-            let p1 = Self.convert(skyPoint: points[1], radius: Dome3DView.globeRadius)
-            let p2 = Self.convert(skyPoint: points[2], radius: Dome3DView.globeRadius)
+        if skyPoints.count == 3 {
+            let p0 = Self.convert(skyPoint: skyPoints[0], radius: Dome3DView.globeRadius)
+            let p1 = Self.convert(skyPoint: skyPoints[1], radius: Dome3DView.globeRadius)
+            let p2 = Self.convert(skyPoint: skyPoints[2], radius: Dome3DView.globeRadius)
             
             let cp = SCNVector3(
                 (4 * p1.x - p0.x - p2.x) / 2,
@@ -140,7 +129,7 @@ struct Dome3DView: View {
             let offset = Float(Dome3DView.globeRadius + 0.1)
             let pos = SCNVector3(offset * sin(Float(phi)), 0, offset * cos(Float(phi)))
             let textGeometry = SCNText(string: dir.label, extrusionDepth: 0.15)
-            textGeometry.font = UIFont.systemFont(ofSize: 0.8)
+            textGeometry.font = UIFont.systemFont(ofSize: 0.7)
             textGeometry.firstMaterial?.diffuse.contents = UIColor.white
             let textNode = SCNNode(geometry: textGeometry)
             let (minBound, maxBound) = textGeometry.boundingBox
@@ -154,14 +143,14 @@ struct Dome3DView: View {
         
         // MARK: - Zenith Marker and Label
         let zenithMarker = SCNSphere(radius: 0.06)
-        zenithMarker.firstMaterial?.diffuse.contents = UIColor.white
+        zenithMarker.firstMaterial?.diffuse.contents = UIColor.green
         let zenithNode = SCNNode(geometry: zenithMarker)
         zenithNode.position = SCNVector3(0, Float(Dome3DView.globeRadius), 0)
         containerNode.addChildNode(zenithNode)
         
-        let zenithLabelGeometry = SCNText(string: "Zenith", extrusionDepth: 0.10)
-        zenithLabelGeometry.font = UIFont.systemFont(ofSize: 0.5)
-        zenithLabelGeometry.firstMaterial?.diffuse.contents = UIColor.white
+        let zenithLabelGeometry = SCNText(string: "Zenith", extrusionDepth: 0.15)
+        zenithLabelGeometry.font = UIFont.systemFont(ofSize: 0.7)
+        zenithLabelGeometry.firstMaterial?.diffuse.contents = UIColor.green
         let zenithLabelNode = SCNNode(geometry: zenithLabelGeometry)
         let (zMin, zMax) = zenithLabelGeometry.boundingBox
         let zdx = (zMax.x - zMin.x) / 2
@@ -177,7 +166,7 @@ struct Dome3DView: View {
     var body: some View {
         GeometryReader { geometry in
             SceneView(
-                scene: scene,
+                scene: makeScene(),
                 pointOfView: nil,
                 options: [],
                 preferredFramesPerSecond: 60
@@ -185,11 +174,9 @@ struct Dome3DView: View {
             // Clip the view so that only the top half (above the horizon) is visible.
             .clipShape(HorizonClipShape(fraction: 0.5))
             .onAppear {
-                // Recreate the scene when the view appears so that it uses the passed-in skyPoints.
-                scene = makeScene()
-                if let cameraNode = scene.rootNode.childNodes.first(where: { $0.camera != nil }) {
+                if let cameraNode = makeScene().rootNode.childNodes.first(where: { $0.camera != nil }) {
                     let aspect = geometry.size.width / geometry.size.height
-                    let paddingFactor: CGFloat = 1.2
+                    let paddingFactor: CGFloat = 1.3
                     let verticalScale = Dome3DView.globeRadius * paddingFactor
                     let horizontalScale = Dome3DView.globeRadius * paddingFactor / aspect
                     let finalScale = max(verticalScale, horizontalScale)
@@ -212,6 +199,7 @@ struct Dome3DView: View {
     }
     
     private func updateContainerRotation() {
+        let scene = makeScene()
         if let containerNode = scene.rootNode.childNode(withName: "container", recursively: false) {
             containerNode.eulerAngles.y = Float(rotationAngle)
         }
@@ -224,10 +212,10 @@ struct Dome3DView: View {
         let sphere = SCNSphere(radius: radius)
         sphere.segmentCount = 48
         let material = SCNMaterial()
-        // Top hemisphere blue.
-        material.diffuse.contents = UIColor.lightGray.withAlphaComponent(0.45)
+        // Set the top hemisphere color to blue.
+        material.diffuse.contents = UIColor.blue.withAlphaComponent(0.75)
         material.isDoubleSided = true
-        // Use a shader modifier to output a solid dark green for the bottom hemisphere.
+        // Use a shader modifier to output solid dark green for fragments with model-space y < 0.
         material.shaderModifiers = [
             SCNShaderModifierEntryPoint.fragment: """
                 if (_surface.position.y < 0.0) {
@@ -278,7 +266,7 @@ struct Dome3DView: View {
         return points
     }
     
-    static func createLineNodeFromPoints(_ points: [SCNVector3], color: UIColor, radius: CGFloat = 0.035) -> SCNNode {
+    static func createLineNodeFromPoints(_ points: [SCNVector3], color: UIColor, radius: CGFloat = 0.015) -> SCNNode {
         let lineNode = SCNNode()
         for i in 0..<points.count - 1 {
             let segment = createCylinderLine(from: points[i], to: points[i+1], radius: radius, color: color)
@@ -330,10 +318,11 @@ struct Dome3DView_Previews: PreviewProvider {
     static var previews: some View {
         Dome3DView(skyPoints: [
             SkyPoint(azimuth: 222, elevation: 0),
-            SkyPoint(azimuth: 308, elevation: 57),
+            SkyPoint(azimuth: 308, elevation: 87),
             SkyPoint(azimuth: 42, elevation: 0)
         ])
-            .frame(width: 200, height: 250)
+            .frame(width: 200, height: 300)
             .ignoresSafeArea()
     }
 }
+

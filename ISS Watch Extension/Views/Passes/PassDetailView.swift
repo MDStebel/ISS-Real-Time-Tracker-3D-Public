@@ -19,6 +19,7 @@ struct PassDetailView: View {
     var body: some View {
         
         // General info
+        let sn = station.satelliteName
         let dm = Date(timeIntervalSince1970: pass.startUTC).formatted(.dateTime.month(.abbreviated)) // Month
         let dw = Date(timeIntervalSince1970: pass.startUTC).formatted(.dateTime.weekday())           // Day of the week
         let dd = Date(timeIntervalSince1970: pass.startUTC).formatted(.dateTime.day())               // Day of the month
@@ -59,43 +60,43 @@ struct PassDetailView: View {
                     
                     Dome3DView(skyPoints: [a, b, c])
                         .id(UUID())
-                        .frame(height: 300)
+                        .frame(height: 255)
                     
                     Group {
                         DetailSubheading(heading: "General")
                         
-                        if pass.mag != RatingSystem.unknown.rawValue && station == .iss  {
+                        if pass.mag != RatingSystem.unknown.rawValue, station == .iss  {
                             passQualityView(for: pass.mag)
                         }
-                        
+                        StatView(label: "Satellite", stat: sn)
                         StatView(label: "Date", stat: dw + ", " + dm + " " + dd)
                         StatView(label: "T-Minus", stat: tm)
                         StatView(label: "First vis.", stat: fv)
                         StatView(label: "Duration", stat: du)
                         StatView(label: "Magnitude", stat: mg)
                         
-                        DetailSubheading(heading: "(A) Start")
+                        DetailSubheading(heading: "Start (A)")
                         
                         StatView(label: "Time", stat: st)
-                        StatView(label: "Azimuth", stat: sa)
                         StatView(label: "Compass", stat: sc)
+                        StatView(label: "Azimuth", stat: sa)
                         StatView(label: "Elevation", stat: se)
                         
-                        DetailSubheading(heading: "(B) Max")
+                        DetailSubheading(heading: "Max (B)")
                         
                         StatView(label: "Time", stat: mt)
-                        StatView(label: "Azimuth", stat: ma)
                         StatView(label: "Compass", stat: mc)
+                        StatView(label: "Azimuth", stat: ma)
                         StatView(label: "Elevation", stat: me)
                         
-                        DetailSubheading(heading: "(C) End")
+                        DetailSubheading(heading: "End (C)")
                         
                         StatView(label: "Time", stat: et)
-                        StatView(label: "Azimuth", stat: ea)
                         StatView(label: "Compass", stat: ec)
+                        StatView(label: "Azimuth", stat: ea)
                         StatView(label: "Elevation", stat: ee)
                     }
-                    .offset(y: -150)
+                    .offset(y: -120)
                 }
                 .padding(2)
             }
@@ -156,5 +157,24 @@ struct PassDetailView: View {
 }
 
 #Preview {
-    PassDetailView(pass: Passes.Pass(startAz: 270, startAzCompass: "W", startEl: 20, startUTC: 1720659580.0, maxAz: 355, maxAzCompass: "NNE", maxEl: 50, maxUTC: 1720659585.0, endAz: 10, endAzCompass: "NNE", endUTC: 1720659590.0, endEl: 5.0, mag: -2.1, duration: 300, startVisibility: 1728744955), station: .iss)
+    PassDetailView(
+        pass: Passes.Pass(
+            startAz: 222,
+            startAzCompass: "SW",
+            startEl: 10,
+            startUTC: 1720659580.0,
+            maxAz: 280,
+            maxAzCompass: "WNW",
+            maxEl: 50,
+            maxUTC: 1720659585.0,
+            endAz: 10,
+            endAzCompass: "NNE",
+            endUTC: 1720659590.0,
+            endEl: 15.0,
+            mag: -2.1,
+            duration: 300,
+            startVisibility: 1728744955
+        ),
+        station: .iss
+    )
 }
