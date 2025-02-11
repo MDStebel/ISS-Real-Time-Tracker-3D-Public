@@ -69,6 +69,7 @@ class SettingsTableViewController: UITableViewController {
         popoverPresentationController?.permittedArrowDirections = UIPopoverArrowDirection([.up])
         popoverPresentationController?.sourceRect = CGRect(x: 1.00, y: 3.0, width: settingsButtonInCallingVCSourceView.bounds.width, height: settingsButtonInCallingVCSourceView.bounds.height)
         
+        SettingsDataModel.restoreUserSettings()         // Restore settings last saved
         Globals.zoomFactorWasResetInSettings = false
         Globals.globeBackgroundWasChanged    = true
     }
