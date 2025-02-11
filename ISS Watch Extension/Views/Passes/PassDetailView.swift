@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SceneKit
 
 struct PassDetailView: View {
     
@@ -17,7 +18,7 @@ struct PassDetailView: View {
     
     var body: some View {
         
-        // Header info
+        // General info
         let dm = Date(timeIntervalSince1970: pass.startUTC).formatted(.dateTime.month(.abbreviated)) // Month
         let dw = Date(timeIntervalSince1970: pass.startUTC).formatted(.dateTime.weekday())           // Day of the week
         let dd = Date(timeIntervalSince1970: pass.startUTC).formatted(.dateTime.day())               // Day of the month
@@ -26,67 +27,79 @@ struct PassDetailView: View {
         let mg = pass.mag != RatingSystem.unknown.rawValue ? String(pass.mag) : "N/A"
         let fv = Date(timeIntervalSince1970: pass.startVisibility).formatted(date: .omitted, time: .shortened)
         
-        // Start
+        // Start (A point)
         let st = Date(timeIntervalSince1970: pass.startUTC).formatted(date: .omitted, time: .shortened)
         let sa = String(format: "%.0f%", pass.startAz) + Globals.degreeSign
         let sc = String(pass.startAzCompass)
         let se = String(format: "%.1f%", pass.startEl) + Globals.degreeSign
-       
-        // Max
+        
+        // Max (B point)
         let mt = Date(timeIntervalSince1970: pass.maxUTC).formatted(date: .omitted, time: .shortened)
         let ma = String(format: "%.0f%", pass.maxAz) + Globals.degreeSign
         let mc = String(pass.maxAzCompass)
         let me = String(format: "%.1f%", pass.maxEl) + Globals.degreeSign
         
-        // End
+        // End (C point)
         let et = Date(timeIntervalSince1970: pass.endUTC).formatted(date: .omitted, time: .shortened)
         let ea = String(format: "%.0f%", pass.endAz) + Globals.degreeSign
         let ec = String(pass.endAzCompass)
-        let ee = String(format: "%.1f%", pass.endEl ?? 0.0) + Globals.degreeSign                     // Ending elevation isn't always returned, for some reason
+        let ee = String(format: "%.1f%", pass.endEl ?? 0.0) + Globals.degreeSign    // Ending elevation isn't always returned, for some reason
+        
+        // Set up the three points in an array of SkyPoints
+        let a = SkyPoint(azimuth: pass.startAz, elevation: pass.startEl)
+        let b = SkyPoint(azimuth: pass.maxAz, elevation: pass.maxEl)
+        let c = SkyPoint(azimuth: pass.endAz, elevation: pass.endEl ?? 0.0)
         
         ZStack {
             gradientBackground(with: [.issrttRed, .ISSRTT3DGrey])
             
             ScrollView {
                 VStack {
+                    DetailSubheading(heading: "Sky Dome")
                     
-                    DetailSubheading(heading: "General")
+                    Dome3DView(skyPoints: [a, b, c])
+                        .id(UUID())
+                        .frame(height: 300)
                     
-                    if pass.mag != RatingSystem.unknown.rawValue && station == .iss  {
-                        passQualityView(for: pass.mag)
+                    Group {
+                        DetailSubheading(heading: "General")
+                        
+                        if pass.mag != RatingSystem.unknown.rawValue && station == .iss  {
+                            passQualityView(for: pass.mag)
+                        }
+                        
+                        StatView(label: "Date", stat: dw + ", " + dm + " " + dd)
+                        StatView(label: "T-Minus", stat: tm)
+                        StatView(label: "First vis.", stat: fv)
+                        StatView(label: "Duration", stat: du)
+                        StatView(label: "Magnitude", stat: mg)
+                        
+                        DetailSubheading(heading: "(A) Start")
+                        
+                        StatView(label: "Time", stat: st)
+                        StatView(label: "Azimuth", stat: sa)
+                        StatView(label: "Compass", stat: sc)
+                        StatView(label: "Elevation", stat: se)
+                        
+                        DetailSubheading(heading: "(B) Max")
+                        
+                        StatView(label: "Time", stat: mt)
+                        StatView(label: "Azimuth", stat: ma)
+                        StatView(label: "Compass", stat: mc)
+                        StatView(label: "Elevation", stat: me)
+                        
+                        DetailSubheading(heading: "(C) End")
+                        
+                        StatView(label: "Time", stat: et)
+                        StatView(label: "Azimuth", stat: ea)
+                        StatView(label: "Compass", stat: ec)
+                        StatView(label: "Elevation", stat: ee)
                     }
-                    
-                    StatView(label: "Date", stat: dw + ", " + dm + " " + dd)
-                    StatView(label: "T-Minus", stat: tm)
-                    StatView(label: "First vis.", stat: fv)
-                    StatView(label: "Duration", stat: du)
-                    StatView(label: "Magnitude", stat: mg)
-                    
-                    DetailSubheading(heading: "Pass Start")
-                    
-                    StatView(label: "Time", stat: st)
-                    StatView(label: "Azimuth", stat: sa)
-                    StatView(label: "Compass", stat: sc)
-                    StatView(label: "Elevation", stat: se)
-                    
-                    DetailSubheading(heading: "Max Viewing")
-                    
-                    StatView(label: "Time", stat: mt)
-                    StatView(label: "Azimuth", stat: ma)
-                    StatView(label: "Compass", stat: mc)
-                    StatView(label: "Elevation", stat: me)
-                    
-                    DetailSubheading(heading: "Pass End")
-                    
-                    StatView(label: "Time", stat: et)
-                    StatView(label: "Azimuth", stat: ea)
-                    StatView(label: "Compass", stat: ec)
-                    StatView(label: "Elevation", stat: ee)
-                    
+                    .offset(y: -150)
                 }
                 .padding(2)
             }
-            .navigationTitle("Pass Viewing")
+            .navigationTitle("\(station.satelliteName) Pass Viewing")
         }
     }
     
