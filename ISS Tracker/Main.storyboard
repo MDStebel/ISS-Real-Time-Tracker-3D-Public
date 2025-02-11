@@ -1186,7 +1186,7 @@ TRACKER
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BzW-4n-ocf" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="RWj-Gn-GrO" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-346" y="-788"/>
+            <point key="canvasLocation" x="-213" y="-789"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="mDs-Mc-3Jg">
@@ -1260,7 +1260,7 @@ TRACKER
                                                     <rect key="frame" x="0.0" y="0.0" width="410" height="110"/>
                                                     <color key="backgroundColor" name="Label Background"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="110" id="Ufk-w7-HMR"/>
+                                                        <constraint firstAttribute="height" constant="110" id="itE-7T-DCq"/>
                                                     </constraints>
                                                     <string key="text">Date
 </string>
@@ -1272,37 +1272,13 @@ TRACKER
                                                     </variation>
                                                 </label>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="qae-UY-wuq">
-                                                    <rect key="frame" x="6" y="83" width="396" height="25"/>
+                                                    <rect key="frame" x="50" y="83" width="352" height="25"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="H1n-FM-qhX">
-                                                            <rect key="frame" x="0.0" y="0.0" width="235" height="25"/>
-                                                            <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons8-time_span-1" translatesAutoresizingMaskIntoConstraints="NO" id="oIC-iY-It3">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
-                                                                    <color key="tintColor" name="Pop-Up and Tab Bar Background"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="25" id="jhe-lb-wlf"/>
-                                                                    </constraints>
-                                                                </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="998" verticalHuggingPriority="251" horizontalCompressionResistancePriority="997" text="xxx" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="WtP-wY-q2Y">
-                                                                    <rect key="frame" x="31" y="0.0" width="204" height="25"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="NED-ZK-AWx"/>
-                                                                    </constraints>
-                                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
-                                                                    <color key="textColor" name="Pop-Up and Tab Bar Background"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                    <variation key="heightClass=regular-widthClass=regular">
-                                                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
-                                                                    </variation>
-                                                                </label>
-                                                            </subviews>
-                                                            <constraints>
-                                                                <constraint firstItem="WtP-wY-q2Y" firstAttribute="leading" secondItem="oIC-iY-It3" secondAttribute="trailing" constant="6" id="m14-fw-fGo"/>
-                                                            </constraints>
+                                                            <rect key="frame" x="0.0" y="0.0" width="191" height="25"/>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="VlI-eN-ADC">
-                                                            <rect key="frame" x="285" y="0.0" width="111" height="25"/>
+                                                            <rect key="frame" x="241" y="0.0" width="111" height="25"/>
                                                             <subviews>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons8-sun-1" translatesAutoresizingMaskIntoConstraints="NO" id="KJ9-U5-YEe">
                                                                     <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -1330,10 +1306,10 @@ TRACKER
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="r7K-JN-JWJ">
-                                                    <rect key="frame" x="72" y="114" width="330" height="19.333333333333343"/>
+                                                    <rect key="frame" x="72" y="114" width="330" height="19"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TIME" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DcM-ON-0Im">
-                                                            <rect key="frame" x="0.0" y="0.0" width="55" height="19.333333333333332"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="55" height="19"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="55" id="FDF-dt-3If"/>
                                                             </constraints>
@@ -1342,7 +1318,7 @@ TRACKER
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AZI" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XUk-Ek-693">
-                                                            <rect key="frame" x="92" y="0.0" width="53" height="19.333333333333332"/>
+                                                            <rect key="frame" x="92" y="0.0" width="53" height="19"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="53" id="8sK-hc-8Wh"/>
                                                             </constraints>
@@ -1351,7 +1327,7 @@ TRACKER
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ELEV" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FNi-dx-cv3">
-                                                            <rect key="frame" x="182" y="0.0" width="56" height="19.333333333333332"/>
+                                                            <rect key="frame" x="182" y="0.0" width="56" height="19"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="56" id="bXU-It-96z"/>
                                                             </constraints>
@@ -1360,7 +1336,7 @@ TRACKER
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="COMP" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uHk-cj-EMP">
-                                                            <rect key="frame" x="275" y="0.0" width="55" height="19.333333333333332"/>
+                                                            <rect key="frame" x="275" y="0.0" width="55" height="19"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="55" id="NIp-ua-eok"/>
                                                             </constraints>
@@ -1532,7 +1508,7 @@ TRACKER
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="bLf-V8-BYN">
-                                                    <rect key="frame" x="127.66666666666666" y="45" width="154.99999999999997" height="35"/>
+                                                    <rect key="frame" x="127" y="45" width="156" height="35"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star-unfilled" translatesAutoresizingMaskIntoConstraints="NO" id="xrj-a7-IwC" userLabel="star1">
                                                             <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
@@ -1542,14 +1518,14 @@ TRACKER
                                                             </constraints>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star-unfilled" translatesAutoresizingMaskIntoConstraints="NO" id="WFP-d2-Vso" userLabel="star2">
-                                                            <rect key="frame" x="40" y="0.0" width="35" height="35"/>
+                                                            <rect key="frame" x="40.333333333333343" y="0.0" width="35" height="35"/>
                                                             <color key="tintColor" name="Pop-Up and Tab Bar Background"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="35" id="48N-R8-oDy"/>
                                                             </constraints>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star-unfilled" translatesAutoresizingMaskIntoConstraints="NO" id="b7L-VR-n0y" userLabel="star3">
-                                                            <rect key="frame" x="80" y="0.0" width="35" height="35"/>
+                                                            <rect key="frame" x="80.666666666666657" y="0.0" width="35" height="35"/>
                                                             <color key="tintColor" name="Pop-Up and Tab Bar Background"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="35" id="T2L-ci-Txq"/>
@@ -1557,7 +1533,7 @@ TRACKER
                                                             </constraints>
                                                         </imageView>
                                                         <imageView userInteractionEnabled="NO" tag="4" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star-unfilled" translatesAutoresizingMaskIntoConstraints="NO" id="RWd-8W-8HN" userLabel="star3">
-                                                            <rect key="frame" x="120.00000000000003" y="0.0" width="35" height="35"/>
+                                                            <rect key="frame" x="121" y="0.0" width="35" height="35"/>
                                                             <color key="tintColor" name="Pop-Up and Tab Bar Background"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="35" id="QqH-MF-21w"/>
@@ -1567,36 +1543,98 @@ TRACKER
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="35" id="dF3-fC-eaJ"/>
+                                                        <constraint firstAttribute="width" constant="156" id="qhc-z1-a2n"/>
                                                     </constraints>
                                                 </stackView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="VFh-vr-c8h">
+                                                    <rect key="frame" x="304.33333333333331" y="8" width="97.666666666666686" height="70.666666666666671"/>
+                                                    <subviews>
+                                                        <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BrW-9N-QOh">
+                                                            <rect key="frame" x="0.0" y="0.0" width="97.666666666666671" height="34.333333333333336"/>
+                                                            <color key="backgroundColor" name="Pop-Up and Tab Bar Background"/>
+                                                            <color key="tintColor" name="ISSRTT-White"/>
+                                                            <state key="normal" title="Button"/>
+                                                            <buttonConfiguration key="configuration" style="plain" image="gauge.with.dots.needle.0percent" catalog="system" titleAlignment="automatic">
+                                                                <attributedString key="attributedTitle">
+                                                                    <fragment content="Viewing">
+                                                                        <attributes>
+                                                                            <font key="NSFont" size="12" name="AvenirNext-Bold"/>
+                                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                </attributedString>
+                                                            </buttonConfiguration>
+                                                        </button>
+                                                        <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4G6-F4-GyH">
+                                                            <rect key="frame" x="0.0" y="36.333333333333329" width="97.666666666666671" height="34.333333333333329"/>
+                                                            <color key="backgroundColor" name="Pop-Up and Tab Bar Background"/>
+                                                            <color key="tintColor" name="ISSRTT-White"/>
+                                                            <state key="normal" title="Button"/>
+                                                            <buttonConfiguration key="configuration" style="plain" image="alarm" catalog="system">
+                                                                <attributedString key="attributedTitle">
+                                                                    <fragment content="Alert">
+                                                                        <attributes>
+                                                                            <font key="NSFont" size="12" name="AvenirNext-Bold"/>
+                                                                            <font key="NSOriginalFont" size="12" name="Helvetica"/>
+                                                                        </attributes>
+                                                                    </fragment>
+                                                                </attributedString>
+                                                            </buttonConfiguration>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="998" verticalHuggingPriority="251" horizontalCompressionResistancePriority="997" text="xxx" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="WtP-wY-q2Y">
+                                                    <rect key="frame" x="39" y="83" width="160" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="NED-ZK-AWx"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="15"/>
+                                                    <color key="textColor" name="Pop-Up and Tab Bar Background"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="17"/>
+                                                    </variation>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icons8-time_span-1" translatesAutoresizingMaskIntoConstraints="NO" id="oIC-iY-It3">
+                                                    <rect key="frame" x="8" y="83" width="25" height="25"/>
+                                                    <color key="tintColor" name="Pop-Up and Tab Bar Background"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="25" id="jhe-lb-wlf"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" name="Pop-Up and Tab Bar Background"/>
                                             <constraints>
                                                 <constraint firstItem="wGZ-bi-DYo" firstAttribute="top" secondItem="WUu-6h-bZl" secondAttribute="top" constant="140" id="0mC-xw-nw8"/>
+                                                <constraint firstItem="oIC-iY-It3" firstAttribute="bottom" secondItem="WtP-wY-q2Y" secondAttribute="bottom" id="2h7-FY-rH6"/>
                                                 <constraint firstItem="DcM-ON-0Im" firstAttribute="leading" secondItem="7eH-aJ-C38" secondAttribute="trailing" constant="9" id="50r-oK-KlO"/>
-                                                <constraint firstItem="WIK-Oi-s9f" firstAttribute="leading" secondItem="WUu-6h-bZl" secondAttribute="leading" id="54f-v9-EmP"/>
                                                 <constraint firstAttribute="trailing" secondItem="UgT-nh-Qxn" secondAttribute="trailing" constant="8" id="8zl-da-A8d"/>
                                                 <constraint firstAttribute="bottom" secondItem="Ts5-eC-YSk" secondAttribute="bottom" id="9SP-8m-YGQ"/>
                                                 <constraint firstItem="qae-UY-wuq" firstAttribute="trailing" secondItem="ZiG-CX-6Wn" secondAttribute="trailing" id="AN4-ks-KyX"/>
+                                                <constraint firstItem="VFh-vr-c8h" firstAttribute="trailing" secondItem="WIK-Oi-s9f" secondAttribute="trailing" constant="-8" id="ClF-tu-8u4"/>
+                                                <constraint firstItem="WIK-Oi-s9f" firstAttribute="leading" secondItem="WUu-6h-bZl" secondAttribute="leading" id="D6m-QD-8Em"/>
+                                                <constraint firstItem="VFh-vr-c8h" firstAttribute="top" secondItem="WUu-6h-bZl" secondAttribute="topMargin" id="Fxh-wm-cJs"/>
                                                 <constraint firstItem="qae-UY-wuq" firstAttribute="top" secondItem="bLf-V8-BYN" secondAttribute="bottom" constant="3" id="JNw-mt-2lh"/>
                                                 <constraint firstItem="Ts5-eC-YSk" firstAttribute="leading" secondItem="WUu-6h-bZl" secondAttribute="leading" id="Kbe-1b-CZ2"/>
-                                                <constraint firstItem="WIK-Oi-s9f" firstAttribute="trailing" secondItem="Ts5-eC-YSk" secondAttribute="trailing" id="KfY-D1-Zmv"/>
                                                 <constraint firstItem="UgT-nh-Qxn" firstAttribute="top" secondItem="WUu-6h-bZl" secondAttribute="top" constant="140" id="KwY-gz-Fpd"/>
+                                                <constraint firstItem="oIC-iY-It3" firstAttribute="top" secondItem="WtP-wY-q2Y" secondAttribute="top" id="N97-n1-6dX"/>
                                                 <constraint firstItem="Ts5-eC-YSk" firstAttribute="centerX" secondItem="bLf-V8-BYN" secondAttribute="centerX" id="Nhx-o9-xWz"/>
+                                                <constraint firstItem="WtP-wY-q2Y" firstAttribute="leading" secondItem="oIC-iY-It3" secondAttribute="trailing" constant="6" id="PhB-Bn-jTc"/>
+                                                <constraint firstItem="r7K-JN-JWJ" firstAttribute="top" secondItem="WIK-Oi-s9f" secondAttribute="bottom" constant="4" id="QZH-S0-YGF"/>
                                                 <constraint firstAttribute="bottom" secondItem="UgT-nh-Qxn" secondAttribute="bottom" constant="15" id="R7a-wY-aeK"/>
                                                 <constraint firstAttribute="trailing" secondItem="r7K-JN-JWJ" secondAttribute="trailing" constant="8" id="R7f-2a-342"/>
                                                 <constraint firstItem="r7K-JN-JWJ" firstAttribute="centerY" secondItem="Ts5-eC-YSk" secondAttribute="centerY" id="Tgz-ly-UA3"/>
                                                 <constraint firstAttribute="trailing" secondItem="Ts5-eC-YSk" secondAttribute="trailing" id="U6L-wo-evx"/>
-                                                <constraint firstItem="WIK-Oi-s9f" firstAttribute="top" secondItem="WUu-6h-bZl" secondAttribute="top" id="ZFg-7Q-iae"/>
+                                                <constraint firstItem="qae-UY-wuq" firstAttribute="leading" secondItem="oIC-iY-It3" secondAttribute="trailing" constant="17" id="Xgp-WJ-UfX"/>
                                                 <constraint firstItem="UgT-nh-Qxn" firstAttribute="leading" secondItem="r7K-JN-JWJ" secondAttribute="leading" id="crZ-0x-yd5"/>
                                                 <constraint firstItem="Ts5-eC-YSk" firstAttribute="centerX" secondItem="WUu-6h-bZl" secondAttribute="centerX" id="dOa-00-Roy"/>
+                                                <constraint firstItem="VFh-vr-c8h" firstAttribute="trailing" secondItem="qae-UY-wuq" secondAttribute="trailing" id="eYe-bP-pED"/>
                                                 <constraint firstItem="Ts5-eC-YSk" firstAttribute="top" secondItem="WUu-6h-bZl" secondAttribute="top" id="i9T-L9-XhC"/>
-                                                <constraint firstItem="WIK-Oi-s9f" firstAttribute="top" secondItem="Ts5-eC-YSk" secondAttribute="top" id="jKi-UQ-yxX"/>
-                                                <constraint firstItem="WIK-Oi-s9f" firstAttribute="leading" secondItem="Ts5-eC-YSk" secondAttribute="leading" id="kQe-Mu-W7W"/>
-                                                <constraint firstAttribute="trailing" secondItem="WIK-Oi-s9f" secondAttribute="trailing" id="lKt-uc-vmS"/>
-                                                <constraint firstItem="qae-UY-wuq" firstAttribute="leading" secondItem="WIK-Oi-s9f" secondAttribute="leading" constant="6" id="nrU-xI-an3"/>
+                                                <constraint firstItem="WtP-wY-q2Y" firstAttribute="top" secondItem="qae-UY-wuq" secondAttribute="top" id="oAG-Ts-rMa"/>
                                                 <constraint firstItem="Ts5-eC-YSk" firstAttribute="leading" secondItem="wGZ-bi-DYo" secondAttribute="leading" constant="-8" id="ogE-2u-iNr"/>
+                                                <constraint firstItem="WIK-Oi-s9f" firstAttribute="top" secondItem="Ts5-eC-YSk" secondAttribute="top" id="p0K-Nk-92O"/>
                                                 <constraint firstItem="bLf-V8-BYN" firstAttribute="centerX" secondItem="WUu-6h-bZl" secondAttribute="centerX" id="uRL-A1-Rgr"/>
+                                                <constraint firstItem="oIC-iY-It3" firstAttribute="leading" secondItem="wGZ-bi-DYo" secondAttribute="leading" id="vtQ-Fa-OiF"/>
                                                 <constraint firstItem="r7K-JN-JWJ" firstAttribute="top" secondItem="qae-UY-wuq" secondAttribute="bottom" constant="6" id="xXd-Rj-mcL"/>
                                                 <constraint firstAttribute="bottom" secondItem="wGZ-bi-DYo" secondAttribute="bottom" constant="15" id="zd2-ie-Q5C"/>
                                             </constraints>
@@ -1693,7 +1731,7 @@ TRACKER
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JCA-ed-TWT" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="v27-2Q-D4J" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-932.24299065420553" y="-1699.5680345572355"/>
+            <point key="canvasLocation" x="-933.48837209302326" y="-1699.570815450644"/>
         </scene>
         <!--Crew-->
         <scene sceneID="xDe-RZ-xqm">
@@ -2436,8 +2474,8 @@ Days in Space:</string>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="cR5-3C-RSS"/>
-        <segue reference="QZj-XB-PmD"/>
-        <segue reference="7Ix-1h-Ypp"/>
+        <segue reference="ses-y7-Ktu"/>
+        <segue reference="qJ0-0D-oLu"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="Tint"/>
     <resources>
@@ -2456,6 +2494,7 @@ Days in Space:</string>
         <image name="Tarantula Nebula in the Large Magellanic Cloud Thumb" width="100" height="100"/>
         <image name="Track-Erase-ISSRTT" width="31" height="31"/>
         <image name="Track-Play" width="36" height="36"/>
+        <image name="alarm" catalog="system" width="123" height="128"/>
         <image name="arrow.clockwise" catalog="system" width="110" height="128"/>
         <image name="arrow.down.right.and.arrow.up.left" catalog="system" width="128" height="117"/>
         <image name="arrow.up.left.and.down.right.and.arrow.up.right.and.down.left" catalog="system" width="128" height="115"/>
@@ -2465,6 +2504,7 @@ Days in Space:</string>
         <image name="comments_filled_wide_mds_new_red" width="223" height="100"/>
         <image name="document.on.document" catalog="system" width="116" height="128"/>
         <image name="exit" width="30" height="30"/>
+        <image name="gauge.with.dots.needle.0percent" catalog="system" width="128" height="123"/>
         <image name="gearshape" catalog="system" width="128" height="123"/>
         <image name="help" width="31" height="31"/>
         <image name="icons8-date_from" width="22" height="22"/>

@@ -26,6 +26,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         static let minObservationTime                   = 300
         static let newLine                              = Globals.newLine
         static let segueToHelpFromPasses                = "segueToHelpFromPasses"
+        static let segueToDome3DFromPass                = "segueToDome3DFromPass"
         static let noRatingStar                         = #imageLiteral(resourceName: "star-unfilled")
         static let ratingStar                           = #imageLiteral(resourceName: "star")
         static let unknownRatingStar                    = #imageLiteral(resourceName: "unknownRatingStar")
@@ -83,6 +84,10 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     @IBOutlet private weak var changeNumberOfDaysButton: UIBarButtonItem!
 
     // MARK: - Methods
+    
+    @IBAction func ViewDome3D(_ sender: UIButton) {
+    }
+    
     
     private func getStationID(for station: StationsAndSatellites) {
         selectTarget.image = stationSelectionButton
@@ -411,6 +416,22 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         destinationVC.helpContentHTML = UserGuide.passesHelp
         destinationVC.helpButtonInCallingVCSourceView = navigationController.navigationBar
         destinationVC.title = helpTitle
+        
+        DispatchQueue.main.async {
+            self.spinner.stopAnimating()
+        }
+    }
+    
+    private func showSkyDome(_ segue: UIStoryboardSegue) {
+        DispatchQueue.main.async {
+            self.spinner.startAnimating()
+        }
+        
+        let navigationController = segue.destination as! UINavigationController
+        let destinationVC = navigationController.topViewController as! Dome3DWrapperViewController
+//        destinationVC.helpContentHTML = UserGuide.passesHelp
+//        destinationVC.helpButtonInCallingVCSourceView = navigationController.navigationBar
+//        destinationVC.title = helpTitle
         
         DispatchQueue.main.async {
             self.spinner.stopAnimating()
