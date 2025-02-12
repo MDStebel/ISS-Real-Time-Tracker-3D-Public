@@ -204,7 +204,7 @@ struct Dome3DView: View {
                 if let cameraNode = scene.rootNode.childNodes.first(where: { $0.camera != nil }) {
                     let aspect = geometry.size.width / geometry.size.height
 #if !os(watchOS)
-                    let paddingFactor: CGFloat = 1.4
+                    let paddingFactor: CGFloat = 1.3
 #else
                     let paddingFactor: CGFloat = 1.2
 #endif
@@ -244,7 +244,7 @@ struct Dome3DView: View {
         let material = SCNMaterial()
         // Top hemisphere.
 #if os(iOS)
-        material.diffuse.contents = UIColor.lightGray.withAlphaComponent(0.55)
+        material.diffuse.contents = UIColor.lightGray.withAlphaComponent(0.65)
 #else
         material.diffuse.contents = UIColor.lightGray.withAlphaComponent(0.45)
 #endif
@@ -260,7 +260,7 @@ struct Dome3DView: View {
      """
         ]
 #else
-        // For non-iOS (e.g. watchOS), you can use your original behavior (or something else)
+        // For watchOS
         material.shaderModifiers = [
             SCNShaderModifierEntryPoint.fragment: """
          if (_surface.position.y < 0.0) {
@@ -269,7 +269,6 @@ struct Dome3DView: View {
      """
         ]
 #endif
-        
         sphere.firstMaterial = material
         return SCNNode(geometry: sphere)
     }

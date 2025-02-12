@@ -1186,7 +1186,7 @@ TRACKER
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BzW-4n-ocf" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="RWj-Gn-GrO" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-213" y="-789"/>
+            <point key="canvasLocation" x="-435" y="-786"/>
         </scene>
         <!--Sky Dome-->
         <scene sceneID="apY-pa-Pur">
@@ -1576,41 +1576,22 @@ TRACKER
                                                     </constraints>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="VFh-vr-c8h">
-                                                    <rect key="frame" x="304.33333333333331" y="8" width="97.666666666666686" height="70.666666666666671"/>
+                                                    <rect key="frame" x="367" y="8" width="35" height="0.0"/>
                                                     <subviews>
-                                                        <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BrW-9N-QOh">
-                                                            <rect key="frame" x="0.0" y="0.0" width="97.666666666666671" height="34.333333333333336"/>
+                                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4G6-F4-GyH">
+                                                            <rect key="frame" x="0.0" y="0.0" width="35" height="35"/>
                                                             <color key="backgroundColor" name="Pop-Up and Tab Bar Background"/>
-                                                            <color key="tintColor" name="ISSRTT-White"/>
-                                                            <state key="normal" title="Button"/>
-                                                            <buttonConfiguration key="configuration" style="plain" image="gauge.with.dots.needle.0percent" catalog="system" titleAlignment="automatic">
-                                                                <attributedString key="attributedTitle">
-                                                                    <fragment content="Viewing">
-                                                                        <attributes>
-                                                                            <font key="NSFont" size="12" name="AvenirNext-Bold"/>
-                                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                                        </attributes>
-                                                                    </fragment>
-                                                                </attributedString>
-                                                            </buttonConfiguration>
-                                                            <connections>
-                                                                <segue destination="e7M-3n-eIJ" kind="presentation" identifier="segueToDome3DFromPass" modalPresentationStyle="fullScreen" id="Eub-4B-5GU"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4G6-F4-GyH">
-                                                            <rect key="frame" x="0.0" y="36.333333333333329" width="97.666666666666671" height="34.333333333333329"/>
-                                                            <color key="backgroundColor" name="Pop-Up and Tab Bar Background"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="4G6-F4-GyH" secondAttribute="height" multiplier="1:1" id="Sdd-9R-4ao"/>
+                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="35" id="hny-nt-RAK"/>
+                                                                <constraint firstAttribute="width" constant="35" id="oHu-6C-SIJ"/>
+                                                                <constraint firstAttribute="height" constant="35" id="pYN-UP-EqL"/>
+                                                            </constraints>
                                                             <color key="tintColor" name="ISSRTT-White"/>
                                                             <state key="normal" title="Button"/>
                                                             <buttonConfiguration key="configuration" style="plain" image="alarm" catalog="system">
-                                                                <attributedString key="attributedTitle">
-                                                                    <fragment content="Alert">
-                                                                        <attributes>
-                                                                            <font key="NSFont" size="12" name="AvenirNext-Bold"/>
-                                                                            <font key="NSOriginalFont" size="12" name="Helvetica"/>
-                                                                        </attributes>
-                                                                    </fragment>
-                                                                </attributedString>
+                                                                <attributedString key="attributedTitle"/>
+                                                                <color key="baseForegroundColor" name="ISSRTT-White"/>
                                                             </buttonConfiguration>
                                                         </button>
                                                     </subviews>
@@ -1634,10 +1615,40 @@ TRACKER
                                                         <constraint firstAttribute="width" constant="25" id="jhe-lb-wlf"/>
                                                     </constraints>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BrW-9N-QOh">
+                                                    <rect key="frame" x="8" y="8" width="35" height="35"/>
+                                                    <color key="backgroundColor" name="Pop-Up and Tab Bar Background"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="35" id="GGo-KJ-Qhl"/>
+                                                        <constraint firstAttribute="width" secondItem="BrW-9N-QOh" secondAttribute="height" multiplier="1:1" id="wIv-LH-MP4"/>
+                                                    </constraints>
+                                                    <color key="tintColor" name="Pop-Up and Tab Bar Background"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="Azimuth">
+                                                        <attributedString key="attributedTitle"/>
+                                                        <color key="baseForegroundColor" name="ISSRTT-White"/>
+                                                    </buttonConfiguration>
+                                                    <connections>
+                                                        <segue destination="e7M-3n-eIJ" kind="presentation" identifier="segueToDome3DFromPass" modalPresentationStyle="fullScreen" id="Eub-4B-5GU"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oft-p0-H6Y">
+                                                    <rect key="frame" x="48" y="8" width="34.333333333333343" height="35"/>
+                                                    <color key="tintColor" name="Pop-Up and Tab Bar Background"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="35" id="lL6-Oi-Cj5"/>
+                                                    </constraints>
+                                                    <string key="text">Sky
+Dome</string>
+                                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="12"/>
+                                                    <color key="textColor" name="Pop-Up and Tab Bar Background"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" name="Pop-Up and Tab Bar Background"/>
                                             <constraints>
                                                 <constraint firstItem="wGZ-bi-DYo" firstAttribute="top" secondItem="WUu-6h-bZl" secondAttribute="top" constant="140" id="0mC-xw-nw8"/>
+                                                <constraint firstItem="oft-p0-H6Y" firstAttribute="leading" secondItem="BrW-9N-QOh" secondAttribute="trailing" constant="5" id="2Ig-78-rwB"/>
                                                 <constraint firstItem="oIC-iY-It3" firstAttribute="bottom" secondItem="WtP-wY-q2Y" secondAttribute="bottom" id="2h7-FY-rH6"/>
                                                 <constraint firstItem="DcM-ON-0Im" firstAttribute="leading" secondItem="7eH-aJ-C38" secondAttribute="trailing" constant="9" id="50r-oK-KlO"/>
                                                 <constraint firstAttribute="trailing" secondItem="UgT-nh-Qxn" secondAttribute="trailing" constant="8" id="8zl-da-A8d"/>
@@ -1645,22 +1656,30 @@ TRACKER
                                                 <constraint firstItem="qae-UY-wuq" firstAttribute="trailing" secondItem="ZiG-CX-6Wn" secondAttribute="trailing" id="AN4-ks-KyX"/>
                                                 <constraint firstItem="VFh-vr-c8h" firstAttribute="trailing" secondItem="WIK-Oi-s9f" secondAttribute="trailing" constant="-8" id="ClF-tu-8u4"/>
                                                 <constraint firstItem="WIK-Oi-s9f" firstAttribute="leading" secondItem="WUu-6h-bZl" secondAttribute="leading" id="D6m-QD-8Em"/>
-                                                <constraint firstItem="VFh-vr-c8h" firstAttribute="top" secondItem="WUu-6h-bZl" secondAttribute="topMargin" id="Fxh-wm-cJs"/>
+                                                <constraint firstItem="VFh-vr-c8h" firstAttribute="width" secondItem="BrW-9N-QOh" secondAttribute="width" id="E4A-OL-ycG"/>
+                                                <constraint firstItem="VFh-vr-c8h" firstAttribute="top" secondItem="WUu-6h-bZl" secondAttribute="topMargin" id="FLf-b0-MqW"/>
                                                 <constraint firstItem="qae-UY-wuq" firstAttribute="top" secondItem="bLf-V8-BYN" secondAttribute="bottom" constant="3" id="JNw-mt-2lh"/>
                                                 <constraint firstItem="Ts5-eC-YSk" firstAttribute="leading" secondItem="WUu-6h-bZl" secondAttribute="leading" id="Kbe-1b-CZ2"/>
                                                 <constraint firstItem="UgT-nh-Qxn" firstAttribute="top" secondItem="WUu-6h-bZl" secondAttribute="top" constant="140" id="KwY-gz-Fpd"/>
+                                                <constraint firstItem="VFh-vr-c8h" firstAttribute="top" secondItem="BrW-9N-QOh" secondAttribute="top" id="LWt-TZ-l79"/>
                                                 <constraint firstItem="oIC-iY-It3" firstAttribute="top" secondItem="WtP-wY-q2Y" secondAttribute="top" id="N97-n1-6dX"/>
                                                 <constraint firstItem="Ts5-eC-YSk" firstAttribute="centerX" secondItem="bLf-V8-BYN" secondAttribute="centerX" id="Nhx-o9-xWz"/>
+                                                <constraint firstItem="VFh-vr-c8h" firstAttribute="top" secondItem="BrW-9N-QOh" secondAttribute="top" id="PTj-Ax-vA7"/>
                                                 <constraint firstItem="WtP-wY-q2Y" firstAttribute="leading" secondItem="oIC-iY-It3" secondAttribute="trailing" constant="6" id="PhB-Bn-jTc"/>
                                                 <constraint firstItem="r7K-JN-JWJ" firstAttribute="top" secondItem="WIK-Oi-s9f" secondAttribute="bottom" constant="4" id="QZH-S0-YGF"/>
                                                 <constraint firstAttribute="bottom" secondItem="UgT-nh-Qxn" secondAttribute="bottom" constant="15" id="R7a-wY-aeK"/>
                                                 <constraint firstAttribute="trailing" secondItem="r7K-JN-JWJ" secondAttribute="trailing" constant="8" id="R7f-2a-342"/>
                                                 <constraint firstItem="r7K-JN-JWJ" firstAttribute="centerY" secondItem="Ts5-eC-YSk" secondAttribute="centerY" id="Tgz-ly-UA3"/>
                                                 <constraint firstAttribute="trailing" secondItem="Ts5-eC-YSk" secondAttribute="trailing" id="U6L-wo-evx"/>
+                                                <constraint firstItem="oft-p0-H6Y" firstAttribute="centerY" secondItem="BrW-9N-QOh" secondAttribute="centerY" id="VGf-Vb-sgh"/>
                                                 <constraint firstItem="qae-UY-wuq" firstAttribute="leading" secondItem="oIC-iY-It3" secondAttribute="trailing" constant="17" id="Xgp-WJ-UfX"/>
+                                                <constraint firstItem="oft-p0-H6Y" firstAttribute="top" secondItem="BrW-9N-QOh" secondAttribute="top" id="aXQ-zC-beA"/>
+                                                <constraint firstItem="BrW-9N-QOh" firstAttribute="leading" secondItem="oIC-iY-It3" secondAttribute="leading" id="c4X-SR-FaP"/>
                                                 <constraint firstItem="UgT-nh-Qxn" firstAttribute="leading" secondItem="r7K-JN-JWJ" secondAttribute="leading" id="crZ-0x-yd5"/>
                                                 <constraint firstItem="Ts5-eC-YSk" firstAttribute="centerX" secondItem="WUu-6h-bZl" secondAttribute="centerX" id="dOa-00-Roy"/>
                                                 <constraint firstItem="VFh-vr-c8h" firstAttribute="trailing" secondItem="qae-UY-wuq" secondAttribute="trailing" id="eYe-bP-pED"/>
+                                                <constraint firstItem="oft-p0-H6Y" firstAttribute="leading" secondItem="BrW-9N-QOh" secondAttribute="trailing" constant="5" id="gQl-re-4Pc"/>
+                                                <constraint firstItem="oft-p0-H6Y" firstAttribute="leading" secondItem="WUu-6h-bZl" secondAttribute="leading" constant="48" id="hh4-fW-GSQ"/>
                                                 <constraint firstItem="Ts5-eC-YSk" firstAttribute="top" secondItem="WUu-6h-bZl" secondAttribute="top" id="i9T-L9-XhC"/>
                                                 <constraint firstItem="WtP-wY-q2Y" firstAttribute="top" secondItem="qae-UY-wuq" secondAttribute="top" id="oAG-Ts-rMa"/>
                                                 <constraint firstItem="Ts5-eC-YSk" firstAttribute="leading" secondItem="wGZ-bi-DYo" secondAttribute="leading" constant="-8" id="ogE-2u-iNr"/>
@@ -2127,7 +2146,7 @@ Days in Space:</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2gt-NH-r0D" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="0YK-NR-PdS" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-2863" y="-786"/>
+            <point key="canvasLocation" x="-2890" y="-786"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="OJm-1l-fZ1">
@@ -2296,7 +2315,7 @@ Days in Space:</string>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="151" y="-1698"/>
+            <point key="canvasLocation" x="-78" y="-1700"/>
         </scene>
         <!--Globe-->
         <scene sceneID="FFZ-eW-W62">
@@ -2449,7 +2468,7 @@ Days in Space:</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nDE-KW-MjK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="2Z1-xE-zUS" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1127.6923076923076" y="-1697.6303317535544"/>
+            <point key="canvasLocation" x="751" y="-1700"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="TJo-kv-MZz">
@@ -2525,17 +2544,18 @@ Days in Space:</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aR3-GC-IUw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="560" y="-789"/>
+            <point key="canvasLocation" x="512" y="-789"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="Hwa-Nf-vWw"/>
-        <segue reference="QZj-XB-PmD"/>
-        <segue reference="7Ix-1h-Ypp"/>
+        <segue reference="ses-y7-Ktu"/>
+        <segue reference="qJ0-0D-oLu"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="Tint"/>
     <resources>
         <image name="3D-Boxed-Reversed-Type-2" width="250" height="157"/>
+        <image name="Azimuth" width="28" height="28"/>
         <image name="Curves 7" width="375" height="667"/>
         <image name="Hubble Legacy Field Thumb 2" width="100" height="100"/>
         <image name="ISS-Marker-25" width="43" height="25"/>
@@ -2560,7 +2580,6 @@ Days in Space:</string>
         <image name="comments_filled_wide_mds_new_red" width="223" height="100"/>
         <image name="document.on.document" catalog="system" width="116" height="128"/>
         <image name="exit" width="30" height="30"/>
-        <image name="gauge.with.dots.needle.0percent" catalog="system" width="128" height="123"/>
         <image name="gearshape" catalog="system" width="128" height="123"/>
         <image name="help" width="31" height="31"/>
         <image name="icons8-date_from" width="22" height="22"/>

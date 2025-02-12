@@ -45,8 +45,8 @@ class Dome3DWrapperViewController: UIViewController {
         let dome3DView = Dome3DView(skyPoints: skyPoints)
         let hostingController = UIHostingController(rootView: dome3DView)
         
-        // Set the hosting controller's view background to clear so the parent's background shows through.
-        hostingController.view.backgroundColor = .clear
+        // Set the hosting controller's view background. Set to clear so the parent's background shows through.
+        hostingController.view.backgroundColor = .issrttRed
         
         // Add the hosting controller as a child.
         addChild(hostingController)
