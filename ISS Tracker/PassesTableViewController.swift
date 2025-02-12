@@ -25,10 +25,10 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         static let fontForTitle                         = Theme.nasa
         static let minObservationTime                   = 300
         static let newLine                              = Globals.newLine
-        static let segueToHelpFromPasses                = "segueToHelpFromPasses"
-        static let segueToDome3DFromPass                = "segueToDome3DFromPass"
         static let noRatingStar                         = #imageLiteral(resourceName: "star-unfilled")
         static let ratingStar                           = #imageLiteral(resourceName: "star")
+        static let segueToDome3DFromPass                = "segueToDome3DFromPass"
+        static let segueToHelpFromPasses                = "segueToHelpFromPasses"
         static let unknownRatingStar                    = #imageLiteral(resourceName: "unknownRatingStar")
     }
 
@@ -401,6 +401,8 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         switch identifier {
         case Constants.segueToHelpFromPasses:
             showHelpViewController(segue)
+        case Constants.segueToDome3DFromPass:
+            showSkyDome(segue)
         default:
             break
         }
@@ -429,9 +431,12 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         let navigationController = segue.destination as! UINavigationController
         let destinationVC = navigationController.topViewController as! Dome3DWrapperViewController
-//        destinationVC.helpContentHTML = UserGuide.passesHelp
-//        destinationVC.helpButtonInCallingVCSourceView = navigationController.navigationBar
-//        destinationVC.title = helpTitle
+        destinationVC.startAz = 190.0
+        destinationVC.startEl = 0.0
+        destinationVC.maxAz = 100.0
+        destinationVC.maxEl = 65.0
+        destinationVC.endAz = 40.0
+        destinationVC.endEl = 0.0
         
         DispatchQueue.main.async {
             self.spinner.stopAnimating()

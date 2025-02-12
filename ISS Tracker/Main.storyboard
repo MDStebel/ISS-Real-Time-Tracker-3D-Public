@@ -1188,6 +1188,35 @@ TRACKER
             </objects>
             <point key="canvasLocation" x="-213" y="-789"/>
         </scene>
+        <!--Sky Dome-->
+        <scene sceneID="apY-pa-Pur">
+            <objects>
+                <viewController id="tlc-iq-vJb" customClass="Dome3DWrapperViewController" customModule="ISS_Tracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Dwi-PA-rvf"/>
+                        <viewControllerLayoutGuide type="bottom" id="vQq-ZU-EKN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7Q6-Ve-TAp">
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="888"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Sky Dome" id="FCT-sw-hUO">
+                        <barButtonItem key="leftBarButtonItem" image="chevron.backward" catalog="system" id="hhw-og-eOY">
+                            <color key="tintColor" name="ISSRTT-White"/>
+                            <connections>
+                                <segue destination="wy4-G7-EGH" kind="unwind" unwindAction="unwindFromOtherVCsWithUnwindSegue:" id="1GZ-eN-aX9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cMZ-CI-DtZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="wy4-G7-EGH" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1257" y="-789"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="mDs-Mc-3Jg">
             <objects>
@@ -1564,6 +1593,9 @@ TRACKER
                                                                     </fragment>
                                                                 </attributedString>
                                                             </buttonConfiguration>
+                                                            <connections>
+                                                                <segue destination="e7M-3n-eIJ" kind="presentation" identifier="segueToDome3DFromPass" modalPresentationStyle="fullScreen" id="Eub-4B-5GU"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4G6-F4-GyH">
                                                             <rect key="frame" x="0.0" y="36.333333333333329" width="97.666666666666671" height="34.333333333333329"/>
@@ -2471,11 +2503,35 @@ Days in Space:</string>
             </objects>
             <point key="canvasLocation" x="472" y="-2559"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Vxx-mZ-IPI">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="e7M-3n-eIJ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="btg-gq-9lh">
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" name="Background"/>
+                        <color key="tintColor" name="Background"/>
+                        <color key="barTintColor" name="ISSRTT-Red"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="tlc-iq-vJb" kind="relationship" relationship="rootViewController" id="pYn-ru-yBq"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aR3-GC-IUw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="560" y="-789"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="cR5-3C-RSS"/>
-        <segue reference="ses-y7-Ktu"/>
-        <segue reference="qJ0-0D-oLu"/>
+        <segue reference="Hwa-Nf-vWw"/>
+        <segue reference="QZj-XB-PmD"/>
+        <segue reference="7Ix-1h-Ypp"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="Tint"/>
     <resources>

@@ -171,7 +171,7 @@ struct PassDetailView: View {
             endAzCompass: "NNE",
             endUTC: 1720659590.0,
             endEl: 15.0,
-            mag: -2.1,
+            mag: -1.1,
             duration: 300,
             startVisibility: 1728744955
         ),
