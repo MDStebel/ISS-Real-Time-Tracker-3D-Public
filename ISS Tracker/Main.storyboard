@@ -1197,9 +1197,9 @@ TRACKER
                         <viewControllerLayoutGuide type="bottom" id="vQq-ZU-EKN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7Q6-Ve-TAp">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="888"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="866"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" name="User Guide Background"/>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Sky Dome" id="FCT-sw-hUO">
@@ -1629,7 +1629,8 @@ TRACKER
                                                         <color key="baseForegroundColor" name="ISSRTT-White"/>
                                                     </buttonConfiguration>
                                                     <connections>
-                                                        <segue destination="e7M-3n-eIJ" kind="presentation" identifier="segueToDome3DFromPass" modalPresentationStyle="fullScreen" id="Eub-4B-5GU"/>
+                                                        <action selector="cellButtonTapped:" destination="5CG-0E-Phl" eventType="touchUpInside" id="hZn-uQ-u3K"/>
+                                                        <segue destination="e7M-3n-eIJ" kind="presentation" identifier="segueToDome3DFromPass" id="3ju-BN-9dA"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oft-p0-H6Y">
@@ -2528,7 +2529,7 @@ Days in Space:</string>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="e7M-3n-eIJ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="btg-gq-9lh">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="56"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="Background"/>
                         <color key="tintColor" name="Background"/>

@@ -3,13 +3,19 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 6/12/18.
+//  Updated by Michael on 2/12/2025
 //  Copyright © 2016-2025 ISS Real-Time Tracker. All rights reserved.
 //
 
 import UIKit
 
+protocol PassesTableViewCellDelegate: AnyObject {
+    func passesTableViewCellDidTapButton(_ cell: PassesTableViewCell)
+}
+
 /// A card style custom cell for passes
 class PassesTableViewCell: UITableViewCell {
+    weak var delegate: PassesTableViewCellDelegate?
     
     // MARK: - Properties
     
@@ -39,6 +45,11 @@ class PassesTableViewCell: UITableViewCell {
     @IBOutlet var startEl: UILabel!
     @IBOutlet var startTime: UILabel!
     @IBOutlet var stationIcon: UIImageView!
+    
+    @IBAction func cellButtonTapped(_ sender: UIButton) {
+        // Notify the delegate when the button is tapped.
+        delegate?.passesTableViewCellDidTapButton(self)
+    }
     
     // MARK: - Methods
     

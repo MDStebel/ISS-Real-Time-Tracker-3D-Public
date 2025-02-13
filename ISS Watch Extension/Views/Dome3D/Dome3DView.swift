@@ -1,8 +1,9 @@
 //
 //  Dome3DView.swift
-//  DomeTest
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 2/9/25.
+//  Copyright © 2025 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import SwiftUI
@@ -52,7 +53,7 @@ struct Dome3DView: View {
         let scene = SCNScene()
         // Make the scene's background transparent.
 #if !os(watchOS)
-        scene.background.contents = issRttRed.withAlphaComponent(1.0)
+        scene.background.contents = issRttDarkGray.withAlphaComponent(1.0)
 #else
         let backgrondColor = issRttRed.withAlphaComponent(0.15)
         scene.background.contents = backgrondColor
@@ -184,8 +185,11 @@ struct Dome3DView: View {
                     // Top half: empty (SceneView will cover it).
                     Color.clear.frame(height: geometry.size.height * 0.5)
                     // Lower half: solid color.
-                    Color.issrttRed.frame(height: geometry.size.height * 0.5)
 #if os(watchOS)
+                    Color.issrttRed.frame(height: geometry.size.height * 0.5)
+                    .opacity(0.15)
+#else
+                    Color.userGuideBackground.frame(height: geometry.size.height * 0.5)
                     .opacity(0.15)
 #endif
                 }
@@ -255,7 +259,7 @@ struct Dome3DView: View {
         material.shaderModifiers = [
             SCNShaderModifierEntryPoint.fragment: """
          if (_surface.position.y < 0.0) {
-             _output.color = vec4(0.00, 0.00, 0.00, 0.0);
+             _output.color = vec4(0.20, 0.200, 0.20, 1.0);
          }
      """
         ]

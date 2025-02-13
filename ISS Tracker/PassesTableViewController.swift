@@ -3,6 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 3/16/16.
+//  Updated by Michael on 2/12/2025
 //  Copyright © 2016-2025 ISS Real-Time Tracker. All rights reserved.
 //
 
@@ -10,26 +11,26 @@ import UIKit
 import EventKit
 import CoreLocation
 
-class PassesTableViewController: UITableViewController, CLLocationManagerDelegate, TableAnimatable {
+class PassesTableViewController: UITableViewController, CLLocationManagerDelegate, TableAnimatable, PassesTableViewCellDelegate {
 
     // MARK: - Properties
     
     private typealias completionHandler = (Data) -> ()
 
     private struct Constants {
-        static let altitude                             = 0
-        static let apiKey                               = ApiKeys.passesApiKey
-        static let customCellIdentifier                 = "OverheadTimesCell"
-        static let deg                                  = Globals.degreeSign
-        static let endpointForPassesAPI                 = ApiEndpoints.passesAPIEndpoint
-        static let fontForTitle                         = Theme.nasa
-        static let minObservationTime                   = 300
-        static let newLine                              = Globals.newLine
-        static let noRatingStar                         = #imageLiteral(resourceName: "star-unfilled")
-        static let ratingStar                           = #imageLiteral(resourceName: "star")
-        static let segueToDome3DFromPass                = "segueToDome3DFromPass"
-        static let segueToHelpFromPasses                = "segueToHelpFromPasses"
-        static let unknownRatingStar                    = #imageLiteral(resourceName: "unknownRatingStar")
+        static let altitude              = 0
+        static let apiKey                = ApiKeys.passesApiKey
+        static let customCellIdentifier  = "OverheadTimesCell"
+        static let deg                   = Globals.degreeSign
+        static let endpointForPassesAPI  = ApiEndpoints.passesAPIEndpoint
+        static let fontForTitle          = Theme.nasa
+        static let minObservationTime    = 300
+        static let newLine               = Globals.newLine
+        static let noRatingStar          = #imageLiteral(resourceName: "star-unfilled")
+        static let ratingStar            = #imageLiteral(resourceName: "star")
+        static let segueToDome3DFromPass = "segueToDome3DFromPass"
+        static let segueToHelpFromPasses = "segueToHelpFromPasses"
+        static let unknownRatingStar     = #imageLiteral(resourceName: "unknownRatingStar")
     }
 
     private var ISSlocationManager: CLLocationManager!
@@ -402,7 +403,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         case Constants.segueToHelpFromPasses:
             showHelpViewController(segue)
         case Constants.segueToDome3DFromPass:
-            showSkyDome(segue)
+            showSkyDome(segue: segue, sender: sender)
         default:
             break
         }
@@ -424,22 +425,32 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         }
     }
     
-    private func showSkyDome(_ segue: UIStoryboardSegue) {
-        DispatchQueue.main.async {
-            self.spinner.startAnimating()
+    private func showSkyDome(segue: UIStoryboardSegue, sender: Any?) {
+        spinner.startAnimating()
+        
+        // First, try to see if the destination is embedded in a UINavigationController.
+        if let navController = segue.destination as? UINavigationController,
+           let destinationVC = navController.topViewController as? Dome3DWrapperViewController {
+            passDataToDomeVC(destinationVC, sender: sender)
+        }
+        // Otherwise, try casting directly.
+        else if let destinationVC = segue.destination as? Dome3DWrapperViewController {
+            passDataToDomeVC(destinationVC, sender: sender)
+        } else {
+            print("Unexpected segue destination: \(segue.destination)")
         }
         
-        let navigationController = segue.destination as! UINavigationController
-        let destinationVC = navigationController.topViewController as! Dome3DWrapperViewController
-        destinationVC.startAz = 190.0
-        destinationVC.startEl = 0.0
-        destinationVC.maxAz = 100.0
-        destinationVC.maxEl = 65.0
-        destinationVC.endAz = 40.0
-        destinationVC.endEl = 0.0
-        
-        DispatchQueue.main.async {
-            self.spinner.stopAnimating()
+        spinner.stopAnimating()
+    }
+
+    private func passDataToDomeVC(_ destinationVC: Dome3DWrapperViewController, sender: Any?) {
+        if let passData = sender as? Passes.Pass {
+            destinationVC.startAz = passData.startAz
+            destinationVC.startEl = passData.startEl
+            destinationVC.maxAz   = passData.maxAz
+            destinationVC.maxEl   = passData.maxEl
+            destinationVC.endAz   = passData.endAz
+            destinationVC.endEl   = passData.endEl ?? 0.0
         }
     }
 
@@ -463,6 +474,9 @@ extension PassesTableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.customCellIdentifier, for: indexPath) as! PassesTableViewCell
+                // Configure your cell (e.g., call configureCell(cell, with: overheadTimesList[indexPath.row]))
+        cell.delegate = self  // set the delegate here
+        
         let row = indexPath.row
 
         if numberOfOverheadTimesActuallyReported > 0 {
@@ -473,6 +487,18 @@ extension PassesTableViewController {
         }
 
         return cell
+    }
+    
+    // Delegate method from the custom cell.
+    func passesTableViewCellDidTapButton(_ cell: PassesTableViewCell) {
+        // Get the indexPath for this cell.
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        
+        // Capture the data from that cell.
+        let selectedPass = overheadTimesList[indexPath.row]
+        
+        // Now perform the segue. You can pass the data via sender.
+        performSegue(withIdentifier: Constants.segueToDome3DFromPass, sender: selectedPass)
     }
 
     private func configureCell(_ cell: PassesTableViewCell, with pass: Passes.Pass) {

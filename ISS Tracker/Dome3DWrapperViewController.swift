@@ -1,6 +1,6 @@
 //
 //  Dome3DWrapperViewController.swift
-//  ISS Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 2/10/25.
 //  Copyright © 2025 Michael Stebel Consulting, LLC. All rights reserved.
@@ -30,13 +30,12 @@ class Dome3DWrapperViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(startAz)
         
         // Set the view controller's modal presentation style to fullScreen.
         self.modalPresentationStyle = .fullScreen
         
         // Set the background to a semi-transparent version of your custom color.
-        view.backgroundColor = .issrttRed.withAlphaComponent(1.0)
+        view.backgroundColor = .userGuideBackground.withAlphaComponent(1.0)
         
         // Create skyPoints to pass to Dome3DView
         skyPoints = createSkypoints()
@@ -46,7 +45,7 @@ class Dome3DWrapperViewController: UIViewController {
         let hostingController = UIHostingController(rootView: dome3DView)
         
         // Set the hosting controller's view background. Set to clear so the parent's background shows through.
-        hostingController.view.backgroundColor = .issrttRed
+        hostingController.view.backgroundColor = .userGuideBackground
         
         // Add the hosting controller as a child.
         addChild(hostingController)
@@ -84,11 +83,10 @@ class Dome3DWrapperViewController: UIViewController {
     private func createSkypoints() -> [SkyPoint] {
         var skyPoints: [SkyPoint] = []
         
-        skyPoints.append(SkyPoint(azimuth: startAz, elevation: startEl))
-        skyPoints.append(SkyPoint(azimuth: maxAz, elevation: maxEl))
-        skyPoints.append(SkyPoint(azimuth: endAz, elevation: endEl))
+        skyPoints.append(SkyPoint(azimuth: startAz, elevation: startEl)) // Point A
+        skyPoints.append(SkyPoint(azimuth: maxAz, elevation: maxEl))     // Point B
+        skyPoints.append(SkyPoint(azimuth: endAz, elevation: endEl))     // Point C
         
-        print(skyPoints)
         return skyPoints
     }
 }
