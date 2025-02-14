@@ -1,25 +1,24 @@
 //
 //  Dome3DView.swift
-//  ISS Real-Time Tracker 3D
+//  DomeTest
 //
 //  Created by Michael Stebel on 2/9/25.
-//  Updated by Michael o 2/13/2025
-//  Copyright © 2025 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
 import SwiftUI
 import SceneKit
 
-/// A simple struct to hold sky coordinates.
+// A simple struct to hold sky coordinates.
 struct SkyPoint {
     var azimuth: Double   // in degrees, where 0° is North
     var elevation: Double // in degrees, where 0° is at the horizon and 90° is the zenith
 }
 
-/// Custom clip shape to show only the top fraction of the view.
+/// A custom shape that clips the view to only show the top fraction.
 struct HorizonClipShape: Shape {
-    /// The fraction of the view's height to show (from the top).
+    // fraction: the fraction of the view's height to show (starting from the top).
     var fraction: CGFloat = 0.5
+
     func path(in rect: CGRect) -> Path {
         var path = Path()
         let clipRect = CGRect(x: rect.minX,
@@ -35,30 +34,18 @@ struct Dome3DView: View {
     // Fixed globe radius.
     static let globeRadius: CGFloat = 2
     
-    // Theme colors as UIColors
-    private let issRttRed = UIColor(cgColor: CGColor(red: 1.0, green: 0.298, blue: 0.298, alpha: 1.0))
-    private let issRttDarkGray = UIColor(cgColor: CGColor(red: 0.20, green: 0.20, blue: 0.20, alpha: 1.0))
-    
-    // The three sky points passed from the parent.
+    // The three sky points, passed from the parent.
     var skyPoints: [SkyPoint]
     
-    // Rotation state so that the globe starts rotated -90° (facing west).
+    // Rotation state so that the globe starts rotated (here, -90° facing west).
     @State private var rotationAngle: Double = -Double.pi/2
     @State private var lastRotation: Double = -Double.pi/2
-    
-    // Store the scene in a @State variable so we can update it.
-    @State private var scene: SCNScene = SCNScene()
-    
-    // Create the SceneKit scene using the current skyPoints.
+
+    /// Builds the SceneKit scene.
     func makeScene() -> SCNScene {
         let scene = SCNScene()
         // Make the scene's background transparent.
-#if !os(watchOS)
-        scene.background.contents = issRttDarkGray.withAlphaComponent(1.0)
-#else
-        let backgrondColor = issRttRed.withAlphaComponent(0.15)
-        scene.background.contents = backgrondColor
-#endif
+        scene.background.contents = UIColor.clear
         
         // Create a container node for all content so we can rotate it.
         let containerNode = SCNNode()
@@ -86,31 +73,23 @@ struct Dome3DView: View {
         scene.rootNode.addChildNode(ambientLightNode)
         
         // MARK: - Globe with Conditional Shading
+        // Create a full globe where the top hemisphere is blue and the bottom is solid dark green.
         let globeNode = Self.createGlobe(radius: Dome3DView.globeRadius)
         containerNode.addChildNode(globeNode)
         
-        // Add the person figure at the center base of the dome.
-        let personNode = Self.createPerson()
-        personNode.name = "person"
-        // Position at the center base (with feet at y = 0)
-        personNode.position = SCNVector3(0, 0, 0)
-        containerNode.addChildNode(personNode)
-        
         // MARK: - Sky Points and Smooth Curve
-        // Use the passed-in skyPoints (we're expecting exactly 3 points: A (start), B (max), C (end).
-        let points = skyPoints
         let pointLabels = ["A", "B", "C"]
-        for (i, point) in points.enumerated() {
+        for (i, point) in skyPoints.enumerated() {
             let pos = Self.convert(skyPoint: point, radius: Dome3DView.globeRadius)
-            let sphere = SCNSphere(radius: 0.10)
-            sphere.firstMaterial?.diffuse.contents = issRttRed
+            let sphere = SCNSphere(radius: 0.05)
+            sphere.firstMaterial?.diffuse.contents = UIColor.red
             let pointNode = SCNNode(geometry: sphere)
             pointNode.position = pos
             containerNode.addChildNode(pointNode)
             
-            let labelGeometry = SCNText(string: pointLabels[i], extrusionDepth: 0.10)
+            let labelGeometry = SCNText(string: pointLabels[i], extrusionDepth: 0.01)
             labelGeometry.font = UIFont.systemFont(ofSize: 0.7)
-            labelGeometry.firstMaterial?.diffuse.contents = issRttRed
+            labelGeometry.firstMaterial?.diffuse.contents = UIColor.red
             let labelNode = SCNNode(geometry: labelGeometry)
             let (minBound, maxBound) = labelGeometry.boundingBox
             let dx = (maxBound.x - minBound.x) / 2
@@ -122,10 +101,10 @@ struct Dome3DView: View {
             containerNode.addChildNode(labelNode)
         }
         
-        if points.count == 3 {
-            let p0 = Self.convert(skyPoint: points[0], radius: Dome3DView.globeRadius)
-            let p1 = Self.convert(skyPoint: points[1], radius: Dome3DView.globeRadius)
-            let p2 = Self.convert(skyPoint: points[2], radius: Dome3DView.globeRadius)
+        if skyPoints.count == 3 {
+            let p0 = Self.convert(skyPoint: skyPoints[0], radius: Dome3DView.globeRadius)
+            let p1 = Self.convert(skyPoint: skyPoints[1], radius: Dome3DView.globeRadius)
+            let p2 = Self.convert(skyPoint: skyPoints[2], radius: Dome3DView.globeRadius)
             
             let cp = SCNVector3(
                 (4 * p1.x - p0.x - p2.x) / 2,
@@ -133,7 +112,7 @@ struct Dome3DView: View {
                 (4 * p1.z - p0.z - p2.z) / 2
             )
             
-            let curvePoints = Self.sampleQuadraticBezier(p0: p0, cp: cp, p2: p2, samples: 128)
+            let curvePoints = Self.sampleQuadraticBezier(p0: p0, cp: cp, p2: p2, samples: 50)
             let lineNode = Self.createLineNodeFromPoints(curvePoints, color: UIColor.white)
             containerNode.addChildNode(lineNode)
         }
@@ -148,9 +127,9 @@ struct Dome3DView: View {
         for dir in cardinalDirections {
             let phi = dir.azimuth * .pi / 180
             let offset = Float(Dome3DView.globeRadius + 0.1)
-            let pos = SCNVector3(offset * sin(Float(phi)), 0, -offset * cos(Float(phi)))
+            let pos = SCNVector3(offset * sin(Float(phi)), 0, offset * cos(Float(phi)))
             let textGeometry = SCNText(string: dir.label, extrusionDepth: 0.15)
-            textGeometry.font = UIFont.systemFont(ofSize: 0.8)
+            textGeometry.font = UIFont.systemFont(ofSize: 0.7)
             textGeometry.firstMaterial?.diffuse.contents = UIColor.white
             let textNode = SCNNode(geometry: textGeometry)
             let (minBound, maxBound) = textGeometry.boundingBox
@@ -164,20 +143,20 @@ struct Dome3DView: View {
         
         // MARK: - Zenith Marker and Label
         let zenithMarker = SCNSphere(radius: 0.06)
-        zenithMarker.firstMaterial?.diffuse.contents = UIColor.white
+        zenithMarker.firstMaterial?.diffuse.contents = UIColor.green
         let zenithNode = SCNNode(geometry: zenithMarker)
         zenithNode.position = SCNVector3(0, Float(Dome3DView.globeRadius), 0)
         containerNode.addChildNode(zenithNode)
         
-        let zenithLabelGeometry = SCNText(string: "Zenith", extrusionDepth: 0.10)
-        zenithLabelGeometry.font = UIFont.systemFont(ofSize: 0.5)
-        zenithLabelGeometry.firstMaterial?.diffuse.contents = UIColor.white
+        let zenithLabelGeometry = SCNText(string: "Zenith", extrusionDepth: 0.15)
+        zenithLabelGeometry.font = UIFont.systemFont(ofSize: 0.7)
+        zenithLabelGeometry.firstMaterial?.diffuse.contents = UIColor.green
         let zenithLabelNode = SCNNode(geometry: zenithLabelGeometry)
         let (zMin, zMax) = zenithLabelGeometry.boundingBox
         let zdx = (zMax.x - zMin.x) / 2
         let zdy = (zMax.y - zMin.y) / 2
         zenithLabelNode.pivot = SCNMatrix4MakeTranslation(zdx, zdy, 0)
-        zenithLabelNode.position = SCNVector3(0, Float(Dome3DView.globeRadius + 0.1), 0)
+        zenithLabelNode.position = SCNVector3(0, Float(Dome3DView.globeRadius + 0.3), 0)
         zenithLabelNode.scale = SCNVector3(0.5, 0.5, 0.5)
         containerNode.addChildNode(zenithLabelNode)
         
@@ -186,40 +165,18 @@ struct Dome3DView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            ZStack {
-                // Background layer that fills the entire view.
-                // We want the lower half to show a solid color.
-                VStack(spacing: 0) {
-                    // Top half: empty (SceneView will cover it).
-                    Color.clear.frame(height: geometry.size.height * 0.5)
-                    // Lower half: solid color.
-#if os(watchOS)
-                    Color.issrttRed.frame(height: geometry.size.height * 0.5)
-                        .opacity(0.15)
-#else
-                    Color.userGuideBackground.frame(height: geometry.size.height * 0.5)
-                        .opacity(0.15)
-#endif
-                }
-                // Overlay the SceneView (clipped to show only the top half).
-                SceneView(
-                    scene: scene,
-                    pointOfView: nil,
-                    options: [],
-                    preferredFramesPerSecond: 60
-                )
-                .clipShape(HorizonClipShape(fraction: 0.5))
-            }
+            SceneView(
+                scene: makeScene(),
+                pointOfView: nil,
+                options: [],
+                preferredFramesPerSecond: 60
+            )
+            // Clip the view so that only the top half (above the horizon) is visible.
+            .clipShape(HorizonClipShape(fraction: 0.5))
             .onAppear {
-                // Recreate the scene when the view appears so that it uses the passed-in skyPoints.
-                scene = makeScene()
-                if let cameraNode = scene.rootNode.childNodes.first(where: { $0.camera != nil }) {
+                if let cameraNode = makeScene().rootNode.childNodes.first(where: { $0.camera != nil }) {
                     let aspect = geometry.size.width / geometry.size.height
-#if !os(watchOS)
                     let paddingFactor: CGFloat = 1.3
-#else
-                    let paddingFactor: CGFloat = 1.2
-#endif
                     let verticalScale = Dome3DView.globeRadius * paddingFactor
                     let horizontalScale = Dome3DView.globeRadius * paddingFactor / aspect
                     let finalScale = max(verticalScale, horizontalScale)
@@ -242,6 +199,7 @@ struct Dome3DView: View {
     }
     
     private func updateContainerRotation() {
+        let scene = makeScene()
         if let containerNode = scene.rootNode.childNode(withName: "container", recursively: false) {
             containerNode.eulerAngles.y = Float(rotationAngle)
         }
@@ -252,39 +210,19 @@ struct Dome3DView: View {
     static func createGlobe(radius: CGFloat) -> SCNNode {
         // Create a full sphere that represents the globe.
         let sphere = SCNSphere(radius: radius)
-#if os(iOS)
-        sphere.segmentCount = 256
-#else
-        sphere.segmentCount = 128
-#endif
+        sphere.segmentCount = 48
         let material = SCNMaterial()
-        // Top hemisphere.
-#if os(iOS)
-        material.diffuse.contents = UIColor.lightGray.withAlphaComponent(0.65)
-#else
-        material.diffuse.contents = UIColor.lightGray.withAlphaComponent(0.45)
-#endif
+        // Set the top hemisphere color to blue.
+        material.diffuse.contents = UIColor.blue.withAlphaComponent(0.75)
         material.isDoubleSided = true
-        
-#if os(iOS)
-        // For iOS: force the lower half (y < 0) to be a solid color.
+        // Use a shader modifier to output solid dark green for fragments with model-space y < 0.
         material.shaderModifiers = [
             SCNShaderModifierEntryPoint.fragment: """
-         if (_surface.position.y < 0.0) {
-             _output.color = vec4(0.20, 0.200, 0.20, 1.0);
-         }
-     """
+                if (_surface.position.y < 0.0) {
+                    _output.color = vec4(0.0, 0.1, 0.0, 1.0);
+                }
+            """
         ]
-#else
-        // For watchOS
-        material.shaderModifiers = [
-            SCNShaderModifierEntryPoint.fragment: """
-         if (_surface.position.y < 0.0) {
-             _output.color = vec4(0.0, 0.1, 0.0, 1.0);
-         }
-     """
-        ]
-#endif
         sphere.firstMaterial = material
         return SCNNode(geometry: sphere)
     }
@@ -294,54 +232,12 @@ struct Dome3DView: View {
         return createGlobe(radius: radius)
     }
     
-    // Function to create a simple 3D figure of a person.
-    static func createPerson() -> SCNNode {
-        let personNode = SCNNode()
-        
-        // Create body: a cylinder (body height 0.5, radius 0.1)
-        let body = SCNCylinder(radius: 0.1, height: 0.5)
-        body.firstMaterial?.diffuse.contents = UIColor.white
-        let bodyNode = SCNNode(geometry: body)
-        // Position the body so its base is at y=0 (shift up by half its height)
-        bodyNode.position = SCNVector3(0, 0.25, 0)
-        personNode.addChildNode(bodyNode)
-        
-        // Create head: a sphere (radius 0.1)
-        let head = SCNSphere(radius: 0.1)
-        head.firstMaterial?.diffuse.contents = UIColor.white
-        let headNode = SCNNode(geometry: head)
-        // Position head on top of the body (body height + head radius)
-        headNode.position = SCNVector3(0, 0.5 + 0.1, 0)
-        personNode.addChildNode(headNode)
-        
-        // Create left arm: a cylinder (arm length 0.3, radius 0.05)
-        let leftArm = SCNCylinder(radius: 0.05, height: 0.3)
-        leftArm.firstMaterial?.diffuse.contents = UIColor.white
-        let leftArmNode = SCNNode(geometry: leftArm)
-        // Rotate the arm so that it lies horizontally along the x-axis.
-        leftArmNode.eulerAngles.z = .pi / 2
-        // Position left arm attached to the left side of the body.
-        leftArmNode.position = SCNVector3(-0.15, 0.4, 0)
-        personNode.addChildNode(leftArmNode)
-        
-        // Create right arm.
-        let rightArm = SCNCylinder(radius: 0.05, height: 0.3)
-        rightArm.firstMaterial?.diffuse.contents = UIColor.white
-        let rightArmNode = SCNNode(geometry: rightArm)
-        rightArmNode.eulerAngles.z = .pi / 2
-        // Position right arm attached to the right side of the body.
-        rightArmNode.position = SCNVector3(0.15, 0.4, 0)
-        personNode.addChildNode(rightArmNode)
-        
-        return personNode
-    }
-    
     static func convert(skyPoint: SkyPoint, radius: CGFloat) -> SCNVector3 {
         let theta = (90 - skyPoint.elevation) * .pi / 180
         let phi = skyPoint.azimuth * .pi / 180
         let x = Float(radius * sin(CGFloat(theta)) * sin(CGFloat(phi)))
         let y = Float(radius * cos(CGFloat(theta)))
-        let z = Float(-radius * sin(CGFloat(theta)) * cos(CGFloat(phi))) // Inverted z for proper orientation
+        let z = Float(radius * sin(CGFloat(theta)) * cos(CGFloat(phi)))
         return SCNVector3(x, y, z)
     }
     
@@ -349,14 +245,6 @@ struct Dome3DView: View {
         return convert(skyPoint: SkyPoint(azimuth: azimuth, elevation: elevation), radius: radius)
     }
     
-    /// This function generates a series of points along a quadratic Bézier curve defined by three 3D points, and then “projects” those points onto a sphere with a fixed radius.
-    /// Uses the Bézier formula: B(t) = (1‑t)²·p0 + 2·(1‑t)·t·cp + t²·p2
-    /// - Parameters:
-    ///   - p0: The starting point of the curve.
-    ///   - cp: The control point. It influences the curvature, determining how the curve bends between the start and end points.
-    ///   - p2: The ending point of the curve.
-    ///   - samples: integer that determines the number of intervals into which the curve is divided.
-    /// - Returns: An  array of points along the curve of the sphere.
     static func sampleQuadraticBezier(p0: SCNVector3, cp: SCNVector3, p2: SCNVector3, samples: Int) -> [SCNVector3] {
         var points: [SCNVector3] = []
         let targetRadius = Float(Dome3DView.globeRadius)
@@ -370,15 +258,15 @@ struct Dome3DView: View {
             let len = sqrt(point.x * point.x + point.y * point.y + point.z * point.z)
             if len != 0 {
                 point = SCNVector3(point.x / len * targetRadius,
-                                   point.y / len * targetRadius,
-                                   point.z / len * targetRadius)
+                                     point.y / len * targetRadius,
+                                     point.z / len * targetRadius)
             }
             points.append(point)
         }
         return points
     }
     
-    static func createLineNodeFromPoints(_ points: [SCNVector3], color: UIColor, radius: CGFloat = 0.025) -> SCNNode {
+    static func createLineNodeFromPoints(_ points: [SCNVector3], color: UIColor, radius: CGFloat = 0.015) -> SCNNode {
         let lineNode = SCNNode()
         for i in 0..<points.count - 1 {
             let segment = createCylinderLine(from: points[i], to: points[i+1], radius: radius, color: color)
@@ -430,10 +318,11 @@ struct Dome3DView_Previews: PreviewProvider {
     static var previews: some View {
         Dome3DView(skyPoints: [
             SkyPoint(azimuth: 222, elevation: 0),
-            SkyPoint(azimuth: 308, elevation: 57),
+            SkyPoint(azimuth: 308, elevation: 87),
             SkyPoint(azimuth: 42, elevation: 0)
         ])
-        .frame(width: 200, height: 250)
-        .ignoresSafeArea()
+            .frame(width: 200, height: 300)
+            .ignoresSafeArea()
     }
 }
+
