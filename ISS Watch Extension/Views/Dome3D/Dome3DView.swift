@@ -217,8 +217,7 @@ struct Dome3DView: View {
                     let aspect = geometry.size.width / geometry.size.height
                     let paddingFactor: CGFloat
 #if !os(watchOS)
-                    if
-                        UIDevice.current.userInterfaceIdiom == .pad {
+                    if UIDevice.current.userInterfaceIdiom == .pad {
                         paddingFactor = 1.5
                     } else {
                         paddingFactor = 1.3
