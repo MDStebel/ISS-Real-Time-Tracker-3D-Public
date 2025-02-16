@@ -126,7 +126,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     /// This computed property returns the allowed minimum zoom slider setting based on the device, for better performance on iPad
     private var zoomSliderMinFloor: Double {
-        if Globals.isIPad {
+        if UIDevice.current.userInterfaceIdiom == .pad {
             return 0.15
         } else {
             return 0.05

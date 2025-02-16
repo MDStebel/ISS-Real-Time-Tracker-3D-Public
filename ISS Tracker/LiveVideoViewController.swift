@@ -75,7 +75,7 @@ class LiveVideoViewController: UIViewController, WKUIDelegate, WKNavigationDeleg
     
     private func setUpWebView() {
         let webConfiguration = WKWebViewConfiguration()
-        webConfiguration.allowsInlineMediaPlayback = Globals.isIPad ? true : false
+        webConfiguration.allowsInlineMediaPlayback = UIDevice.current.userInterfaceIdiom == .pad ? true : false
         
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
         webView.uiDelegate = self

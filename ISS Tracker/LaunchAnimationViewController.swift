@@ -103,7 +103,7 @@ class LaunchAnimationViewController: UIViewController {
         let yOffset: CGFloat
         let finalScale: CGFloat
         
-        if Globals.isIPad {
+        if UIDevice.current.userInterfaceIdiom == .pad {
             yOffset = threeDTextImage.bounds.height + iPad3DTextYOffset
             finalScale = 22.0
         } else {
@@ -151,17 +151,17 @@ class LaunchAnimationViewController: UIViewController {
         )
     }
     
-    // MARK: - Rotation Handling
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            coordinator.animate(alongsideTransition: nil) { [weak self] _ in
-                guard let self = self else { return }
-                self.performSegue(withIdentifier: self.segueToMainViewController, sender: self)
-            }
-        }
-    }
+//    // MARK: - For debugging only! Rotation Handling to stop animation and go right into the main screen
+//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+//        super.viewWillTransition(to: size, with: coordinator)
+//        
+//        if UIDevice.current.userInterfaceIdiom == .phone {
+//            coordinator.animate(alongsideTransition: nil) { [weak self] _ in
+//                guard let self = self else { return }
+//                self.performSegue(withIdentifier: self.segueToMainViewController, sender: self)
+//            }
+//        }
+//    }
     
     // MARK: - Helper Methods
     private func getVersionAndCopyrightData() {

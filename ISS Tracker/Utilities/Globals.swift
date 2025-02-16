@@ -13,16 +13,6 @@ struct Globals {
     
     // MARK: - Global Variables
     
-    static var isIPad = false {
-        didSet {
-            if isIPad {
-                Theme.navigationBarTitleFontSize = Theme.navigationBarTitleFontSizeForIPad
-            } else {
-                Theme.navigationBarTitleFontSize = Theme.navigationBarTitleFontSizeForIPhone
-            }
-        }
-    }
-    
     static var autoRotateGlobeEnabled                        = true
     static var blackScreenInHDEVExplanationPopsUp            = true
     static var buildNumber                                   = ""

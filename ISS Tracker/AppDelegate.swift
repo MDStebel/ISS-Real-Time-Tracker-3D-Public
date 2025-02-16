@@ -33,8 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func configureGlobalSettings() {
         window?.tintColor = UIColor(named: Theme.tint)
-        Globals.thisDevice = UIDevice.current.model
-        Globals.isIPad = Globals.thisDevice.hasPrefix("iPad")
     }
 
     // We only restore settings once during the foreground transition.
