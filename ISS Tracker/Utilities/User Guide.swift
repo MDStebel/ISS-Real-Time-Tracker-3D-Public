@@ -224,7 +224,7 @@ struct UserGuide {
     <h4>Viewing the Sky Dome</h4>
     <p>The Sky Dome shows the path the flyover pass will take from your point of view. Tap the Sky Dome button on the upper-left of any pass to display the 3D Sky Dome for that pass. Drag the dome to rotate it around the zenith.
     <h4>Adding a Pass Event to Your Calendar</h4>
-    <p>Tap any pass in the table to add it as an event in your calendar. When adding a pass to your calendar, two alerts will be set: the first for 1 hour before and the second for 15 minutes before the start of the pass. The starting and ending times for the pass are saved in the event in your calendar, along with the maximum magnitude and the starting, maximum, and ending azimuths and elevations for the pass.</p>
+    <p>Tap the Remind button on the upper-right of any pass to add it as an event in your calendar. When adding a pass to your calendar, two alerts will be set: the first for 1 hour before and the second for 15 minutes before the start of the pass. The starting and ending times for the pass are saved in the event in your calendar, along with the maximum magnitude and the starting, maximum, and ending azimuths and elevations for the pass.</p>
     <h4>Changing the Number of Days to Compute</h4>
     <p>Tap the Calendar icon at the top-right of the screen to change the number of days to compute and refresh the list. You can also change the number of days so that the app remembers your settings for the next time in Settings.</p>
     <h4>Pull-to-Refresh</h4>
@@ -325,7 +325,7 @@ struct UserGuide {
     <h4>Viewing the Sky Dome</h4>
     <p>The Sky Dome shows the path the flyover pass will take from your point of view. Tap the Sky Dome button on the upper-left of any pass to display the 3D Sky Dome for that pass. Drag the dome to rotate it around the zenith.
     <h4>Adding a Pass Event to Your Calendar</h4>
-    <p>Tap any pass in the table to add it as an event in your calendar. When adding a pass to your calendar, two alerts will be set: the first for 1 hour before, and the second for 15 minutes before the start of the pass. The starting and ending times for the pass are saved in the event in your calendar, along with the maximum magnitude, as well as the starting, maximum, and ending azimuths and elevations for the pass.</p>
+    <p>Tap the Remind button on the upper-right of any pass in the table to add it as an event in your calendar. When adding a pass to your calendar, two alerts will be set: the first for 1 hour before, and the second for 15 minutes before the start of the pass. The starting and ending times for the pass are saved in the event in your calendar, along with the maximum magnitude, as well as the starting, maximum, and ending azimuths and elevations for the pass.</p>
     <h4>Change Number of Days to Compute &amp; Refresh</h4>
     <p>Tap the Calendar icon at the top-right of the screen to change the number of days to compute and refresh the list. To change the number of days so that the app remembers your setting for next time, change it in Settings.</p>
     <h4>Pull-to-Refresh</h4>

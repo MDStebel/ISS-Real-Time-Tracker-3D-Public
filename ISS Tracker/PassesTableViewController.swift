@@ -98,7 +98,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     }
 
     private func setUpDateFormatter() {
-        dateFormatterForDate.dateFormat = Globals.outputDateOnlyFormatString
+        dateFormatterForDate.dateFormat = UIDevice.current.userInterfaceIdiom == .pad || UIDevice.current.orientation.isLandscape ? Globals.outputDateOnlyFormatStringWide : Globals.outputDateOnlyFormatString
         dateFormatterForTime.dateFormat = Globals.outputTimeOnlyFormatString
     }
 
