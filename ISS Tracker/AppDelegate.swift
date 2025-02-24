@@ -30,6 +30,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         reviewPromptManager.scheduleReviewRequest()
         return true
     }
+    
+    // MARK: - Orientation Control
+
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return UIDevice.current.userInterfaceIdiom == .pad ? .all : .portrait
+    }
+    
+    // MARK: - Handle state changes
 
     private func configureGlobalSettings() {
         window?.tintColor = UIColor(named: Theme.tint)

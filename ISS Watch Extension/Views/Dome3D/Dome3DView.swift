@@ -39,8 +39,10 @@ struct Dome3DView: View {
     private let issRttRed = UIColor(cgColor: CGColor(red: 1.0, green: 0.298, blue: 0.298, alpha: 1.0))
     private let issRttDarkGray = UIColor(cgColor: CGColor(red: 0.20, green: 0.20, blue: 0.20, alpha: 1.0))
     
-    // The three sky points passed from the parent.
+    // The three sky points, pass date & time, and satellite name. These will be passed from the parent view.
     var skyPoints: [SkyPoint]
+    var date: String = ""
+    var startTime: String = ""
     
     // Rotation state so that the globe starts rotated -90° (facing west).
     @State private var rotationAngle: Double = -Double.pi/2
@@ -209,6 +211,35 @@ struct Dome3DView: View {
                     preferredFramesPerSecond: 60
                 )
                 .clipShape(HorizonClipShape(fraction: 0.5))
+                
+#if !os(watchOS)
+                // Text appearing immediately below the hemisphere.
+                VStack(alignment: .leading) {
+                    let textPadding = geometry.size.height * -0.045
+                    Spacer()
+                        .padding(.top, textPadding)
+                    Text("Sky Dome")
+                        .font(.title)
+                        .bold()
+                        .foregroundColor(.white)
+                        .padding(.top, textPadding * 0.8)  // Move it up to align properly under the dome
+                    Text("Shows the flyover path for the pass")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding(.top, textPadding * 0.7)  // Move it up to align properly under the dome
+                    Text("ON: \(date),  START (A): \(startTime).")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .padding(.top, textPadding * 0.5)  // Move it up to align properly under the dome
+                    Text("Drag the Sky Dome left or right to rotate it around you.")
+                        .font(.footnote)
+                        .foregroundColor(.white)
+                        .padding(.top, textPadding * 0.01)  // Move it up to align properly under the dome
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
+                .frame(height: geometry.size.height * 0.5)
+#endif
+                
             }
             .onAppear {
                 // Recreate the scene when the view appears so that it uses the passed-in skyPoints.
@@ -216,6 +247,7 @@ struct Dome3DView: View {
                 if let cameraNode = scene.rootNode.childNodes.first(where: { $0.camera != nil }) {
                     let aspect = geometry.size.width / geometry.size.height
                     let paddingFactor: CGFloat
+                    
 #if !os(watchOS)
                     if UIDevice.current.userInterfaceIdiom == .pad {
                         paddingFactor = 1.5
@@ -225,7 +257,7 @@ struct Dome3DView: View {
 #else
                     paddingFactor = 1.2
 #endif
-                    print(paddingFactor)
+                    
                     let verticalScale = Dome3DView.globeRadius * paddingFactor
                     let horizontalScale = Dome3DView.globeRadius * paddingFactor / aspect
                     let finalScale = max(verticalScale, horizontalScale)

@@ -18,6 +18,8 @@ class Dome3DWrapperViewController: UIViewController {
     var maxEl: Double   = 0.0
     var endAz: Double   = 0.0
     var endEl: Double   = 0.0
+    var passDate = ""
+    var passStartTime = ""
     
     private var skyPoints: [SkyPoint] = []
     
@@ -41,7 +43,7 @@ class Dome3DWrapperViewController: UIViewController {
         skyPoints = createSkypoints()
         
         // Create your SwiftUI Dome3DView with the passed skyPoints.
-        let dome3DView = Dome3DView(skyPoints: skyPoints)
+        let dome3DView = Dome3DView(skyPoints: skyPoints, date: passDate, startTime: passStartTime)
         let hostingController = UIHostingController(rootView: dome3DView)
         
         // Set the hosting controller's view background. Set to clear so the parent's background shows through.

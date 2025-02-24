@@ -445,12 +445,14 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
 
     private func passDataToDomeVC(_ destinationVC: Dome3DWrapperViewController, sender: Any?) {
         if let passData = sender as? Passes.Pass {
-            destinationVC.startAz = passData.startAz
-            destinationVC.startEl = passData.startEl
-            destinationVC.maxAz   = passData.maxAz
-            destinationVC.maxEl   = passData.maxEl
-            destinationVC.endAz   = passData.endAz
-            destinationVC.endEl   = passData.endEl ?? 0.0
+            destinationVC.startAz       = passData.startAz
+            destinationVC.startEl       = passData.startEl
+            destinationVC.maxAz         = passData.maxAz
+            destinationVC.maxEl         = passData.maxEl
+            destinationVC.endAz         = passData.endAz
+            destinationVC.endEl         = passData.endEl ?? 0.0
+            destinationVC.passDate      = dateFormatterForDate.string(from: Date(timeIntervalSince1970: passData.startUTC))
+            destinationVC.passStartTime = dateFormatterForTime.string(from: Date(timeIntervalSince1970: passData.startUTC))
         }
     }
 
