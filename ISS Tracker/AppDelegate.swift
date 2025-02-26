@@ -49,6 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
+        SettingsDataModel.restoreUserSettings()
         if referenceToGlobeFullViewController.isViewLoaded {
             referenceToGlobeFullViewController.startUpdatingGlobe()
         }

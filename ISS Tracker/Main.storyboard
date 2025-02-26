@@ -1377,7 +1377,7 @@ TRACKER
                                                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="14"/>
                                                             </variation>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="COMP" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uHk-cj-EMP">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="COMP" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uHk-cj-EMP">
                                                             <rect key="frame" x="275" y="0.0" width="55" height="19"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="55" id="NIp-ua-eok"/>
@@ -1427,13 +1427,14 @@ TRACKER
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="55" id="Yqs-Wr-UVs"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="45" id="fwT-fQ-0La"/>
                                                         <constraint firstItem="7eH-aJ-C38" firstAttribute="centerY" secondItem="wGZ-bi-DYo" secondAttribute="centerY" id="pwp-Rj-BPL"/>
                                                     </constraints>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="UgT-nh-Qxn">
                                                     <rect key="frame" x="72" y="140" width="330" height="92"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="3k5-o4-kUX">
+                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="3k5-o4-kUX">
                                                             <rect key="frame" x="0.0" y="0.0" width="330" height="19.333333333333332"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00PM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FwY-ja-Py8">
@@ -1446,7 +1447,7 @@ TRACKER
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30.5" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BiX-l4-gvd">
-                                                                    <rect key="frame" x="111.66666666666666" y="0.0" width="40" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="104.33333333333334" y="0.0" width="40" height="19.333333333333332"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="40" id="kOG-es-ZSg"/>
                                                                     </constraints>
@@ -1455,7 +1456,7 @@ TRACKER
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15.05" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f2M-3V-gfJ">
-                                                                    <rect key="frame" x="198.33333333333331" y="0.0" width="40" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="196" y="0.0" width="40" height="19.333333333333332"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="40" id="6on-fA-1SR"/>
                                                                     </constraints>
@@ -1463,7 +1464,7 @@ TRACKER
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vpw-I9-jil">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NE" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vpw-I9-jil">
                                                                     <rect key="frame" x="285" y="0.0" width="45" height="19.333333333333332"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="45" id="jqK-mo-6Bi"/>
@@ -1474,7 +1475,7 @@ TRACKER
                                                                 </label>
                                                             </subviews>
                                                         </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="T6F-mP-e3f">
+                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="T6F-mP-e3f">
                                                             <rect key="frame" x="0.0" y="36.333333333333343" width="330" height="19.333333333333329"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00PM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="89O-zD-qRi">
@@ -1487,7 +1488,7 @@ TRACKER
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30.5" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hz-62-B2Y">
-                                                                    <rect key="frame" x="111.66666666666666" y="0.0" width="40" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="104.33333333333334" y="0.0" width="40" height="19.333333333333332"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="40" id="IJj-Jp-rXc"/>
                                                                     </constraints>
@@ -1496,7 +1497,7 @@ TRACKER
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15.05" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v94-95-EiB">
-                                                                    <rect key="frame" x="198.33333333333331" y="0.0" width="40" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="196" y="0.0" width="40" height="19.333333333333332"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="40" id="mbT-7M-2UE"/>
                                                                     </constraints>
@@ -1504,7 +1505,7 @@ TRACKER
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yS1-9o-HC4">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NE" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yS1-9o-HC4">
                                                                     <rect key="frame" x="285" y="0.0" width="45" height="19.333333333333332"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="45" id="js7-4r-kNo"/>
@@ -1515,7 +1516,7 @@ TRACKER
                                                                 </label>
                                                             </subviews>
                                                         </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="ZiG-CX-6Wn">
+                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="ZiG-CX-6Wn">
                                                             <rect key="frame" x="0.0" y="72.666666666666657" width="330" height="19.333333333333329"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00PM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yjc-zr-CUh">
@@ -1528,7 +1529,7 @@ TRACKER
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="30.5" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VCN-OD-M3l">
-                                                                    <rect key="frame" x="111.66666666666666" y="0.0" width="40" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="104.33333333333334" y="0.0" width="40" height="19.333333333333332"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="40" id="dNg-RA-cmQ"/>
                                                                     </constraints>
@@ -1537,7 +1538,7 @@ TRACKER
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15.05" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6XQ-YD-i1H">
-                                                                    <rect key="frame" x="198.33333333333331" y="0.0" width="40" height="19.333333333333332"/>
+                                                                    <rect key="frame" x="196" y="0.0" width="40" height="19.333333333333332"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="40" id="C3d-QH-8Bv"/>
                                                                     </constraints>
@@ -1545,7 +1546,7 @@ TRACKER
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nK8-zX-b3e">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NE" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nK8-zX-b3e">
                                                                     <rect key="frame" x="285" y="0.0" width="45" height="19.333333333333332"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="45" id="x9k-fh-cla"/>
@@ -1557,6 +1558,9 @@ TRACKER
                                                             </subviews>
                                                         </stackView>
                                                     </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="270" id="MoA-Hz-c4G"/>
+                                                    </constraints>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="bLf-V8-BYN">
                                                     <rect key="frame" x="127" y="45" width="156" height="35"/>

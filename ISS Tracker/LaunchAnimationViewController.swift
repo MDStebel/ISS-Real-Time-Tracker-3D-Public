@@ -151,18 +151,6 @@ class LaunchAnimationViewController: UIViewController {
         )
     }
     
-//    // MARK: - For debugging only! Rotation Handling to stop animation and go right into the main screen
-//    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-//        super.viewWillTransition(to: size, with: coordinator)
-//        
-//        if UIDevice.current.userInterfaceIdiom == .phone {
-//            coordinator.animate(alongsideTransition: nil) { [weak self] _ in
-//                guard let self = self else { return }
-//                self.performSegue(withIdentifier: self.segueToMainViewController, sender: self)
-//            }
-//        }
-//    }
-    
     // MARK: - Helper Methods
     private func getVersionAndCopyrightData() {
         Globals.copyrightString = Bundle.main.humanReadableCopyright

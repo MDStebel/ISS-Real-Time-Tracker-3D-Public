@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 2/9/25.
-//  Updated by Michael on 2/24/2025
+//  Updated by Michael on 2/25/2025
 //  Copyright © 2025 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
@@ -215,7 +215,8 @@ struct Dome3DView: View {
 #if !os(watchOS)
                 // Text appearing immediately below the hemisphere.
                 VStack(alignment: .leading) {
-                    let textPadding = geometry.size.height * -0.045
+                    let paddingFactor: CGFloat = 0.020     // Used to fine-tune the text line spacing. Lower=more space, higher=less space.
+                    let textPadding = geometry.size.height * -paddingFactor
                     Spacer()
                         .padding(.top, textPadding)
                     Text("Sky Dome")
@@ -227,7 +228,7 @@ struct Dome3DView: View {
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding(.top, textPadding * 0.7)  // Move it up to align properly under the dome
-                    Text("ON: \(date),  START (A): \(startTime).")
+                    Text("On: \(date),  Start (A): \(startTime).")
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding(.top, textPadding * 0.5)  // Move it up to align properly under the dome
