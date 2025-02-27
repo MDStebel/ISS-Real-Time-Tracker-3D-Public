@@ -215,7 +215,7 @@ struct Dome3DView: View {
 #if !os(watchOS)
                 // Text appearing immediately below the hemisphere.
                 VStack(alignment: .leading) {
-                    let paddingFactor: CGFloat = 0.020     // Used to fine-tune the text line spacing. Lower=more space, higher=less space.
+                    let paddingFactor: CGFloat = 0.020     // Used to fine-tune the text line spacing. Lower = more space, higher = less space. (Use 0.045 for simulator screenshot accuracy
                     let textPadding = geometry.size.height * -paddingFactor
                     Spacer()
                         .padding(.top, textPadding)
@@ -292,9 +292,9 @@ struct Dome3DView: View {
         // Create a full sphere that represents the globe.
         let sphere = SCNSphere(radius: radius)
 #if os(iOS)
-        sphere.segmentCount = 256
+        sphere.segmentCount = 512
 #else
-        sphere.segmentCount = 128
+        sphere.segmentCount = 256
 #endif
         let material = SCNMaterial()
         // Top hemisphere.
