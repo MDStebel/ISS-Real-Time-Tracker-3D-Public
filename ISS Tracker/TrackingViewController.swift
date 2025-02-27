@@ -307,7 +307,13 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // Set font and attributes for navigation bar
+        // Set font and attributes for navigation bar and set the appropriate title font size for iPad or iPhone
+        // This value is contained in Theme and used in other views.
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            Theme.navigationBarTitleFontSize = Theme.navigationBarTitleFontSizeForIPad
+        } else {
+            Theme.navigationBarTitleFontSize = Theme.navigationBarTitleFontSizeForIPhone
+        }
         let titleFontSize = Theme.navigationBarTitleFontSize
         if let titleFont = UIFont(name: Constants.fontForTitle, size: titleFontSize) {
             let attributes = [NSAttributedString.Key.font: titleFont, .foregroundColor: UIColor.white]

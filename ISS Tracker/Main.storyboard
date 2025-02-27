@@ -2273,7 +2273,6 @@ Days in Space:</string>
                         <color key="barTintColor" name="ISSRTT-Red"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" name="NasalizationRg-Regular" family="Nasalization" pointSize="17"/>
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
                         <textAttributes key="largeTitleTextAttributes">
                             <fontDescription key="fontDescription" name="NasalizationRg-Regular" family="Nasalization" pointSize="17"/>
@@ -2473,6 +2472,11 @@ Days in Space:</string>
                         <rightBarButtonItems>
                             <barButtonItem title="Item" image="questionmark.circle" catalog="system" id="Rgv-1M-nnR">
                                 <color key="tintColor" name="ISSRTT-White"/>
+                                <connections>
+                                    <segue destination="BQd-9j-Dfx" kind="popoverPresentation" identifier="segueToHelpFromGlobe" popoverAnchorBarButtonItem="Rgv-1M-nnR" id="RUQ-Nx-aQC">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
                             </barButtonItem>
                             <barButtonItem image="music.quarternote.3" catalog="system" width="25" id="goe-7d-KVl">
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2559,9 +2563,6 @@ Days in Space:</string>
                         <color key="backgroundColor" name="Background"/>
                         <color key="tintColor" name="Background"/>
                         <color key="barTintColor" name="ISSRTT-Red"/>
-                        <textAttributes key="titleTextAttributes">
-                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -2575,7 +2576,7 @@ Days in Space:</string>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="Hwa-Nf-vWw"/>
-        <segue reference="ses-y7-Ktu"/>
+        <segue reference="RUQ-Nx-aQC"/>
         <segue reference="qJ0-0D-oLu"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="Tint"/>

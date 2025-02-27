@@ -198,14 +198,14 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         guard segue.identifier != nil else { return }   // Prevents crash if a segue is unnamed
         
         switch segue.identifier {
-        case Constants.segueToHelpFromGlobe :
+        case Constants.segueToHelpFromGlobe:
             let navigationController                          = segue.destination as! UINavigationController
             let destinationVC                                 = navigationController.topViewController as! HelpViewController
             destinationVC.helpContentHTML                     = UserGuide.fullGlobe
             destinationVC.helpButtonInCallingVCSourceView     = navigationController.navigationBar
             destinationVC.title                               = helpTitle
             
-        case Constants.segueToSettings :                                 // Keep tracking, set popover arrow to point to middle, below settings button
+        case Constants.segueToSettings:                                 // Keep tracking, set popover arrow to point to middle, below settings button
             let navigationController                          = segue.destination as! UINavigationController
             let destinationVC                                 = navigationController.topViewController as! SettingsTableViewController
             destinationVC.settingsButtonInCallingVCSourceView = navigationController.navigationBar
