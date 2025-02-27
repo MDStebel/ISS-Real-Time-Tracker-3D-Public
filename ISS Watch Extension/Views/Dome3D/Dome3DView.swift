@@ -10,12 +10,6 @@
 import SwiftUI
 import SceneKit
 
-/// A simple struct to hold sky coordinates.
-struct SkyPoint {
-    var azimuth: Double   // in degrees, where 0° is North
-    var elevation: Double // in degrees, where 0° is at the horizon and 90° is the zenith
-}
-
 /// Custom clip shape to show only the top fraction of the view.
 struct HorizonClipShape: Shape {
     /// The fraction of the view's height to show (from the top).
