@@ -223,36 +223,36 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         showAlert(title: "\(currentCrewSize) \(self.station.satelliteName) Crew Members\nCopied to Your Clipboard", message: crewListString)
     }
       
-    /// Build a label with leading text followed by an image and return as an attributed string
-    /// - Parameters:
-    ///   - startOfText: String to add image to
-    ///   - endingWithImageAtURL: URL of image
-    /// - Returns: Label with image
-    private func createStringWithRichContent(starting startOfText: String, and endingWithImageAtURL: String) -> NSMutableAttributedString {
-        // Create an NSMutableAttributedString that we'll append the image to
-        let fullString = NSMutableAttributedString(string: startOfText)
-        
-        // Get image at URL represented by string
-        let imageURL = Foundation.URL(string: endingWithImageAtURL)
-        
-        if let imageData = try? Data(contentsOf: imageURL!) {
-            
-            let actualImage = UIImage(data: imageData, scale: 2)
-            
-            // Create the NSTextAttachment with the image
-            let imageAttachment = NSTextAttachment()
-            imageAttachment.image = actualImage
-            
-            // Wrap the attachment in its own attributed string so we can append it
-            let imageString = NSAttributedString(attachment: imageAttachment)
-            
-            // Add the NSTextAttachment wrapper at the end of the string
-            fullString.append(imageString)
-            
-        }
-        
-        return fullString
-    }
+//    /// Build a label with leading text followed by an image and return as an attributed string
+//    /// - Parameters:
+//    ///   - startOfText: String to add image to
+//    ///   - endingWithImageAtURL: URL of image
+//    /// - Returns: Label with image
+//    private func createStringWithRichContent(starting startOfText: String, and endingWithImageAtURL: String) -> NSMutableAttributedString {
+//        // Create an NSMutableAttributedString that we'll append the image to
+//        let fullString = NSMutableAttributedString(string: startOfText)
+//        
+//        // Get image at URL represented by string
+//        let imageURL = Foundation.URL(string: endingWithImageAtURL)
+//        
+//        if let imageData = try? Data(contentsOf: imageURL!) {
+//            
+//            let actualImage = UIImage(data: imageData, scale: 2)
+//            
+//            // Create the NSTextAttachment with the image
+//            let imageAttachment = NSTextAttachment()
+//            imageAttachment.image = actualImage
+//            
+//            // Wrap the attachment in its own attributed string so we can append it
+//            let imageString = NSAttributedString(attachment: imageAttachment)
+//            
+//            // Add the NSTextAttachment wrapper at the end of the string
+//            fullString.append(imageString)
+//            
+//        }
+//        
+//        return fullString
+//    }
     
     /// Prepare for seque
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

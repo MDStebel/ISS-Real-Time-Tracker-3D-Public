@@ -221,8 +221,8 @@ struct UserGuide {
     <p>Each pass is rated based on its maximum magnitude (i.e., brightness). The brightest passes get the highest ratings. Passes are rated with 0, 1, 2, 3, or 4 stars corresponding to relatively poor, fair, good, better, or best, respectively.</p>
     <h4>Switching Targets</h4>
     <p>Tap the switch target button in the navigation bar to switch between the ISS, Tiangong, and Hubble. The table will automatically refresh and present passes for the selected station.</p>
-    <h4>Viewing the Sky Dome</h4>
-    <p>The Sky Dome shows the path the flyover pass will take from your point of view. Tap the Sky Dome button on the upper-left of any pass to display the 3D Sky Dome for that pass. Drag the dome to rotate it around the zenith.
+    <h4>Viewing the SkyDome</h4>
+    <p>The SkyDome shows the path the flyover pass will take from your point of view. Tap the SkyDome button on the upper-left of any pass to display the SkyDome for that pass. Drag the dome to rotate it around the zenith.
     <h4>Adding a Pass Event to Your Calendar</h4>
     <p>Tap the Remind button on the upper-right of any pass to add it as an event in your calendar. When adding a pass to your calendar, two alerts will be set: the first for 1 hour before and the second for 15 minutes before the start of the pass. The starting and ending times for the pass are saved in the event in your calendar, along with the maximum magnitude and the starting, maximum, and ending azimuths and elevations for the pass.</p>
     <h4>Changing the Number of Days to Compute</h4>
@@ -290,7 +290,7 @@ struct UserGuide {
     <p>The watch app shows an interactive 3D globe with the real-time positions of the ISS, Tiangong, and Hubble. It also provides live position details, the subsolar point, pass predictions for each satellite, and crew listings, stats, and bios.</p>
     <p>From the globe view, tap the reset button at the bottom-left of the watch face to restore the globe to its starting position. Tap the rotation button to disable/enable the globe's autorotation.</p>
     <p>To see live position information for the three satellites and the subsolar point, tap the live position button (third from left). The positions are updated in real-time every three seconds.</p>
-    <p>Get pass predictions on your Apple Watch for the ISS, Tiangong, and Hubble. Tap the live position button, then tap the ISS, Tiangong, or Hubble position details. You'll get a list of your location's visible passes for that satellite for the next 30 days. Like the iPhone and iPad apps, each ISS pass is rated 0 - 4 stars. Tap any of the passes to view a 3D sky dome and viewing details for that pass. Tapping the subsolar point provides a discussion of the subsolar point.</p>
+    <p>Get pass predictions on your Apple Watch for the ISS, Tiangong, and Hubble. Tap the live position button, then tap the ISS, Tiangong, or Hubble position details. You'll get a list of your location's visible passes for that satellite for the next 30 days. Like the iPhone and iPad apps, each ISS pass is rated 0 - 4 stars. Tap any of the passes to view a 3D SkyDome and viewing details for that pass. Tapping the subsolar point provides a discussion of the subsolar point.</p>
     <p>Tap the crew button (bottom-right) to get crew information for the ISS and Tiangong. Scroll to see the crews for each station. Tap a crew member to get their details.</p>
     <p>Tap the < button to return to the globe.</p>
     <h4><a href="#contents">Back to contents</a></h4>
@@ -322,8 +322,8 @@ struct UserGuide {
     <p>Each pass is rated based on its maximum magnitude (i.e., brightness). The brightest passes get the highest ratings. Passes are rated with 0, 1, 2, 3, or 4 stars corresponding to relatively poor, fair, good, better, or best, respectively.</p>
     <h4>Switching Targets</h4>
     <p>Tap the switch target button in the navigation bar to switch between the ISS, Tiangong, and Hubble. The table will automatically refresh and present passes for the selected station.</p>
-    <h4>Viewing the Sky Dome</h4>
-    <p>The Sky Dome shows the path the flyover pass will take from your point of view. Tap the Sky Dome button on the upper-left of any pass to display the 3D Sky Dome for that pass. Drag the dome to rotate it around the zenith.
+    <h4>Viewing the SkyDome</h4>
+    <p>The SkyDome shows the path the flyover pass will take from your point of view. Tap the SkyDome button on the upper-left of any pass to display the SkyDome for that pass. Drag the dome to rotate it around the zenith.
     <h4>Adding a Pass Event to Your Calendar</h4>
     <p>Tap the Remind button on the upper-right of any pass in the table to add it as an event in your calendar. When adding a pass to your calendar, two alerts will be set: the first for 1 hour before, and the second for 15 minutes before the start of the pass. The starting and ending times for the pass are saved in the event in your calendar, along with the maximum magnitude, as well as the starting, maximum, and ending azimuths and elevations for the pass.</p>
     <h4>Change Number of Days to Compute &amp; Refresh</h4>

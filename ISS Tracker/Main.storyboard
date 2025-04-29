@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="xca-LQ-QDn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="xca-LQ-QDn">
     <device id="retina6_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -34,11 +34,11 @@
                                 </connections>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ISS-New" translatesAutoresizingMaskIntoConstraints="NO" id="itU-6j-N9d">
-                                <rect key="frame" x="0.0" y="813" width="150" height="85"/>
+                                <rect key="frame" x="0.0" y="779" width="150" height="85"/>
                                 <color key="tintColor" name="ISSRTT-White"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hMu-io-e1w">
-                                <rect key="frame" x="0.0" y="0.0" width="430" height="898"/>
+                                <rect key="frame" x="0.0" y="0.0" width="430" height="864"/>
                                 <color key="tintColor" name="Background"/>
                                 <string key="text">ISS
 REAL-TIME
@@ -106,12 +106,12 @@ TRACKER
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="satellite" showsBuildings="NO" pitchEnabled="NO" showsPointsOfInterest="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k3X-Gz-uum">
-                                <rect key="frame" x="0.0" y="43" width="430" height="844"/>
+                                <rect key="frame" x="0.0" y="102" width="430" height="751"/>
                                 <color key="backgroundColor" systemColor="viewFlipsideBackgroundColor"/>
                                 <color key="tintColor" name="ISSRTT-White"/>
                             </mapView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="redraw" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HpK-If-zcL">
-                                <rect key="frame" x="0.0" y="887" width="430" height="45"/>
+                                <rect key="frame" x="0.0" y="853" width="430" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="hwh-95-T32"/>
                                 </constraints>
@@ -159,7 +159,7 @@ TRACKER
                                 <color key="barTintColor" name="Pop-Up and Tab Bar Background"/>
                             </toolbar>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" placeholderIntrinsicWidth="560" placeholderIntrinsicHeight="50" text="Track" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fte-sW-KzP">
-                                <rect key="frame" x="0.0" y="0.0" width="430" height="43"/>
+                                <rect key="frame" x="0.0" y="59" width="430" height="43"/>
                                 <color key="backgroundColor" name="Background"/>
                                 <color key="tintColor" name="Background"/>
                                 <constraints>
@@ -173,7 +173,7 @@ TRACKER
                                 </variation>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="B2p-8q-BUa">
-                                <rect key="frame" x="20" y="9" width="115" height="25"/>
+                                <rect key="frame" x="20" y="68" width="115" height="25"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QAy-US-aB2" userLabel="Settings">
                                         <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
@@ -220,7 +220,7 @@ TRACKER
                                 <variation key="heightClass=regular-widthClass=regular" spacing="25"/>
                             </stackView>
                             <button contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kSZ-y8-zT6" userLabel="HelpButton">
-                                <rect key="frame" x="379" y="8.6666666666666661" width="31" height="25.666666666666671"/>
+                                <rect key="frame" x="379" y="67.666666666666671" width="31" height="25.666666666666671"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="31" id="eKb-5B-MNd"/>
                                 </constraints>
@@ -236,7 +236,7 @@ TRACKER
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z6D-TV-FeT" userLabel="Zoom Slider Background">
-                                <rect key="frame" x="0.0" y="43" width="430" height="60"/>
+                                <rect key="frame" x="0.0" y="102" width="430" height="60"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nSf-Fo-OQm">
                                         <rect key="frame" x="12" y="3" width="406" height="57"/>
@@ -271,7 +271,7 @@ TRACKER
                                 </constraints>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ISS-New" translatesAutoresizingMaskIntoConstraints="NO" id="cKo-c4-ZI0">
-                                <rect key="frame" x="190" y="440" width="50" height="50"/>
+                                <rect key="frame" x="190" y="452.66666666666669" width="50" height="50"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -280,7 +280,7 @@ TRACKER
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="XrY-vP-Q2h">
-                                <rect key="frame" x="102.66666666666669" y="827" width="225" height="60"/>
+                                <rect key="frame" x="102.66666666666669" y="793" width="225" height="60"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="i4e-9Z-DpO">
                                         <rect key="frame" x="0.0" y="0.0" width="225" height="60"/>
@@ -346,7 +346,7 @@ TRACKER
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bOt-bt-VWJ" userLabel="Play Soundtrack">
-                                <rect key="frame" x="319" y="9" width="30" height="25"/>
+                                <rect key="frame" x="319" y="68" width="30" height="25"/>
                                 <color key="tintColor" name="White"/>
                                 <state key="normal" image="music.quarternote.3" catalog="system">
                                     <color key="titleColor" name="White"/>
@@ -357,7 +357,7 @@ TRACKER
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jrE-4A-1fT">
-                                <rect key="frame" x="339.66666666666669" y="843" width="27.333333333333314" height="31"/>
+                                <rect key="frame" x="339.66666666666669" y="809" width="27.333333333333314" height="31"/>
                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal">
                                     <imageReference key="image" image="document.on.document" catalog="system" symbolScale="large"/>
@@ -367,7 +367,7 @@ TRACKER
                                 </connections>
                             </button>
                             <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oek-QF-9gT">
-                                <rect key="frame" x="102.66666666666669" y="641" width="225" height="186"/>
+                                <rect key="frame" x="102.66666666666669" y="607" width="225" height="186"/>
                                 <color key="backgroundColor" name="Pop-Up and Tab Bar Background"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="225" id="hxB-h0-bGd"/>
@@ -375,7 +375,7 @@ TRACKER
                                 </constraints>
                             </sceneKitView>
                             <button opaque="NO" contentMode="redraw" placeholderIntrinsicWidth="223" placeholderIntrinsicHeight="100" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="clip" translatesAutoresizingMaskIntoConstraints="NO" id="GvX-Ty-Z8L">
-                                <rect key="frame" x="20" y="802" width="223" height="100"/>
+                                <rect key="frame" x="20" y="768" width="223" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="HnY-Ug-aPI"/>
                                     <constraint firstAttribute="width" constant="223" id="J7Z-eO-Xqu"/>
@@ -390,7 +390,7 @@ TRACKER
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FmF-pz-0hA">
-                                <rect key="frame" x="298.66666666666669" y="647" width="22" height="20"/>
+                                <rect key="frame" x="298.66666666666669" y="613" width="22" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="eb2-eR-n7l"/>
                                     <constraint firstAttribute="width" constant="22" id="f5a-8h-Mr5"/>
@@ -405,7 +405,7 @@ TRACKER
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R9b-8r-JJO" userLabel="Status">
-                                <rect key="frame" x="108.66666666666669" y="647" width="125" height="13.666666666666629"/>
+                                <rect key="frame" x="108.66666666666669" y="613" width="125" height="13.666666666666629"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="125" id="aoK-Kj-uPX"/>
                                 </constraints>
@@ -417,7 +417,7 @@ TRACKER
                                 </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f0c-45-PcO" userLabel="Reset">
-                                <rect key="frame" x="204" y="647" width="18" height="20"/>
+                                <rect key="frame" x="204" y="613" width="18" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="ZPL-J9-SQu"/>
                                     <constraint firstAttribute="width" constant="18" id="hoy-5a-Xiu"/>
@@ -510,7 +510,7 @@ TRACKER
             <objects>
                 <tableViewController modalPresentationStyle="currentContext" id="XQO-Wu-Orz" customClass="SettingsTableViewController" customModule="ISS_Tracker" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="8pn-xy-Q8N">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="817"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="724"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="groupTableViewBackgroundColor"/>
                         <color key="tintColor" name="Background"/>
@@ -1149,11 +1149,11 @@ TRACKER
                         <viewControllerLayoutGuide type="bottom" id="S2S-fB-GTB"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="LW9-Xd-LX6">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="866"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="807"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <wkWebView contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Nbi-HB-nAn">
-                                <rect key="frame" x="16" y="8" width="398" height="850"/>
+                                <rect key="frame" x="16" y="8" width="398" height="757"/>
                                 <color key="backgroundColor" name="User Guide Background"/>
                                 <wkWebViewConfiguration key="configuration" allowsPictureInPictureMediaPlayback="NO">
                                     <dataDetectorTypes key="dataDetectorTypes" none="YES"/>
@@ -1188,7 +1188,7 @@ TRACKER
             </objects>
             <point key="canvasLocation" x="-435" y="-786"/>
         </scene>
-        <!--Sky Dome-->
+        <!--SkyDome-->
         <scene sceneID="apY-pa-Pur">
             <objects>
                 <viewController id="tlc-iq-vJb" customClass="Dome3DWrapperViewController" customModule="ISS_Tracker" customModuleProvider="target" sceneMemberID="viewController">
@@ -1197,12 +1197,12 @@ TRACKER
                         <viewControllerLayoutGuide type="bottom" id="vQq-ZU-EKN"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="7Q6-Ve-TAp">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="866"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="807"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" name="User Guide Background"/>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Sky Dome" id="FCT-sw-hUO">
+                    <navigationItem key="navigationItem" title="SkyDome" id="FCT-sw-hUO">
                         <barButtonItem key="leftBarButtonItem" image="chevron.backward" catalog="system" id="hhw-og-eOY">
                             <color key="tintColor" name="ISSRTT-White"/>
                             <connections>
@@ -1234,7 +1234,7 @@ TRACKER
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="mtk-QQ-vDr">
-                        <rect key="frame" x="0.0" y="-10" width="0.0" height="0.0"/>
+                        <rect key="frame" x="0.0" y="-69" width="0.0" height="0.0"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
@@ -1654,7 +1654,7 @@ TRACKER
                                                     </constraints>
                                                     <color key="tintColor" name="Pop-Up and Tab Bar Background"/>
                                                     <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" image="SkyDomeIcon" title="Sky Dome" imagePadding="0.0" titleAlignment="center">
+                                                    <buttonConfiguration key="configuration" style="plain" image="SkyDomeIcon" title=" SkyDome" imagePadding="0.0" titleAlignment="center">
                                                         <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="9"/>
                                                         <color key="baseForegroundColor" name="ISSRTT-White"/>
                                                     </buttonConfiguration>
@@ -2143,11 +2143,11 @@ Days in Space:</string>
                         <viewControllerLayoutGuide type="bottom" id="PRF-aR-Fcj"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="iAb-4a-W37">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="888"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="829"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Uc-ji-9Bz" userLabel="Background">
-                                <rect key="frame" x="0.0" y="0.0" width="430" height="888"/>
+                                <rect key="frame" x="0.0" y="0.0" width="430" height="795"/>
                                 <color key="backgroundColor" systemColor="viewFlipsideBackgroundColor"/>
                             </view>
                         </subviews>
@@ -2186,7 +2186,7 @@ Days in Space:</string>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="NbO-fa-Kas"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="AwQ-nj-sb9">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
+                        <rect key="frame" x="0.0" y="59" width="430" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="Background"/>
                         <color key="tintColor" name="White"/>
@@ -2211,7 +2211,7 @@ Days in Space:</string>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="UCQ-cc-2Ks"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="yAo-aF-CV0">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
+                        <rect key="frame" x="0.0" y="59" width="430" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="Background"/>
                         <color key="tintColor" name="Background"/>
@@ -2241,7 +2241,7 @@ Days in Space:</string>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Hhb-qQ-T10"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="rlF-pp-kdv">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
+                        <rect key="frame" x="0.0" y="59" width="430" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="Background"/>
                         <color key="tintColor" name="Background"/>
@@ -2300,7 +2300,7 @@ Days in Space:</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oup-Pf-N8L" userLabel="Background">
-                                <rect key="frame" x="4" y="44" width="422" height="888"/>
+                                <rect key="frame" x="4" y="103" width="422" height="795"/>
                                 <color key="backgroundColor" systemColor="viewFlipsideBackgroundColor"/>
                             </view>
                         </subviews>
@@ -2356,14 +2356,14 @@ Days in Space:</string>
                         <viewControllerLayoutGuide type="bottom" id="4tc-5W-dL4"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ouM-W8-b2U">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="888"/>
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="829"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7EC-Ek-IrK">
-                                <rect key="frame" x="0.0" y="0.0" width="430" height="888"/>
+                                <rect key="frame" x="0.0" y="0.0" width="430" height="829"/>
                             </imageView>
                             <sceneKitView clipsSubviews="YES" contentMode="scaleToFill" sceneName="fullGlobe" translatesAutoresizingMaskIntoConstraints="NO" id="pEZ-ao-oHi">
-                                <rect key="frame" x="0.0" y="0.0" width="430" height="888"/>
+                                <rect key="frame" x="0.0" y="0.0" width="430" height="829"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </sceneKitView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M2A-FM-kEU" userLabel="Controls Background">
@@ -2507,7 +2507,7 @@ Days in Space:</string>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="OIA-Hq-RNV"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" translucent="NO" id="oBh-qV-pGx">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
+                        <rect key="frame" x="0.0" y="59" width="430" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="Background"/>
                         <color key="tintColor" name="Background"/>
@@ -2533,7 +2533,7 @@ Days in Space:</string>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="5On-kT-UJN"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" translucent="NO" id="E1E-2K-uL2">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
+                        <rect key="frame" x="0.0" y="59" width="430" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" name="Background"/>
                         <color key="tintColor" name="Background"/>
@@ -2576,7 +2576,7 @@ Days in Space:</string>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="Hwa-Nf-vWw"/>
-        <segue reference="RUQ-Nx-aQC"/>
+        <segue reference="iJ8-s1-Dwi"/>
         <segue reference="qJ0-0D-oLu"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" name="Tint"/>
