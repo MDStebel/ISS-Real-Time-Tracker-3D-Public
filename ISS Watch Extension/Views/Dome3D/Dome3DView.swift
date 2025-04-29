@@ -213,7 +213,7 @@ struct Dome3DView: View {
                     let textPadding = geometry.size.height * -paddingFactor
                     Spacer()
                         .padding(.top, textPadding)
-                    Text("Sky Dome")
+                    Text("SkyDome")
                         .font(.title)
                         .bold()
                         .foregroundColor(.white)
@@ -226,7 +226,7 @@ struct Dome3DView: View {
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding(.top, textPadding * 0.5)  // Move it up to align properly under the dome
-                    Text("Drag the Sky Dome left or right to rotate it around you.")
+                    Text("Drag the SkyDome left or right to rotate it around you.")
                         .font(.footnote)
                         .foregroundColor(.white)
                         .padding(.top, textPadding * 0.01)  // Move it up to align properly under the dome

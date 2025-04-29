@@ -53,7 +53,9 @@ struct CrewDetailView: View {
                     DetailSubheading(heading: "On Station")
                     
                     StatView(label: "Title", stat: crewMember.title)
-                    StatView(label: "Expediiton", stat: crewMember.expedition)
+                    if crewMember.expedition != "N/A" {
+                        StatView(label: "Expediiton", stat: crewMember.expedition)
+                    }
                     StatView(label: "Days in space", stat: "\(numDays)")
                     
                     DetailSubheading(heading: "Launch")
@@ -61,7 +63,7 @@ struct CrewDetailView: View {
                     StatView(label: "Date", stat: launchdate)
                     StatView(label: "Mission", stat: crewMember.mission)
                     StatView(label: "Vehicle", stat: crewMember.launchvehicle)
-
+                    
                     DetailSubheading(heading: "Biography")
                     
                     Text(crewMember.bio)

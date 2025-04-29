@@ -56,7 +56,7 @@ struct PassDetailView: View {
             
             ScrollView {
                 VStack {
-                    DetailSubheading(heading: "Sky Dome")
+                    DetailSubheading(heading: "SkyDome")
                     
                     Dome3DView(skyPoints: [a, b, c])
                         .id(UUID())
