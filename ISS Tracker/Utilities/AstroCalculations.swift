@@ -100,7 +100,7 @@ public struct AstroCalculations {
         return (280.46646 + t * 36000.76983 + t * t * 0.0003032).truncatingRemainder(dividingBy: Double(Globals.threeSixtyDegrees))
     }
     
-    /// Calculate the exact current latitude of the Sun for a given date
+    /// Calculate the exact current latitude of the Sun for a given date and time
     ///
     /// Uses the geometric mean longitude of the Sun and equation of center.
     /// - Parameter date: A date as a Date type
@@ -116,52 +116,39 @@ public struct AstroCalculations {
         return latitudeOfSun * Double(Globals.radiansToDegrees)
     }
     
-    /// Calculate the exact current longitude of the Sun for a given date
+    /// Calculate the exact current longitude of the Sun for a given date and time
     ///
-    /// This is an original algorithm that I based on a given date and the equation of time. This is partially empirical and uses the difference between local and GMT time to determine roughly where noon is.
-    /// The algorithm then corrects this based on the equation of time and whether the Sun is east or west of the International Date Line.
+    /// This is an original algorithm that I created to calculate the subsolar point longitude, based on a given date and the equation of time.
     /// - Parameter date: A date as a Date type
     /// - Returns: The subsolar longitude as a Double
-    static func subSolarLongitudeOfSunAtCurrentTime(for date: Date) -> Double {
-        
-        var timeCorrection, dayCorrection, lonCorrection: Double
-        
-        // Time calculations for the current time
-        let eOT            = equationOfTime(for: date)
-        let localMins      = Double(Calendar.current.component(.minute, from: date))
-        let localHour      = Double(Calendar.current.component(.hour, from: date)) + localMins / Globals.numberOfMinutesInAnHour   // The current time as a decimal value
-        let secondsFromGMT = Double(TimeZone.current.secondsFromGMT())
-        
-        // Correct for time and day relative to GMT and the International Date Line
-        if secondsFromGMT <= 0 {
-            timeCorrection = 1
-            dayCorrection  = 0
-        } else {
-            timeCorrection = -1
-            dayCorrection  = -Globals.numberOfHoursInADay
-        }
-        
-        // Calculate current GMT
-        let GMT = (localHour - secondsFromGMT / Globals.numberOfSecondsInAnHour - timeCorrection * Globals.numberOfHoursInADay.truncatingRemainder(dividingBy: Globals.numberOfHoursInADay)).truncatingRemainder(dividingBy: Globals.numberOfHoursInADay)
-        
-        // Now, calculate the difference between current GMT and noontime in hours
-        let noonHourDelta = min(Globals.noonTime - GMT - eOT / Globals.numberOfMinutesInAnHour + dayCorrection, 12.0).truncatingRemainder(dividingBy: Globals.numberOfHoursInADay)  // Force to <= 12
-        
-        // The subsolar longitude is the difference in hours times the number of degrees per hour (360/24 = 15 deg/hr)
-        let subSolarLon = noonHourDelta * Globals.degreesLongitudePerHour
-        
-        // Now, determine if we've crossed the international date line. If so, we need to add 180 degrees.
-        if subSolarLon < -Globals.oneEightyDegrees && GMT < Globals.noonTime {
-            lonCorrection = Globals.oneEightyDegrees
-        } else if subSolarLon < -Globals.oneEightyDegrees && GMT >= Globals.noonTime {
-            lonCorrection = 0               //localHour >= GMT ? 0 : Globals.oneEightyDegrees
-        } else if GMT >= Globals.numberOfHoursInADay {
-            lonCorrection = Globals.oneEightyDegrees
-        } else {
-            lonCorrection = 0
+    static func subSolarLongitudeAtCurrentTimeUTC(for date: Date) -> Double {
+        let utcCalendar = Calendar(identifier: .gregorian)
+        let utcComponents = utcCalendar.dateComponents(in: TimeZone(secondsFromGMT: 0)!, from: date)
+
+        guard let hour = utcComponents.hour,
+              let minute = utcComponents.minute,
+              let second = utcComponents.second else {
+            return 0.0
         }
 
-        return subSolarLon + lonCorrection
+        // Convert UTC time to decimal hours
+        let utcDecimalHours = Double(hour) + Double(minute) / 60.0 + Double(second) / 3600.0
+
+        // Get the Equation of Time in minutes
+        let eotMinutes = equationOfTime(for: date)
+        let eotHours = eotMinutes / 60.0
+
+        // Subsolar longitude with Equation of Time correction
+        var longitude = (12.0 - utcDecimalHours - eotHours) * 15.0
+
+        // Normalize to [-180°, 180°]
+        if longitude > 180 {
+            longitude -= 360
+        } else if longitude < -180 {
+            longitude += 360
+        }
+
+        return longitude
     }
     
     /// Get the subsolar coordinates at the current date and time
@@ -172,7 +159,7 @@ public struct AstroCalculations {
         
         let now = Date()
         let lat = Float(latitudeOfSunAtCurrentTime(for: now))
-        let lon = Float(subSolarLongitudeOfSunAtCurrentTime(for: now))
+        let lon = Float(subSolarLongitudeAtCurrentTimeUTC(for: now))
         
         return (lat, lon)
     }
