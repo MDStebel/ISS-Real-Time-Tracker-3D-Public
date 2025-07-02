@@ -23,6 +23,7 @@ struct GlobeView: View {
                 
                 // MARK: Globe
                 /// Render the globe. This will update continually as new coordinates are received from the view model.
+                /// 
                 SceneView(scene: vm.globeScene,
                           pointOfView: vm.globeMainNode,
                           options: [.allowsCameraControl]
