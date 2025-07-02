@@ -38,7 +38,7 @@ final class EarthGlobeMarkers {
         let computedWidthAndHeight: CGFloat
         let computedAltitude: Float
         
-        if !isInOrbit { // Footprint circle on the ground
+        if !isInOrbit {             // Footprint circle must sit at ground level
             let scaling: CGFloat
             let heightAdj: Float
             

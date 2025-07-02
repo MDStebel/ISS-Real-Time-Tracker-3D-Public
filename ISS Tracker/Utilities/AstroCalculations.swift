@@ -72,9 +72,9 @@ public struct AstroCalculations {
         let term4 = 0.5 * obliquity * obliquity * sin(4 * meanLongitudeSunRadians)
         let term5 = 1.25 * eccentricity * eccentricity * sin(2 * meanAnomalySunRadians)
         
-        let equationOfTime = 4 * (term1 - term2 + term3 - term4 - term5) * Globals.radiansToDegrees
+        let eOT = 4 * (term1 - term2 + term3 - term4 - term5) * Globals.radiansToDegrees
         
-        return equationOfTime
+        return eOT
     }
     
     /// Calculate the Sun Equation of Center
@@ -105,8 +105,7 @@ public struct AstroCalculations {
     /// Uses the geometric mean longitude of the Sun and equation of center.
     /// - Parameter date: A date as a Date type
     /// - Returns: Latitude in degrees as a Double
-    static func latitudeOfSunAtCurrentTime(for date: Date) -> Double {
-        
+    static func subsolarLatitude(for date: Date) -> Double {
         let jC                       = julianCenturySinceJan2000(date: date)
         
         let geomMeanLongitude        = geometricMeanLongitudeOfSunAtCurrentTime(t: jC)
@@ -132,14 +131,14 @@ public struct AstroCalculations {
         }
 
         // Convert UTC time to decimal hours
-        let utcDecimalHours = Double(hour) + Double(minute) / 60.0 + Double(second) / 3600.0
+        let utcDecimalHours = Double(hour) + Double(minute) / Globals.numberOfMinutesInAnHour + Double(second) / Globals.numberOfSecondsInAnHour
 
         // Get the Equation of Time in minutes
         let eotMinutes = equationOfTime(for: date)
-        let eotHours = eotMinutes / 60.0
+        let eotHours = eotMinutes / Globals.numberOfMinutesInAnHour
 
         // Subsolar longitude with Equation of Time correction
-        var longitude = (12.0 - utcDecimalHours - eotHours) * 15.0
+        var longitude = (12.0 - utcDecimalHours - eotHours) * Globals.degreesLongitudePerHour
 
         // Normalize to [-180°, 180°]
         if longitude > 180 {
@@ -156,9 +155,8 @@ public struct AstroCalculations {
     /// The subsolar point is the position on Earth where the Sun is at the zenith.
     /// - Returns: The subsolar coordinates (latitude and longitude) as a tuple of Floats
     static func getSubSolarCoordinates() -> (latitude: Float, longitude: Float) {
-        
         let now = Date()
-        let lat = Float(latitudeOfSunAtCurrentTime(for: now))
+        let lat = Float(subsolarLatitude(for: now))
         let lon = Float(subSolarLongitudeAtCurrentTimeUTC(for: now))
         
         return (lat, lon)

@@ -1,8 +1,9 @@
 //
 //  ReviewPromptManager.swift
-//  ISS Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 2/9/25.
+//  Updated by Michael on 7/1/2025.
 //  Copyright © 2025 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
