@@ -3,6 +3,7 @@
 //  ISS Watch
 //
 //  Created by Michael Stebel on 4/13/24.
+//  Updated by Michael on 7/28/2025.
 //  Copyright © 2024-2025 ISS Real-Time Tracker. All rights reserved.
 //
 
@@ -14,7 +15,7 @@ struct CrewDetailView: View {
     
     let crewMember: Crews.People
     
-    @State private var image: Image? = nil    
+    @State private var image: Image? = nil
     
     private let corner = 15.0
     
@@ -78,21 +79,24 @@ struct CrewDetailView: View {
             .onAppear {
                 Task {
                     do {
-                        let urlString = crewMember.biophoto
-                        guard let url = URL(string: urlString) else {
-                            self.image = Image(.astronautPlaceholder)
+                        guard let url = URL(string: crewMember.biophoto) else {
+                            await MainActor.run { image = Image(.astronautPlaceholder) }
                             return
                         }
-                        let imageData = try await loadImage(from: url)
-                        DispatchQueue.main.async {
-                            if let imageFromData = UIImage(data: imageData) {
-                                self.image = Image(uiImage: imageFromData)
-                            } else {
-                                self.image = Image(.astronautPlaceholder)
+                        let data = try await loadImage(from: url)
+                        if let uiImage = UIImage(data: data) {
+                            await MainActor.run {
+                                image = Image(uiImage: uiImage)
+                            }
+                        } else {
+                            await MainActor.run {
+                                image = Image(.astronautPlaceholder)
                             }
                         }
                     } catch {
-                        self.image = Image(.astronautPlaceholder)
+                        await MainActor.run {
+                            image = Image(.astronautPlaceholder)
+                        }
                         print("Error loading image: \(error.localizedDescription)")
                     }
                 }
