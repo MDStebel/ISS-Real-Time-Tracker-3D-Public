@@ -3,6 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 2/23/2025
+//  Updated by Michael on 7/30/2025.
 //  Copyright © 2016-2025 ISS Real-Time Tracker. All rights reserved.
 //
 
@@ -32,7 +33,6 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
         static let earthViewSegue             = "segueToStreamingVideo"
         static let globeSegue                 = "segueToFullGlobe"
         static let helpSegue                  = "helpViewSegue"
-//        static let nasaTvSegue                = "segueToNasaTV"
         static let passesSegue                = "segueToPassTimes"
         static let segueToFullGlobeFromTabBar = "segueToFullGlobeFromTabBar"
         static let settingsSegue              = "segueToSettings"
@@ -200,6 +200,13 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     
     // MARK: - Outlets
     
+    @IBOutlet var titleLabel: UILabel! {
+        didSet {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                titleLabel.text = "ISS Tracking"
+            }
+        }
+    }
     @IBOutlet var clearOrbitTrackButton: UIButton!
     @IBOutlet var helpButton: UIButton!
     @IBOutlet var settingsButton: UIButton!
@@ -775,6 +782,9 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
                 self.zoomValueWasChanged = true
                 self.timerValue = self.getTimerInterval()
                 self.target = selectedTarget
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    self.titleLabel.text = "\(selectedTarget.satelliteName) Tracking"
+                }
                 self.satelliteCode = selectedTarget.satelliteNORADCode
                 self.listOfCoordinates.removeAll()
                 self.map.removeOverlays(self.map.overlays)
