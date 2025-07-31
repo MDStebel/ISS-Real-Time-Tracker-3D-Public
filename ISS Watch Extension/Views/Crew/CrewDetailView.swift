@@ -3,7 +3,7 @@
 //  ISS Watch
 //
 //  Created by Michael Stebel on 4/13/24.
-//  Updated by Michael on 7/28/2025.
+//  Updated by Michael on 7/31/2025.
 //  Copyright © 2024-2025 ISS Real-Time Tracker. All rights reserved.
 //
 
@@ -14,8 +14,6 @@ struct CrewDetailView: View {
     // MARK: - Properties
     
     let crewMember: Crews.People
-    
-    @State private var image: Image? = nil
     
     private let corner = 15.0
     
@@ -28,15 +26,26 @@ struct CrewDetailView: View {
                     Circle()
                         .fill(Gradient(colors: [.ISSRTT3DRed.opacity(0.95), .blue.opacity(0.80), .white.opacity(0.25), ]))
                         .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 20))
-                    if let image {
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .clipShape(Circle())
-                            .padding(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 25))
-                    } else {
-                        ProgressView()
-                            .scaleEffect(x: 2, y: 2, anchor: .center) // Scale the ProgressView
+                    AsyncImage(url: URL(string: crewMember.biophoto)) { phase in
+                        switch phase {
+                        case .empty:
+                            ProgressView()
+                                .scaleEffect(x: 2, y: 2, anchor: .center)
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .scaledToFit()
+                                .clipShape(Circle())
+                                .padding(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 25))
+                        case .failure(_):
+                            Image(.astronautPlaceholder)
+                                .resizable()
+                                .scaledToFit()
+                                .clipShape(Circle())
+                                .padding(EdgeInsets(top: 0, leading: 25, bottom: 0, trailing: 25))
+                        @unknown default:
+                            EmptyView()
+                        }
                     }
                 }
                 
@@ -75,50 +84,15 @@ struct CrewDetailView: View {
                 .padding(2)
             }
             .navigationTitle(crewMember.name)
-            
-            .onAppear {
-                Task {
-                    do {
-                        guard let url = URL(string: crewMember.biophoto) else {
-                            await MainActor.run { image = Image(.astronautPlaceholder) }
-                            return
-                        }
-                        let data = try await loadImage(from: url)
-                        if let uiImage = UIImage(data: data) {
-                            await MainActor.run {
-                                image = Image(uiImage: uiImage)
-                            }
-                        } else {
-                            await MainActor.run {
-                                image = Image(.astronautPlaceholder)
-                            }
-                        }
-                    } catch {
-                        await MainActor.run {
-                            image = Image(.astronautPlaceholder)
-                        }
-                        print("Error loading image: \(error.localizedDescription)")
-                    }
-                }
-            }
         }
     }
     
     // MARK: - Helper functions
     
-    /// Helper function to fetch image acsynchronously
-    /// - Parameter url: The image URL
-    /// - Returns: Image data
-    func loadImage(from url: URL) async throws -> Data {
-        let (data, _) = try await URLSession.shared.data(from: url)
-        return data
-    }
-    
     /// Helper method to calculate the number of days an astronaut has been in space (today - launch date).
     /// If there's an error in the data, this will detect it and return 0 days.
     /// - Returns: Number of days since launch.
     func numberOfDaysInSpace(since launch: String) -> Int {
-        
         let todaysDate = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = Globals.outputDateFormatStringShortForm
