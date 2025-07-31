@@ -95,7 +95,7 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         
         getStationID(for: station)
         setUpRefreshControl()
-    } 
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -115,9 +115,8 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         
         // If we came here from the map view, get the crew from the API, otherwise, we're returning from the bio viewcontroller, so do nothing.
         if !getCurrentCrewMembersAlreadyRun {
-            
             DispatchQueue.global(qos: .userInteractive).async {
-                self.getCurrrentCrewMembers()
+                self.fetchCurrentCrewMembers()
             }
         }
     }
@@ -139,75 +138,68 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
     /// Selector for refresh control
     @objc func refreshTable(_ sender: Any) {
         DispatchQueue.global(qos: .userInteractive).async {
-            self.getCurrrentCrewMembers()
+            self.fetchCurrentCrewMembers()
         }
     }
     
-    /// Method to get current crew data from API
-    private func getCurrrentCrewMembers() {
+    /// Fetch current crew data from API
+    private func fetchCurrentCrewMembers() {
         DispatchQueue.main.async {
             self.spinner.startAnimating()
             self.promptLabel.text = Constants.updatingDataPromptText
         }
-        
-        // Create the session
-        let configuration = URLSessionConfiguration.ephemeral               // Set up an ephemeral session, which uses only RAM and no persistent storage for cache, etc.
-        let crewURLSession = URLSession(configuration: configuration)
-        crewURLSession.configuration.urlCache = nil                         // Turn off caching
-        
-        let urlForCurrentCrew = URL(string: Constants.crewAPIEndpointURLString)!
-        let crewMembersTask = crewURLSession.dataTask(with: urlForCurrentCrew) { [ weak weakSelf = self ] (data, response, error) -> Void in
-            
-            if let data {
-                
-                // Parse data and if successful (not nil) copy crew member names to currentCrew string array and fill the table
-                if let parsedCrewMembers = Astronaut.parseCurrentCrew(from: data) {
-                    
-                    weakSelf?.currentCrew = parsedCrewMembers
-                    
-                    // Select only crew members from the target space station
-                    let selectedTargetStationCrewOnly = weakSelf?.currentCrew?.filter { $0.spaceCraft == self.stationName }
-                    
-                    // Sort the list by name and then by title
-                    weakSelf?.currentCrew = selectedTargetStationCrewOnly?.sorted {$0.name < $1.name}
-                    weakSelf?.currentCrew?.sort() {$0.title < $1.title}
 
-                    weakSelf?.currentCrewSize = (weakSelf?.currentCrew!.count)!
-                    
-                    DispatchQueue.main.async {
-                        weakSelf?.spinner.stopAnimating()
-                        weakSelf?.refreshControl?.endRefreshing()
-                        weakSelf?.animate(table: self.crewTable)
-                        if weakSelf?.currentCrewSize != 0 {
-                            self.promptLabel.text = "\(self.currentCrewSize) current \(self.station.satelliteName) crew members\n\(Constants.tapAnyCrewMemberPromptText)"
-                        } else {
-                            self.promptLabel.text = "No crew is currently onboard \(self.station.satelliteName)"
-                        }
-                    }
-                    
-                    self.getCurrentCrewMembersAlreadyRun = true
-                    
-                } else {
-                    
-                    DispatchQueue.main.async {
-                        weakSelf?.spinner.stopAnimating()
-                        weakSelf?.refreshControl?.endRefreshing()
-                        weakSelf?.showAlert(title: "Can't get crew data", message: "Tap Done, wait a few minutes, then try again")
-                    }
-                }
-                
-            } else {
-                
-                DispatchQueue.main.async {
-                    weakSelf?.spinner.stopAnimating()
-                    weakSelf?.refreshControl?.endRefreshing()
-                    weakSelf?.showNoInternetAlert()
-                }
+        guard let url = URL(string: Constants.crewAPIEndpointURLString) else {
+            DispatchQueue.main.async {
+                self.spinner.stopAnimating()
+                self.refreshControl?.endRefreshing()
+                self.showAlert(title: "Invalid URL", message: "The crew data URL is invalid.")
             }
+            return
         }
-        
-        // Start task
-        crewMembersTask.resume()
+
+        let config = URLSessionConfiguration.ephemeral
+        config.urlCache = nil
+        let session = URLSession(configuration: config)
+
+        session.dataTask(with: url) { [weak self] data, response, error in
+            guard let self else { return }
+
+            DispatchQueue.main.async {
+                self.spinner.stopAnimating()
+                self.refreshControl?.endRefreshing()
+            }
+
+            guard error == nil else {
+                DispatchQueue.main.async {
+                    self.showNoInternetAlert()
+                }
+                return
+            }
+
+            guard let data,
+                  let parsedCrew = Astronaut.parseCurrentCrew(from: data) else {
+                DispatchQueue.main.async {
+                    self.showAlert(title: "Can't get crew data", message: "Tap Done, wait a few minutes, then try again")
+                }
+                return
+            }
+
+            let filteredCrew = parsedCrew
+                .filter { $0.spaceCraft == self.stationName }
+                .sorted { ($0.title, $0.name) < ($1.title, $1.name) }
+
+            self.currentCrew = filteredCrew
+            self.currentCrewSize = filteredCrew.count
+            self.getCurrentCrewMembersAlreadyRun = true
+
+            DispatchQueue.main.async {
+                self.animate(table: self.crewTable)
+                self.promptLabel.text = self.currentCrewSize > 0
+                    ? "\(self.currentCrewSize) current \(self.station.satelliteName) crew members\n\(Constants.tapAnyCrewMemberPromptText)"
+                    : "No crew is currently onboard \(self.station.satelliteName)"
+            }
+        }.resume()
     }
     
     /// Copy crew names to clipboard
@@ -231,26 +223,26 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
 //    private func createStringWithRichContent(starting startOfText: String, and endingWithImageAtURL: String) -> NSMutableAttributedString {
 //        // Create an NSMutableAttributedString that we'll append the image to
 //        let fullString = NSMutableAttributedString(string: startOfText)
-//        
+//
 //        // Get image at URL represented by string
 //        let imageURL = Foundation.URL(string: endingWithImageAtURL)
-//        
+//
 //        if let imageData = try? Data(contentsOf: imageURL!) {
-//            
+//
 //            let actualImage = UIImage(data: imageData, scale: 2)
-//            
+//
 //            // Create the NSTextAttachment with the image
 //            let imageAttachment = NSTextAttachment()
 //            imageAttachment.image = actualImage
-//            
+//
 //            // Wrap the attachment in its own attributed string so we can append it
 //            let imageString = NSAttributedString(attachment: imageAttachment)
-//            
+//
 //            // Add the NSTextAttachment wrapper at the end of the string
 //            fullString.append(imageString)
-//            
+//
 //        }
-//        
+//
 //        return fullString
 //    }
     
@@ -367,7 +359,7 @@ extension CrewMembersTableViewController {
             alertController.addAction(UIAlertAction(title: "\(target.satelliteName)", style: .default) { (choice) in
                 self.station = target
                 DispatchQueue.global(qos: .userInteractive).async {
-                    self.getCurrrentCrewMembers()
+                    self.fetchCurrentCrewMembers()
                 }
             })
         }
@@ -436,7 +428,7 @@ extension CrewMembersTableViewController {
         
         let row                                         = indexPath.row
         let startOfLabelText                            = currentCrew![row].name + Globals.spacer
-        let flagImageURLString                          = currentCrew![row].flag 
+        let flagImageURLString                          = currentCrew![row].flag
         
         crewMemberDetailView.shortBioName?.text         = startOfLabelText + flagImageURLString
         crewMemberDetailView.shortBioInforomation?.text = currentCrew?[row].shortBioBlurb ?? "No short bio is available."

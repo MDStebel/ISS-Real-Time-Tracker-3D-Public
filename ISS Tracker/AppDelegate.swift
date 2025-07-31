@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var referenceToGlobeFullViewController = GlobeFullViewController()
     
     // ReviewPromptManager instance handles review scheduling logic.
-    private lazy var reviewPromptManager = ReviewPromptManager(minimumPromptTime: 25, maximumPromptTime: 70)
+    private lazy var reviewPromptManager = ReviewPromptManager(minimumPromptTime: 20, maximumPromptTime: 60)
 
     // MARK: - Application Lifecycle
 
