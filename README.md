@@ -2,7 +2,7 @@
 Selected source code from the app for educational purposes.
 For iOS, iPadOS, & watchOS.
 
-### July 31, 2025 Version 7.20.14
+### August 1, 2025 Version 7.20.14
 ■ Improvements
 
 ∙ Improved the performance of several sections of code.
