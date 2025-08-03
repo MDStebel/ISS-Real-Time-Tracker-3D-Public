@@ -2,6 +2,9 @@
 Selected source code from the app for educational purposes.
 For iOS, iPadOS, & watchOS.
 
+### August 4, 2025 Version 7.20.15
+No changes, just replaced screenshots on the App Store.
+
 ### August 1, 2025 Version 7.20.14
 ■ Improvements
 
