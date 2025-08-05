@@ -3,6 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 2/22/16.
+//  Updated by Michael on 8/4/2025.
 //  Copyright © 2016-2025 ISS Real-Time Tracker. All rights reserved.
 //
 
@@ -107,6 +108,10 @@ class CrewMembersTableViewController: UITableViewController, TableAnimatable {
         barAppearance.titleTextAttributes   = [.font : UIFont(name: Constants.fontForTitle, size: titleFontSize) as Any, .foregroundColor : UIColor.white]
         navigationItem.standardAppearance   = barAppearance
         navigationItem.scrollEdgeAppearance = barAppearance
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            navigationItem.title = "\(station.satelliteName) Crew"
+        }
     }
     
     
@@ -358,6 +363,11 @@ extension CrewMembersTableViewController {
         for target in [StationsAndSatellites.iss, StationsAndSatellites.tss] {
             alertController.addAction(UIAlertAction(title: "\(target.satelliteName)", style: .default) { (choice) in
                 self.station = target
+                
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    self.navigationItem.title = "\(self.station.satelliteName) Crew"
+                }
+                
                 DispatchQueue.global(qos: .userInteractive).async {
                     self.fetchCurrentCrewMembers()
                 }

@@ -13,7 +13,7 @@ import Foundation
 final class CrewViewModel: ObservableObject {
     
     // MARK: - Published properties
-    var crews    = [Crews.People]()
+    var crews = [Crews.People]()
     var wasError = false
     var errorForAlert: ErrorCodes?
     

@@ -37,26 +37,20 @@ class CrewMemberDetailView: UIView {
     
     /// Opens the crew member's Twitter profile in the Twitter app or Safari.
     @IBAction private func goToTwitter() {
-        guard
-            let urlString = twitterHandleURL,
-            !urlString.isEmpty
-        else { return }
+        guard let urlString = twitterHandleURL,
+              let url = URL(string: urlString),
+              let twitterHandle = url.pathComponents.last,
+              !twitterHandle.isEmpty else { return }
 
-        let twitterHandle = urlString.removingPrefix("https://twitter.com/")
-        
-        guard !twitterHandle.isEmpty, twitterHandle.count > 3 else { return }
-
-        guard
-            let appURL = URL(string: "twitter://user?screen_name=\(twitterHandle)"),
-            let webURL = URL(string: "https://twitter.com/\(twitterHandle)")
-        else { return }
+        let appURL = URL(string: "twitter://user?screen_name=\(twitterHandle)")!
+        let webURL = URL(string: "https://twitter.com/\(twitterHandle)")!
 
         let application = UIApplication.shared
-        
+
         if application.canOpenURL(appURL) {
-            application.open(appURL)
+            application.open(appURL, options: [:], completionHandler: nil)
         } else {
-            application.open(webURL)
+            application.open(webURL, options: [:], completionHandler: nil)
         }
     }
     

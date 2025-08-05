@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 6/12/18.
-//  Updated by Michael on 2/12/2025
+//  Updated by Michael on 8/4/2025.
 //  Copyright © 2016-2025 ISS Real-Time Tracker. All rights reserved.
 //
 
@@ -77,5 +77,28 @@ class PassesTableViewCell: UITableViewCell {
             cellBackground.backgroundColor = UIColor(named: Theme.popupBgd)
             passDate.textColor = UIColor(named: Theme.popupBgd)
         }
+    }
+    
+    /// Clear all data from the table
+    func clear() {
+        passDate.text = ""
+        durationLabel.text = ""
+        magnitudeLabel.text = ""
+        startTime.text = ""
+        startAz.text = ""
+        startEl.text = ""
+        startComp.text = ""
+        maxTime.text = ""
+        maxAz.text = ""
+        maxEl.text = ""
+        maxComp.text = ""
+        endTime.text = ""
+        endAz.text = ""
+        endEl.text = ""
+        endComp.text = ""
+
+        backgroundColor = UIColor(named: Theme.popupBgd)
+        tintColor = UIColor(named: Theme.popupBgd)
+        passDate.backgroundColor = UIColor(named: Theme.popupBgd)
     }
 }

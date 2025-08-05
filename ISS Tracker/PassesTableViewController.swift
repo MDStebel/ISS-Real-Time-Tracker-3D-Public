@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 3/16/16.
-//  Updated by Michael on 2/24/2025
+//  Updated by Michael on 8/4/2025.
 //  Copyright © 2016-2025 ISS Real-Time Tracker. All rights reserved.
 //
 
@@ -118,6 +118,10 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setNavigationBarAppearance()
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            navigationItem.title = "\(station.satelliteName) Passes"
+        }
     }
 
     private func setNavigationBarAppearance() {
@@ -215,6 +219,11 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
         for target in [StationsAndSatellites.iss, StationsAndSatellites.tss, StationsAndSatellites.hst] {
             alertController.addAction(UIAlertAction(title: "\(target.satelliteName)", style: .default) { _ in
                 self.station = target
+                
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    self.navigationItem.title = "\(self.station.satelliteName) Passes"
+                }
+                
                 self.restartGettingUserLocation()
             })
         }
@@ -551,24 +560,7 @@ extension PassesTableViewController {
     }
 
     private func clearData(in cell: PassesTableViewCell) {
-        cell.passDate.text = ""
-        cell.durationLabel.text = ""
-        cell.magnitudeLabel.text = ""
-        cell.startTime.text = ""
-        cell.startAz.text = ""
-        cell.startEl.text = ""
-        cell.startComp.text = ""
-        cell.maxTime.text = ""
-        cell.maxAz.text = ""
-        cell.maxEl.text = ""
-        cell.maxComp.text = ""
-        cell.endTime.text = ""
-        cell.endAz.text = ""
-        cell.endEl.text = ""
-        cell.endComp.text = ""
-        cell.backgroundColor = UIColor(named: Theme.popupBgd)
-        cell.tintColor = UIColor(named: Theme.popupBgd)
-        cell.passDate.backgroundColor = UIColor(named: Theme.popupBgd)
+        cell.clear()
     }
 
     private func showAlertForNoVisiblePasses() {
