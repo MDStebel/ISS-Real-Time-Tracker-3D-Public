@@ -6,6 +6,7 @@ For iOS, iPadOS, & watchOS.
 ■ Improvements
 
 ∙ New startup screen.
+
 ∙ Refactored a few sections.
 
 ### August 6, 2025 Version 7.20.16
