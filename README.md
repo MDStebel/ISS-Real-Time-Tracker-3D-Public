@@ -2,6 +2,12 @@
 Selected source code from the app for educational purposes.
 For iOS, iPadOS, & watchOS.
 
+### August 7, 2025 Version 7.20.17
+■ Improvements
+
+∙ New startup screen.
+∙ Refactored a few sections.
+
 ### August 6, 2025 Version 7.20.16
 ■ Improvements
 
