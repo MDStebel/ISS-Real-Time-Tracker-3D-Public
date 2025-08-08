@@ -7,7 +7,7 @@ For iOS, iPadOS, & watchOS.
 
 ∙ SkyDome points and orbital colors now conform to the satellite color code convention used throughout the app.
 
-∙ General UI improvements throughout
+∙ General UI improvements throughout.
 
 ∙ Performance tuning throughout the iOS and watchOS apps.
 
