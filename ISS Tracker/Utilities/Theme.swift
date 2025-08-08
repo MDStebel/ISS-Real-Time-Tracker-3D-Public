@@ -10,7 +10,6 @@ import UIKit
 
 /// The main theme used in the app
 struct Theme {
-    
     static let appFont                                      = "Avenir Book"
     static let appFontBold                                  = "Avenir Next Medium"
     static let atlBgd                                       = "Alternate Background"

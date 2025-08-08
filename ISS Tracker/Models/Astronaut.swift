@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 7/9/16.
-//  Updated by Michael on 2/7/2025.
+//  Updated by Michael on 8/7/2025.
 //  Copyright © 2016-2025 ISS Real-Time Tracker. All rights reserved.
 //
 
@@ -30,6 +30,18 @@ struct Astronaut: Decodable, Hashable {
     let mission: String
     let expedition: String
     
+    // Map JSON keys to our property names
+    private enum CodingKeys: String, CodingKey {
+        case name, title, country
+        case spaceCraft = "location"
+        case launchDate = "launchdate"
+        case bio = "biolink"
+        case launchVehicle = "launchvehicle"
+        case shortBioBlurb = "bio"
+        case image = "biophoto"
+        case twitter, mission, expedition
+    }
+    
     /// Returns the uppercase string of the country.
     private var countryFormatted: String {
         country.uppercased()
@@ -54,85 +66,56 @@ struct Astronaut: Decodable, Hashable {
     }
     
     // MARK: - Methods
+
+    /// Shared date formatter for European-form launch dates to avoid reallocation.
+    private static let launchDateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = Globals.dateFormatStringEuropeanForm
+        df.timeZone = TimeZone(secondsFromGMT: 0)
+        return df
+    }()
     
-    /// Calculates the number of days an astronaut has been in space (today minus the launch date).
-    /// If the launch date is invalid, returns 0.
-    /// - Returns: Number of days since launch.
+    /// Calculates the number of whole days an astronaut has been in space (today minus the launch date).
+    /// Parsing uses the source `launchDate` format directly for accuracy.
+    /// - Returns: Number of days since launch (non-negative).
     func numberOfDaysInSpace() -> Int {
-        let todaysDate = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = Globals.outputDateFormatStringShortForm
-        
-        guard let startDate = dateFormatter.date(from: launchDateFormatted) else {
-            return 0
-        }
-        
-        let timeInterval = todaysDate.timeIntervalSince(startDate)
-        return Int(timeInterval / Globals.numberOfSecondsInADay)
+        guard let startDate = Astronaut.launchDateFormatter.date(from: launchDate) else { return 0 }
+        let days = Calendar.current.dateComponents([.day], from: startDate, to: Date()).day ?? 0
+        return max(0, days)
     }
     
     // MARK: - JSON Parsing
     
-    /// Parses JSON data containing current crew information and returns an array of Astronauts.
+    /// Parses JSON data containing current crew information and returns an array of `Astronaut`.
+    /// Uses `JSONDecoder` with `Decodable` models instead of manual dictionary parsing.
     /// - Parameter data: The data returned from the API.
-    /// - Returns: An optional array of Astronauts.
+    /// - Returns: An optional array of Astronauts, or `nil` if decoding fails.
     static func parseCurrentCrew(from data: Data?) -> [Astronaut]? {
         guard let data = data else { return nil }
-        
-        // Type alias for a dictionary to make code easier to read.
-        typealias JSONDictionary = [String: Any]
-        
         do {
-            guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? JSONDictionary,
-                  let numberOfAstronauts = json["number"] as? Int,
-                  let astronautsArray = json["people"] as? [JSONDictionary] else {
-                return nil
+            let decoder = JSONDecoder()
+            let response = try decoder.decode(CurrentCrewResponse.self, from: data)
+            // If the API's count mismatches, still return what we successfully decoded.
+            if response.people.count != response.number {
+                return response.people
             }
-            
-            var crew = [Astronaut]()
-            
-            for astronaut in astronautsArray {
-                guard let name          = astronaut["name"] as? String,
-                      let title         = astronaut["title"] as? String,
-                      let country       = astronaut["country"] as? String,
-                      let spaceCraft    = astronaut["location"] as? String,
-                      let launchDate    = astronaut["launchdate"] as? String,
-                      let bio           = astronaut["biolink"] as? String,
-                      let shortBioBlurb = astronaut["bio"] as? String,
-                      let image         = astronaut["biophoto"] as? String,
-                      let twitter       = astronaut["twitter"] as? String,
-                      let mission       = astronaut["mission"] as? String,
-                      let launchVehicle = astronaut["launchvehicle"] as? String,
-                      let expedition    = astronaut["expedition"] as? String else {
-                    return nil
-                }
-                
-                let astronautObj = Astronaut(name: name,
-                                             title: title,
-                                             country: country,
-                                             spaceCraft: spaceCraft,
-                                             launchDate: launchDate,
-                                             bio: bio,
-                                             launchVehicle: launchVehicle,
-                                             shortBioBlurb: shortBioBlurb,
-                                             image: image,
-                                             twitter: twitter,
-                                             mission: mission,
-                                             expedition: expedition)
-                crew.append(astronautObj)
-            }
-            
-            // Ensure the number of parsed astronauts matches the expected count.
-            guard crew.count == numberOfAstronauts else { return nil }
-            return crew
+            return response.people
         } catch {
             return nil
         }
     }
 }
 
+
+// MARK: - API Response Model
+
+private struct CurrentCrewResponse: Decodable {
+    let number: Int
+    let people: [Astronaut]
+}
+
+
 extension Astronaut: CustomStringConvertible, Comparable {
-    
     static func < (lhs: Astronaut, rhs: Astronaut) -> Bool {
         lhs.name < rhs.name
     }

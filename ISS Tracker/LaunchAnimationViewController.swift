@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 10/31/16.
-//  Updated by Michael on 2/8/2025
+//  Updated by Michael on 8/7/2025.
 //  Copyright © 2016-2025 ISS Real-Time Tracker. All rights reserved.
 //
 
@@ -14,6 +14,7 @@ import UIKit
 class LaunchAnimationViewController: UIViewController {
     
     // MARK: - Constants
+    
     private let iconAnimationDuration: TimeInterval = 5.0
     private let iconAnimationRotationAngle: CGFloat = -CGFloat.pi / 6.0
     private let iconAnimationScaleFactor: CGFloat = 0.5
@@ -27,17 +28,20 @@ class LaunchAnimationViewController: UIViewController {
     private let segueToMainViewController = "mainViewControllerSegue"
     
     // MARK: - Properties
+    
     private var issImageFinalTransform = CGAffineTransform.identity
     private var titleFinalTransform = CGAffineTransform.identity
     private var threeDTextFinalTransform = CGAffineTransform.identity
     
     // MARK: - Outlets
+    
     @IBOutlet private var curves: UIImageView!
     @IBOutlet private var ISSImage: UIImageView!
     @IBOutlet private var appNameTitleForLaunchAnimation: UILabel!
     @IBOutlet private var threeDTextImage: UIImageView!
     
     // MARK: - Lifecycle Methods
+    
     override var prefersStatusBarHidden: Bool {
         true
     }
@@ -119,6 +123,7 @@ class LaunchAnimationViewController: UIViewController {
     }
     
     // MARK: - Animation Method
+    
     private func animateLaunchScreen() {
         UIView.animate(
             withDuration: iconAnimationDuration,
@@ -152,6 +157,7 @@ class LaunchAnimationViewController: UIViewController {
     }
     
     // MARK: - Helper Methods
+    
     private func getVersionAndCopyrightData() {
         Globals.copyrightString = Bundle.main.humanReadableCopyright
         Globals.versionNumber = Bundle.main.appVersion

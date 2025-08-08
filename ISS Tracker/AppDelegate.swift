@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 1/28/16.
-//  Updated by Michael on 2/24/2025.
+//  Updated by Michael on 8/7/2025.
 //  Copyright © 2016-2025 ISS Real-Time Tracker. All rights reserved.
 //
 
@@ -15,17 +15,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: - Properties
 
-    var window: UIWindow?
-    var referenceToViewController = TrackingViewController()
     var referenceToGlobeFullViewController = GlobeFullViewController()
+    var referenceToViewController = TrackingViewController()
+    var window: UIWindow?
     
     // ReviewPromptManager instance handles review scheduling logic.
     private lazy var reviewPromptManager = ReviewPromptManager(minimumPromptTime: 20, maximumPromptTime: 60)
 
     // MARK: - Application Lifecycle
 
-    func application(_ application: UIApplication,
-                     willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    func application(
+        _ application: UIApplication,
+        willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
         configureGlobalSettings()
         reviewPromptManager.scheduleReviewRequest()
         return true

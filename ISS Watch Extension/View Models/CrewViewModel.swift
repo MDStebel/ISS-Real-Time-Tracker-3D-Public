@@ -20,6 +20,7 @@ final class CrewViewModel: ObservableObject {
     // MARK: - Properties
     private let crewAPIEndpointURLString = ApiEndpoints.crewAPIEndpoint
     private let timerValue               = 5.0
+    
     private var cancellables             = Set<AnyCancellable>()
     private var timer: AnyCancellable?
     

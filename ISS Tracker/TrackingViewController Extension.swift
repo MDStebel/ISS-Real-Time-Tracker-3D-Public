@@ -124,7 +124,7 @@ extension TrackingViewController {
         DispatchQueue.main.async {
             self.setUpDisplayConfiguration()
             
-            if Globals.zoomFactorWasResetInSettings {           // If reset was pressed in Settings, or if the zoom scale factor was changed, this flag will be set. So, reset zoom to default values for the selected scale factor and call zoomValueChanged method.
+            if Globals.zoomFactorWasResetInSettings {     // If reset was pressed in Settings, or if the zoom scale factor was changed, this flag will be set. So, reset zoom to default values for the selected scale factor and call zoomValueChanged method.
                 self.setUpZoomSlider(usingSavedZoomFactor: false)
                 self.zoomValueChanged(self.zoomSlider)
             }
@@ -150,7 +150,7 @@ extension TrackingViewController {
                 self.clearOrbitTrackButton.isEnabled = false
             }
             
-            self.cursor.isHidden = false                        // Now, show the marker
+            self.cursor.isHidden = false     // Now, show the marker
         }
     }
     

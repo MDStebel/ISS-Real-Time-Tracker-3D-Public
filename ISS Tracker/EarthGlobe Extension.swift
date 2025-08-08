@@ -3,6 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 10/22/20.
+//  Updated by Michael on 8/7/2025.
 //  Copyright © 2020-2025 ISS Real-Time Tracker. All rights reserved.
 //
 
@@ -25,7 +26,6 @@ extension EarthGlobe {
         let pulse = false
 #endif
         self.addMarker(ISS, shouldPulse: pulse)
-        
     }
     
     /// Adds the TSS position marker at the precise latitude and longitude to our globe scene
@@ -41,7 +41,6 @@ extension EarthGlobe {
         let pulse = false
 #endif
         self.addMarker(TSS, shouldPulse: pulse)
-        
     }
     
     /// Adds the Hubble position marker at the precise latitude and longitude to our globe scene
@@ -57,7 +56,6 @@ extension EarthGlobe {
         let pulse = false
 #endif
         self.addMarker(hubble, shouldPulse: pulse)
-        
     }
     
     /// Adds the satellite's viewing circle marker at the precise latitude and longitude to our globe scene
@@ -113,7 +111,11 @@ extension EarthGlobe {
         let orbitalCorrectionForInclination = calculateOrbitalCorrectionForInclination(for: station, absLat: absLat, exponent: exponent)
         let orbitInclinationInRadiansCorrected = pow(orbitInclination, orbitalCorrectionForInclination) * headingFactor
         
-        let compositeRotationMatrix = createCompositeRotationMatrix(orbitInclinationInRadiansCorrected: orbitInclinationInRadiansCorrected, orbitalCorrectionForLon: orbitalCorrectionForLon, orbitalCorrectionForLat: orbitalCorrectionForLat)
+        let compositeRotationMatrix = createCompositeRotationMatrix(
+            orbitInclinationInRadiansCorrected: orbitInclinationInRadiansCorrected,
+            orbitalCorrectionForLon: orbitalCorrectionForLon,
+            orbitalCorrectionForLat: orbitalCorrectionForLat
+        )
         
         orbitTrackNode.transform = compositeRotationMatrix
     }
@@ -153,6 +155,11 @@ extension EarthGlobe {
         }
     }
     
+    /// Helper function to transform satellite coordinates to globe position
+    /// - Parameters:
+    ///   - lat: Satellite's latitude
+    ///   - lon: Satellite's longitude
+    /// - Returns: Transformed latitude and longitude in a tuple of floats
     private func adjustCoordinates(lat: Float, lon: Float) -> (lat: Float, lon: Float) {
         let adjustedLat = lat + Float(Globals.oneEightyDegrees)
         let adjustedLon = lon - Float(Globals.oneEightyDegrees)
@@ -163,17 +170,34 @@ extension EarthGlobe {
         return .pi / multiplier + absLat * Float(Globals.degreesToRadians) / orbitInclination
     }
     
+    /// Chooses a power for the orbital-inclination correction based on absolute latitude and the station's table,
+    /// then returns pow(exponent, selectedPower). Falls back safely for `.none`.
     private func calculateOrbitalCorrectionForInclination(for station: StationsAndSatellites, absLat: Float, exponent: Float) -> Float {
-        switch station {
-        case .iss:
-            return calculateOrbitalCorrection(absLat: absLat, exponent: exponent, thresholds: [12.0, 17.0, 25.0, 33.0, 40.0, 45.0, 49.0, 51.0], powers: [0.80, 0.85, 1.00, 1.25, 1.60, 2.00, 2.50, 3.20, 4.00])
-        case .tss:
-            return calculateOrbitalCorrection(absLat: absLat, exponent: exponent, thresholds: [15.0, 20.0, 25.0, 30.0, 35.0, 38.0, 40.0, 41.0, 41.5], powers: [0.75, 0.85, 1.00, 1.20, 1.45, 1.70, 2.00, 2.30, 2.50, 2.80])
-        case .hst:
-            return calculateOrbitalCorrection(absLat: absLat, exponent: exponent, thresholds: [10.0, 15.0, 18.0, 20.0, 22.0, 24.0, 26.0, 27.0], powers: [0.35, 0.50, 0.65, 0.80, 1.00, 1.30, 1.75, 2.10, 3.00])
-        case .none:
-            return 0.0
-        }
+        let (thresholds, powers): ([Float], [Float]) = {
+            switch station {
+            case .iss:
+                return ([12.0, 17.0, 25.0, 33.0, 40.0, 45.0, 49.0, 51.0],
+                        [0.80, 0.85, 1.00, 1.25, 1.60, 2.00, 2.50, 3.20, 4.00])
+            case .tss:
+                return ([15.0, 20.0, 25.0, 30.0, 35.0, 38.0, 40.0, 41.0, 41.5],
+                        [0.75, 0.85, 1.00, 1.20, 1.45, 1.70, 2.00, 2.30, 2.50, 2.80])
+            case .hst:
+                return ([10.0, 15.0, 18.0, 20.0, 22.0, 24.0, 26.0, 27.0],
+                        [0.35, 0.50, 0.65, 0.80, 1.00, 1.30, 1.75, 2.10, 3.00])
+            case .none:
+                return ([], [])
+            }
+        }()
+
+        // If there is no table (station .none), mirror prior behavior by returning 0.0
+        guard !thresholds.isEmpty, !powers.isEmpty else { return 0.0 }
+
+        return calculateOrbitalCorrection(
+            absLat: absLat,
+            exponent: exponent,
+            thresholds: thresholds,
+            powers: powers
+        )
     }
     
     private func calculateOrbitalCorrection(absLat: Float, exponent: Float, thresholds: [Float], powers: [Float]) -> Float {
@@ -219,7 +243,6 @@ extension EarthGlobe {
             marker.addPulseAnimation()
         }
 #endif
-        
     }
     
     /// Remove the last child node in the nodes array
@@ -237,8 +260,8 @@ extension EarthGlobe {
     
     /// Set up the Sun
     /// - Parameters:
-    ///   - lat: Subsolor point latitude in degrees
-    ///   - lon: Subsolor point longitude in degrees
+    ///   - lat: Subsolar point latitude in degrees
+    ///   - lon: Subsolar point longitude in degrees
     public func setUpTheSun(lat: Float, lon: Float) {
         let adjustedLon        = lon + Globals.ninetyDegrees
         let adjustedLat        = lat
@@ -257,7 +280,7 @@ extension EarthGlobe {
     
     /// Convert map coordinates from lat, lon, altitude to SceneKit x, y, z coordinates
     /// - Parameters:
-    ///   - lat: Latitude as a decimal Floa+t
+    ///   - lat: Latitude as a decimal Float
     ///   - lon: Longitude as a decimal Float
     ///   - alt: altitude as a decimal Float
     /// - Returns: Position as a SCNVector3

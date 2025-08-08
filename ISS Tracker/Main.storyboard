@@ -25,7 +25,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Curves 7" translatesAutoresizingMaskIntoConstraints="NO" id="Pyb-uu-Rih" userLabel="Curves">
+                            <imageView opaque="NO" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" image="earth4" translatesAutoresizingMaskIntoConstraints="NO" id="3Hu-qI-8U7">
+                                <rect key="frame" x="0.0" y="505" width="430" height="427"/>
+                            </imageView>
+                            <imageView hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Curves 7" translatesAutoresizingMaskIntoConstraints="NO" id="Pyb-uu-Rih" userLabel="Curves">
                                 <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                                 <color key="tintColor" name="ISSRTT-White"/>
                                 <gestureRecognizers/>
@@ -73,6 +76,8 @@ TRACKER
                             <constraint firstItem="hMu-io-e1w" firstAttribute="leading" secondItem="itU-6j-N9d" secondAttribute="leading" id="ib2-Ri-M9V"/>
                             <constraint firstItem="hMu-io-e1w" firstAttribute="trailing" secondItem="Pyb-uu-Rih" secondAttribute="trailing" id="n4M-rN-gR3"/>
                             <constraint firstItem="d1e-Bn-Nx7" firstAttribute="centerY" secondItem="fBq-BF-I6i" secondAttribute="centerY" constant="100" id="olg-gY-Rmx"/>
+                            <constraint firstItem="3Hu-qI-8U7" firstAttribute="leading" secondItem="fBq-BF-I6i" secondAttribute="leading" id="qyQ-Bu-YyK"/>
+                            <constraint firstItem="3Hu-qI-8U7" firstAttribute="bottom" secondItem="fBq-BF-I6i" secondAttribute="bottom" id="tAE-rU-Jgz"/>
                             <constraint firstAttribute="bottom" secondItem="Pyb-uu-Rih" secondAttribute="bottom" id="vRO-EU-SMU"/>
                         </constraints>
                     </view>
@@ -91,7 +96,7 @@ TRACKER
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FH2-hf-wpo" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="ce2-I9-mj5"/>
             </objects>
-            <point key="canvasLocation" x="-2889.2307692307691" y="-3598.5781990521327"/>
+            <point key="canvasLocation" x="-2889.7674418604652" y="-3598.7124463519317"/>
         </scene>
         <!--Tracking View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -2608,6 +2613,7 @@ Days in Space:</string>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="comments_filled_wide_mds_new_red" width="223" height="100"/>
         <image name="document.on.document" catalog="system" width="116" height="128"/>
+        <image name="earth4" width="410" height="410"/>
         <image name="exit" width="30" height="30"/>
         <image name="gearshape" catalog="system" width="128" height="123"/>
         <image name="help" width="31" height="31"/>
