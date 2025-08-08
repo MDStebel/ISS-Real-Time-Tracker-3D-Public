@@ -2,6 +2,15 @@
 Selected source code from the app for educational purposes.
 For iOS, iPadOS, & watchOS.
 
+### August 8, 2025 Version 7.21
+■ Improvements
+
+∙ SkyDome points and orbital colors now conform to the satellite color code convention used throughout the app.
+
+∙ General UI improvements throughout
+
+∙ Performance tuning throughout the iOS and watchOS apps.
+
 ### August 7, 2025 Version 7.20.17
 ■ Improvements
 
