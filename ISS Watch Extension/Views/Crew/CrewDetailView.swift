@@ -1,6 +1,6 @@
 //
 //  CrewDetailView.swift
-//  ISS Watch
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 4/13/24.
 //  Updated by Michael on 7/31/2025.

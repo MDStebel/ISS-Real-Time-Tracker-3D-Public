@@ -1,12 +1,14 @@
 //
 //  PassesViewModel.swift
-//  ISS Watch
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 6/5/24.
+//  Updated by Michael on 8/8/2025.
 //  Copyright © 2024-2025 ISS Real-Time Tracker. All rights reserved.
 //
 
 import CoreLocation
+import Observation
 import SwiftUI
 
 @Observable

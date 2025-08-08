@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 2/9/25.
-//  Updated by Michael on 2/25/2025
+//  Updated by Michael on 8/8/2025
 //  Copyright © 2025 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
@@ -34,6 +34,7 @@ struct Dome3DView: View {
     private let issRttDarkGray = UIColor(cgColor: CGColor(red: 0.20, green: 0.20, blue: 0.20, alpha: 1.0))
     
     // The three sky points, pass date & time, and satellite name. These will be passed from the parent view.
+    var satellite: StationsAndSatellites
     var skyPoints: [SkyPoint]
     var date: String = ""
     var startTime: String = ""
@@ -93,20 +94,21 @@ struct Dome3DView: View {
         containerNode.addChildNode(personNode)
         
         // MARK: - Sky Points and Smooth Curve
+        
         // Use the passed-in skyPoints (we're expecting exactly 3 points: A (start), B (max), C (end).
         let points = skyPoints
         let pointLabels = ["A", "B", "C"]
         for (i, point) in points.enumerated() {
             let pos = Self.convert(skyPoint: point, radius: Dome3DView.globeRadius)
             let sphere = SCNSphere(radius: 0.10)
-            sphere.firstMaterial?.diffuse.contents = issRttRed
+            sphere.firstMaterial?.diffuse.contents = satellite.color
             let pointNode = SCNNode(geometry: sphere)
             pointNode.position = pos
             containerNode.addChildNode(pointNode)
             
             let labelGeometry = SCNText(string: pointLabels[i], extrusionDepth: 0.10)
             labelGeometry.font = UIFont.systemFont(ofSize: 0.7)
-            labelGeometry.firstMaterial?.diffuse.contents = issRttRed
+            labelGeometry.firstMaterial?.diffuse.contents = satellite.color
             let labelNode = SCNNode(geometry: labelGeometry)
             let (minBound, maxBound) = labelGeometry.boundingBox
             let dx = (maxBound.x - minBound.x) / 2
@@ -130,11 +132,12 @@ struct Dome3DView: View {
             )
             
             let curvePoints = Self.sampleQuadraticBezier(p0: p0, cp: cp, p2: p2, samples: 128)
-            let lineNode = Self.createLineNodeFromPoints(curvePoints, color: UIColor.white)
+            let lineNode = Self.createLineNodeFromPoints(curvePoints, color: satellite.color)
             containerNode.addChildNode(lineNode)
         }
         
         // MARK: - Cardinal Directions (Placed on the Ground)
+        
         let cardinalDirections: [(label: String, azimuth: Double)] = [
             ("N", 0),
             ("E", 90),
@@ -159,6 +162,7 @@ struct Dome3DView: View {
         }
         
         // MARK: - Zenith Marker and Label
+        
         let zenithMarker = SCNSphere(radius: 0.06)
         zenithMarker.firstMaterial?.diffuse.contents = UIColor.white
         let zenithNode = SCNNode(geometry: zenithMarker)
@@ -461,11 +465,23 @@ struct Dome3DView: View {
 
 struct Dome3DView_Previews: PreviewProvider {
     static var previews: some View {
-        Dome3DView(skyPoints: [
-            SkyPoint(azimuth: 222, elevation: 0),
-            SkyPoint(azimuth: 308, elevation: 57),
-            SkyPoint(azimuth: 42, elevation: 0)
-        ])
+        Dome3DView(
+            satellite: .iss,
+            skyPoints: [
+                SkyPoint(
+                    azimuth: 222,
+                    elevation: 0
+                ),
+                SkyPoint(
+                    azimuth: 308,
+                    elevation: 57
+                ),
+                SkyPoint(
+                    azimuth: 42,
+                    elevation: 0
+                )
+            ]
+        )
         .frame(width: 200, height: 250)
         .ignoresSafeArea()
     }

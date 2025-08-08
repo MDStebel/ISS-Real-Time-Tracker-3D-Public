@@ -1,38 +1,47 @@
 //
 //  LocationViewModel.swift
-//  ISS Real-Time Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 6/16/24.
+//  Updated by Michael on 8/8/2025.
 //  Copyright © 2024-2025 ISS Real-Time Tracker. All rights reserved.
 //
 
-import Combine
 import CoreLocation
 import Foundation
+import Observation
 
-final class LocationViewModel: ObservableObject {
+@Observable
+final class LocationViewModel {
     
-    @Published var authorizationStatus: CLAuthorizationStatus
-    @Published var latitude: Double  = 0.0
-    @Published var longitude: Double = 0.0
+    var authorizationStatus: CLAuthorizationStatus
+    var latitude: Double  = 0.0
+    var longitude: Double = 0.0
     
-    private var locationManager = LocationManager()
-    private var cancellables = Set<AnyCancellable>()
+    private let locationManager: LocationManager
 
     init() {
-        self.authorizationStatus = locationManager.authorizationStatus
-        
-        locationManager.$location
-            .compactMap { $0 }
-            .map { $0.coordinate }
-            .sink { [weak self] coordinate in
-                self?.latitude = coordinate.latitude
-                self?.longitude = coordinate.longitude
+        let manager = LocationManager()
+        self.locationManager = manager
+        self.authorizationStatus = manager.authorizationStatus
+
+        Task {
+            for await location in manager.locationStream() {
+                if let coordinate = location?.coordinate {
+                    await MainActor.run {
+                        self.latitude = coordinate.latitude
+                        self.longitude = coordinate.longitude
+                    }
+                }
             }
-            .store(in: &cancellables)
-        
-        locationManager.$authorizationStatus
-            .assign(to: \.authorizationStatus, on: self)
-            .store(in: &cancellables)
+        }
+
+        Task {
+            for await status in manager.authorizationStatusStream() {
+                await MainActor.run {
+                    self.authorizationStatus = status
+                }
+            }
+        }
     }
 }

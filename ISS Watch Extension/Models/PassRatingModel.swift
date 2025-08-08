@@ -1,6 +1,6 @@
 //
 //  PassRatingModel.swift
-//  ISS Real-Time Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 6/8/24.
 //  Copyright © 2024-2025 ISS Real-Time Tracker. All rights reserved.

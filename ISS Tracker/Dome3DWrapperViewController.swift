@@ -3,7 +3,7 @@
 //  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 2/10/25.
-//  Updated by Michael on 2/24/2025
+//  Updated by Michael on 8/8/2025
 //  Copyright © 2025 Michael Stebel Consulting, LLC. All rights reserved.
 //
 
@@ -13,14 +13,15 @@ import SwiftUI
 class Dome3DWrapperViewController: UIViewController {
     
     // These will be set before the segue.
-    var startAz: Double = 0.0
-    var startEl: Double = 0.0
-    var maxAz: Double   = 0.0
-    var maxEl: Double   = 0.0
-    var endAz: Double   = 0.0
-    var endEl: Double   = 0.0
-    var passDate = ""
-    var passStartTime = ""
+    var satellite: StationsAndSatellites = .iss
+    var startAz: Double                  = 0.0
+    var startEl: Double                  = 0.0
+    var maxAz: Double                    = 0.0
+    var maxEl: Double                    = 0.0
+    var endAz: Double                    = 0.0
+    var endEl: Double                    = 0.0
+    var passDate                         = ""
+    var passStartTime                    = ""
     
     private var skyPoints: [SkyPoint] = []
     
@@ -44,7 +45,7 @@ class Dome3DWrapperViewController: UIViewController {
         skyPoints = createSkypoints()
         
         // Create your SwiftUI Dome3DView with the passed skyPoints.
-        let dome3DView = Dome3DView(skyPoints: skyPoints, date: passDate, startTime: passStartTime)
+        let dome3DView = Dome3DView(satellite: satellite, skyPoints: skyPoints, date: passDate, startTime: passStartTime)
         let hostingController = UIHostingController(rootView: dome3DView)
         
         // Set the hosting controller's view background. Set to clear so the parent's background shows through.

@@ -1,6 +1,6 @@
 //
 //  DetailSubheading.swift
-//  ISS Watch
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 5/1/24.
 //  Copyright © 2024-2025 ISS Real-Time Tracker. All rights reserved.

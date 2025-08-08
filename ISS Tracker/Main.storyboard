@@ -45,7 +45,7 @@
                                 <color key="tintColor" name="Background"/>
                                 <string key="text">ISS
 REAL-TIME
-TRACKER
+TRACKER 3D
   </string>
                                 <fontDescription key="fontDescription" name="NasalizationRg-Regular" family="Nasalization" pointSize="32"/>
                                 <color key="textColor" name="ISSRTT-White"/>
@@ -765,7 +765,7 @@ TRACKER
                                             <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Globe Autorotation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mCi-0a-w3o" userLabel="Auto-rotate globe">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Globe autorotation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mCi-0a-w3o" userLabel="Auto-rotate globe">
                                                     <rect key="frame" x="28" y="9.0000000000000018" width="245" height="22.666666666666671"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="245" id="bTO-Fa-9Cy"/>
@@ -878,48 +878,8 @@ TRACKER
                                             </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="fQW-ZK-NvN">
-                                        <rect key="frame" x="0.0" y="407.33333206176758" width="430" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fQW-ZK-NvN" id="YpX-dg-wFa">
-                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Orbit ground track line overlay" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GPd-Eu-RcD">
-                                                    <rect key="frame" x="28" y="9.0000000000000018" width="245" height="22.666666666666671"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="245" id="iG2-gh-f8s"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Km1-b4-h94">
-                                                    <rect key="frame" x="361" y="9" width="51" height="31"/>
-                                                    <color key="tintColor" name="Tint"/>
-                                                    <color key="onTintColor" name="Background"/>
-                                                    <connections>
-                                                        <action selector="showOrbitGroundTrack:" destination="XQO-Wu-Orz" eventType="valueChanged" id="upS-AX-fnd"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Km1-b4-h94" firstAttribute="top" secondItem="GPd-Eu-RcD" secondAttribute="top" id="0y3-iB-upf"/>
-                                                <constraint firstItem="GPd-Eu-RcD" firstAttribute="leading" secondItem="YpX-dg-wFa" secondAttribute="leadingMargin" constant="8" id="5ff-IP-aZ6"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="GPd-Eu-RcD" secondAttribute="bottom" constant="-0.5" id="7ZS-YE-sgW"/>
-                                                <constraint firstItem="Km1-b4-h94" firstAttribute="top" secondItem="YpX-dg-wFa" secondAttribute="topMargin" constant="-4" id="AoW-Zh-HjH"/>
-                                                <constraint firstItem="GPd-Eu-RcD" firstAttribute="leading" secondItem="YpX-dg-wFa" secondAttribute="leadingMargin" constant="8" id="cBb-fP-1SS"/>
-                                                <constraint firstItem="Km1-b4-h94" firstAttribute="trailing" secondItem="YpX-dg-wFa" secondAttribute="trailingMargin" id="fES-Xr-e9d"/>
-                                                <constraint firstItem="Km1-b4-h94" firstAttribute="top" secondItem="GPd-Eu-RcD" secondAttribute="top" id="fWo-dG-AkW"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="constraints">
-                                                    <exclude reference="5ff-IP-aZ6"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="XV6-Z2-6Mv">
-                                        <rect key="frame" x="0.0" y="451.33333206176758" width="430" height="44"/>
+                                        <rect key="frame" x="0.0" y="407.33333206176758" width="430" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XV6-Z2-6Mv" id="J75-Nv-mBX">
                                             <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
@@ -959,7 +919,7 @@ TRACKER
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="VFV-fK-x7T">
-                                        <rect key="frame" x="0.0" y="495.33333206176758" width="430" height="44"/>
+                                        <rect key="frame" x="0.0" y="451.33333206176758" width="430" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VFV-fK-x7T" id="hOh-xP-3zK">
                                             <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
@@ -990,6 +950,46 @@ TRACKER
                                                 <constraint firstItem="FSb-yK-u2l" firstAttribute="top" secondItem="hOh-xP-3zK" secondAttribute="topMargin" constant="-3" id="qMA-FV-qwE"/>
                                                 <constraint firstItem="ooZ-11-bTh" firstAttribute="trailing" secondItem="hOh-xP-3zK" secondAttribute="trailingMargin" id="rc1-u7-c04"/>
                                             </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="0.0" shouldIndentWhileEditing="NO" id="fQW-ZK-NvN">
+                                        <rect key="frame" x="0.0" y="495.33333206176758" width="430" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fQW-ZK-NvN" id="YpX-dg-wFa">
+                                            <rect key="frame" x="0.0" y="0.0" width="430" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Orbit ground track line overlay" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GPd-Eu-RcD">
+                                                    <rect key="frame" x="28" y="9.0000000000000018" width="245" height="22.666666666666671"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="245" id="iG2-gh-f8s"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Km1-b4-h94">
+                                                    <rect key="frame" x="361" y="9" width="51" height="31"/>
+                                                    <color key="tintColor" name="Tint"/>
+                                                    <color key="onTintColor" name="Background"/>
+                                                    <connections>
+                                                        <action selector="showOrbitGroundTrack:" destination="XQO-Wu-Orz" eventType="valueChanged" id="upS-AX-fnd"/>
+                                                    </connections>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Km1-b4-h94" firstAttribute="top" secondItem="GPd-Eu-RcD" secondAttribute="top" id="0y3-iB-upf"/>
+                                                <constraint firstItem="GPd-Eu-RcD" firstAttribute="leading" secondItem="YpX-dg-wFa" secondAttribute="leadingMargin" constant="8" id="5ff-IP-aZ6"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="GPd-Eu-RcD" secondAttribute="bottom" constant="-0.5" id="7ZS-YE-sgW"/>
+                                                <constraint firstItem="Km1-b4-h94" firstAttribute="top" secondItem="YpX-dg-wFa" secondAttribute="topMargin" constant="-4" id="AoW-Zh-HjH"/>
+                                                <constraint firstItem="GPd-Eu-RcD" firstAttribute="leading" secondItem="YpX-dg-wFa" secondAttribute="leadingMargin" constant="8" id="cBb-fP-1SS"/>
+                                                <constraint firstItem="Km1-b4-h94" firstAttribute="trailing" secondItem="YpX-dg-wFa" secondAttribute="trailingMargin" id="fES-Xr-e9d"/>
+                                                <constraint firstItem="Km1-b4-h94" firstAttribute="top" secondItem="GPd-Eu-RcD" secondAttribute="top" id="fWo-dG-AkW"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="5ff-IP-aZ6"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -2581,7 +2581,7 @@ Days in Space:</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Hwa-Nf-vWw"/>
+        <segue reference="cR5-3C-RSS"/>
         <segue reference="QZj-XB-PmD"/>
         <segue reference="7Ix-1h-Ypp"/>
     </inferredMetricsTieBreakers>

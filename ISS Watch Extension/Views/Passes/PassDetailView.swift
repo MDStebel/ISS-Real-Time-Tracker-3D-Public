@@ -1,6 +1,6 @@
 //
 //  PassDetailView.swift
-//  ISS Watch
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 6/11/24.
 //  Updated by Michael on 7/2/2025.
@@ -59,7 +59,7 @@ struct PassDetailView: View {
                 VStack {
                     DetailSubheading(heading: "SkyDome")
                     
-                    Dome3DView(skyPoints: [a, b, c])
+                    Dome3DView(satellite: station, skyPoints: [a, b, c])
                         .id(UUID())
                         .frame(height: 255)
                     

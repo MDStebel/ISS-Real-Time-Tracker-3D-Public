@@ -1,6 +1,6 @@
 //
 //  BundleExtensionForVersion.swift
-//  ISS Real-Time Tracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 1/20/25.
 //  Copyright © 2025 Michael Stebel Consulting, LLC. All rights reserved.

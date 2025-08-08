@@ -109,4 +109,17 @@ public enum StationsAndSatellites: String, CaseIterable {
             return UIImage(named: Globals.issIconForMapView)!
         }
     }
+    
+    var color: UIColor {
+        switch self {
+        case .iss:
+            return UIColor(named: Theme.issOrbitalColor) ?? .red
+        case .tss:
+            return UIColor(named: Theme.tssOrbitalColor) ?? .yellow
+        case .hst:
+            return UIColor(named: Theme.hubbleOrbitalColor) ?? .blue
+        case .none:
+            return UIColor(named: Theme.issOrbitalColor) ?? .red
+        }
+    }
 }

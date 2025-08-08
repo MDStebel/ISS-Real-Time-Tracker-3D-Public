@@ -1,6 +1,6 @@
 //
 //  AstronautBioViewController.swift
-//  ISS Real-TimeTracker
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 7/10/16.
 //  Copyright © 2016-2025 ISS Real-Time Tracker. All rights reserved.

@@ -454,6 +454,7 @@ class PassesTableViewController: UITableViewController, CLLocationManagerDelegat
 
     private func passDataToDomeVC(_ destinationVC: Dome3DWrapperViewController, sender: Any?) {
         if let passData = sender as? Passes.Pass {
+            destinationVC.satellite     = station
             destinationVC.startAz       = passData.startAz
             destinationVC.startEl       = passData.startEl
             destinationVC.maxAz         = passData.maxAz

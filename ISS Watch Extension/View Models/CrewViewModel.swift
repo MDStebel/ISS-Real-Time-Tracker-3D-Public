@@ -1,13 +1,15 @@
 //
 //  CrewViewModel.swift
-//  ISS Watch
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 4/24/24.
+//  Updated by Michael on 8/8/2025.
 //  Copyright © 2024-2025 ISS Real-Time Tracker. All rights reserved.
 //
 
 import Combine
 import Foundation
+import Observation
 
 @Observable
 final class CrewViewModel: ObservableObject {

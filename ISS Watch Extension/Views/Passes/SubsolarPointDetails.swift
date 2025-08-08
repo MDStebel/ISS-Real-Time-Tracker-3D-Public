@@ -1,6 +1,6 @@
 //
 //  SubsolarPointDetails.swift
-//  ISS Watch
+//  ISS Real-Time Tracker 3D
 //
 //  Created by Michael Stebel on 6/12/24.
 //  Updated by Michael on 7/2/2025.
