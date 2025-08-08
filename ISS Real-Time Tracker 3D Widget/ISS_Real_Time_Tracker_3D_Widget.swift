@@ -1,6 +1,6 @@
 //
 //  ISS_Real_Time_Tracker_3D_Widget.swift
-//  ISS Real-Time Tracker 3D Widget
+//  ISS Real-Time Tracker 3D 
 //
 //  Created by Michael Stebel on 5/17/24.
 //  Copyright © 2024-2025 ISS Real-Time Tracker. All rights reserved.
