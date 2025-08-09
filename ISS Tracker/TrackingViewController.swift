@@ -393,7 +393,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     @IBAction func zoomValueChanged(_ sender: UISlider) {
         stopAction()
         
-        delay(1.0) {                                        // Delay a bit to make sure we don't violate the API's 1 second rate limit if moving the slider too fast
+        schedule(after: 1.0) {                                        // Delay a bit to make sure we don't violate the API's 1 second rate limit if moving the slider too fast
             Globals.zoomFactorLastValue = sender.value
             self.zoomValueWasChanged = true
             self.timerValue = self.getTimerInterval()
@@ -778,7 +778,7 @@ class TrackingViewController: UIViewController, MKMapViewDelegate, UIGestureReco
     private func handleTargetSelection(_ selectedTarget: StationsAndSatellites) {
         DispatchQueue.main.async {
             self.stopAction()
-            self.delay(1.0) {
+            self.schedule(after: 1.0) {
                 self.zoomValueWasChanged = true
                 self.timerValue = self.getTimerInterval()
                 self.target = selectedTarget

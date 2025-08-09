@@ -33,7 +33,7 @@ struct Dome3DView: View {
     private let issRttRed = UIColor(cgColor: CGColor(red: 1.0, green: 0.298, blue: 0.298, alpha: 1.0))
     private let issRttDarkGray = UIColor(cgColor: CGColor(red: 0.20, green: 0.20, blue: 0.20, alpha: 1.0))
     
-    // The three sky points, pass date & time, and satellite name. These will be passed from the parent view.
+    // The three sky points, pass date, time, and satellite name. These will be passed from the parent view.
     var satellite: StationsAndSatellites
     var skyPoints: [SkyPoint]
     var date: String = ""
@@ -222,15 +222,15 @@ struct Dome3DView: View {
                         .bold()
                         .foregroundColor(.white)
                         .padding(.top, textPadding * 0.8)  // Move it up to align properly under the dome
-                    Text("Shows the flyover path for the pass")
+                    Text("Shows the path for the selected \(satellite.satelliteName) pass.")
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding(.top, textPadding * 0.7)  // Move it up to align properly under the dome
-                    Text("On: \(date),  Start (A): \(startTime).")
+                    Text("Start (A) on \(date) at \(startTime).")
                         .font(.headline)
                         .foregroundColor(.white)
                         .padding(.top, textPadding * 0.5)  // Move it up to align properly under the dome
-                    Text("Drag the SkyDome left or right to rotate it around you.")
+                    Text("Drag the SkyDome left & right to rotate it around you.")
                         .font(.footnote)
                         .foregroundColor(.white)
                         .padding(.top, textPadding * 0.01)  // Move it up to align properly under the dome

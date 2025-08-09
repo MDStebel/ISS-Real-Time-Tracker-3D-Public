@@ -22,8 +22,6 @@ class LaunchAnimationViewController: UIViewController {
     private let titleInitialScaleFactor: CGFloat = 0.33
     private let titleFinalScaleFactor: CGFloat = 4.0
     private let threeDInitialScaleFactor: CGFloat = 0.05
-    private let iPad3DTextYOffset: CGFloat = 850.0
-    private let iPhone3DTextYOffset: CGFloat = 10.0
     private let issIconExtraOffset: CGFloat = 20.0
     private let segueToMainViewController = "mainViewControllerSegue"
     
@@ -31,14 +29,11 @@ class LaunchAnimationViewController: UIViewController {
     
     private var issImageFinalTransform = CGAffineTransform.identity
     private var titleFinalTransform = CGAffineTransform.identity
-    private var threeDTextFinalTransform = CGAffineTransform.identity
     
     // MARK: - Outlets
     
-    @IBOutlet private var curves: UIImageView!
     @IBOutlet private var ISSImage: UIImageView!
     @IBOutlet private var appNameTitleForLaunchAnimation: UILabel!
-    @IBOutlet private var threeDTextImage: UIImageView!
     
     // MARK: - Lifecycle Methods
     
@@ -55,7 +50,6 @@ class LaunchAnimationViewController: UIViewController {
         // Calculate final transforms based on the view’s bounds
         setupISSImageFinalTransform()
         setupTitleFinalTransform()
-        setup3DTextFinalTransform()
         
         getVersionAndCopyrightData()
     }
@@ -77,11 +71,6 @@ class LaunchAnimationViewController: UIViewController {
         appNameTitleForLaunchAnimation.transform = CGAffineTransform(scaleX: titleInitialScaleFactor, y: titleInitialScaleFactor)
         appNameTitleForLaunchAnimation.alpha = 0.0
         appNameTitleForLaunchAnimation.isHidden = true
-        
-        // Configure threeDTextImage similarly.
-        threeDTextImage.transform = CGAffineTransform(scaleX: threeDInitialScaleFactor, y: threeDInitialScaleFactor)
-        threeDTextImage.alpha = 0.0
-        threeDTextImage.isHidden = true
     }
     
     /// Compute the final transform for the ISS icon animation.
@@ -102,26 +91,6 @@ class LaunchAnimationViewController: UIViewController {
             .scaledBy(x: titleFinalScaleFactor, y: titleFinalScaleFactor)
     }
     
-    /// Compute the final transform for the 3D text image animation.
-    private func setup3DTextFinalTransform() {
-        let yOffset: CGFloat
-        let finalScale: CGFloat
-        
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            yOffset = threeDTextImage.bounds.height + iPad3DTextYOffset
-            finalScale = 22.0
-        } else {
-            yOffset = threeDTextImage.bounds.height + iPhone3DTextYOffset
-            finalScale = 12.0
-        }
-        
-        // Start with the initial small scale, then apply translation and additional scaling.
-        let initialTransform = CGAffineTransform(scaleX: threeDInitialScaleFactor, y: threeDInitialScaleFactor)
-        threeDTextFinalTransform = initialTransform
-            .translatedBy(x: 0, y: yOffset)
-            .scaledBy(x: finalScale, y: finalScale)
-    }
-    
     // MARK: - Animation Method
     
     private func animateLaunchScreen() {
@@ -137,17 +106,11 @@ class LaunchAnimationViewController: UIViewController {
                 // Animate ISSImage out
                 self.ISSImage.transform = self.issImageFinalTransform
                 self.ISSImage.alpha = 0.0
-                self.curves.alpha = 0.0
                 
                 // Animate appNameTitleForLaunchAnimation into view
                 self.appNameTitleForLaunchAnimation.isHidden = false
                 self.appNameTitleForLaunchAnimation.alpha = 1.0
                 self.appNameTitleForLaunchAnimation.transform = self.titleFinalTransform
-                
-                // Animate threeDTextImage into view
-                self.threeDTextImage.isHidden = false
-                self.threeDTextImage.alpha = 1.0
-                self.threeDTextImage.transform = self.threeDTextFinalTransform
             },
             completion: { [weak self] _ in
                 guard let self = self else { return }

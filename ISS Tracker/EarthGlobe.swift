@@ -40,7 +40,6 @@ final class EarthGlobe: ObservableObject {
     let sunDistance: Float                 = 1000                                 // Relative distance to the Sun
     let sunlightTemp: CGFloat              = 6000                                 // Note: the default value is 6500 Kelvin
     
-    
     // MARK: - Methods
     
     /// Initializer for our Earth model

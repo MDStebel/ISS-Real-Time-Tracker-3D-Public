@@ -253,7 +253,7 @@ class GlobeFullViewController: UIViewController, AVAudioPlayerDelegate, EarthGlo
         super.didReceiveMemoryWarning()
         
         stopUpdatingGlobe()
-        delay(0.5) {
+        schedule(after: 0.5) {
             self.startUpdatingGlobe()
         }
     }
