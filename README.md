@@ -11,6 +11,8 @@ For iOS, iPadOS, & watchOS.
 
 ∙ Performance tuning throughout the iOS and watchOS apps.
 
+∙ New startup screen.
+
 ### August 7, 2025 Version 7.20.17
 ■ Improvements
 
